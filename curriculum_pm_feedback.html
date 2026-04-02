@@ -1,0 +1,1641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Skill Passport — Product Manager v2</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#fff;color:#1a1a1a;padding:2rem 1rem;font-size:14px;line-height:1.6}
+.root{max-width:1280px;margin:0 auto}
+.tab-row{display:flex;gap:0;border-bottom:1px solid #e5e5e5;margin-bottom:2rem;overflow-x:auto}
+.tab{padding:9px 16px;font-size:13px;font-weight:500;color:#888;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;flex-shrink:0}
+.tab.active{color:#1a1a1a;border-bottom-color:#1a1a1a}
+.panel{display:none}.panel.active{display:block}
+.sec{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#888;margin-bottom:.875rem;margin-top:1.5rem}
+.sec:first-child{margin-top:0}
+h1{font-size:22px;font-weight:600;color:#1a1a1a;margin-bottom:4px}
+.sub{font-size:14px;color:#555;line-height:1.6;margin-bottom:1.75rem}
+.role-pill{display:inline-flex;background:#E1F5EE;color:#085041;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.infobox{background:#f7f7f5;border-radius:10px;padding:12px 14px;margin-bottom:1.25rem;font-size:13px;color:#555;line-height:1.6}
+.infobox b{font-weight:600;color:#1a1a1a}
+.infobox.warn{background:#FEFCE8;border:1px solid #FDE68A}
+.infobox.info{background:#EFF6FF;border:1px solid #BFDBFE}
+.convo{display:flex;flex-direction:column;gap:12px;margin-bottom:1.5rem}
+.bg{display:flex;flex-direction:column}
+.bg.r{align-items:flex-end}
+.blabel{font-size:10px;color:#888;font-weight:600;letter-spacing:.04em;margin-bottom:3px}
+.bubble{max-width:82%;padding:10px 14px;font-size:13px;line-height:1.6;color:#1a1a1a}
+.bubble.ai{background:#f7f7f5;border-radius:4px 12px 12px 12px}
+.bubble.usr{background:#E6F1FB;color:#0C447C;border-radius:12px 4px 12px 12px}
+.branch{font-size:12px;color:#888;font-style:italic;padding:5px 10px;border-left:2px solid #ddd;margin:2px 0 2px 8px;line-height:1.5}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem}
+.pitem{background:#f7f7f5;border-radius:8px;padding:9px 11px}
+.plabel{font-size:10px;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:3px}
+.pval{font-size:12px;font-weight:600;color:#1a1a1a;line-height:1.4}
+.psub{font-size:11px;color:#555;margin-top:2px}
+.gap-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.75rem}
+.gap-card{border:1px solid #e5e5e5;border-radius:12px;padding:1rem 1.125rem}
+.gap-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.gb-pre{background:#FAEEDA;color:#633806}
+.gb-ctx{background:#E1F5EE;color:#085041}
+.gb-act{background:#EEEDFE;color:#3C3489}
+.gb-qual{background:#E6F1FB;color:#0C447C}
+.gap-title{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:5px}
+.gap-desc{font-size:12px;color:#555;line-height:1.55;margin-bottom:8px}
+.srow{display:flex;gap:6px;align-items:flex-start;font-size:11px;color:#555;margin-bottom:3px}
+.sdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:3px;background:#EF9F27}
+.intv{border:1px solid #e5e5e5;border-radius:12px;overflow:hidden;margin-bottom:10px}
+.intv-head{display:flex;align-items:center;gap:10px;padding:.75rem 1rem;background:#f7f7f5}
+.ibadge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px}
+.ib-rt{background:#E6F1FB;color:#0C447C}
+.ib-pt{background:#FAECE7;color:#712B13}
+.ib-sr{background:#E1F5EE;color:#085041}
+.intv-title{font-size:13px;font-weight:600;color:#1a1a1a}
+.intv-body{padding:.875rem 1rem;font-size:12px;color:#555;line-height:1.6}
+.ex-box{margin-top:8px;padding:9px 11px;background:#f7f7f5;border-radius:8px;font-size:12px;color:#555;line-height:1.55}
+.ex-box b{font-weight:600;color:#1a1a1a}
+/* CURRICULUM */
+.skill-block{margin-bottom:2.5rem}
+.skill-head{display:flex;align-items:center;gap:10px;margin-bottom:.75rem;padding-bottom:10px;border-bottom:1px solid #e5e5e5}
+.skill-num{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;flex-shrink:0}
+.skill-name{font-size:16px;font-weight:600;color:#1a1a1a}
+.skill-desc{font-size:12px;color:#888;margin-top:2px}
+.end-state{background:#f7f7f5;border-radius:8px;padding:9px 12px;font-size:12px;color:#555;line-height:1.5;margin-bottom:12px}
+.end-state b{font-weight:600;color:#1a1a1a}
+.task-card{border:1px solid #e5e5e5;border-radius:12px;margin-bottom:10px;overflow:hidden;background:#fff}
+.task-head{display:flex;align-items:center;gap:10px;padding:.875rem 1.125rem;cursor:pointer;user-select:none}
+.task-head:hover{background:#fafafa}
+.tidx{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.ttitles{flex:1;min-width:0}
+.tname{font-size:14px;font-weight:600;color:#1a1a1a}
+.tby{font-size:11px;color:#888;margin-top:1px}
+.tright{display:flex;align-items:center;gap:6px;flex-shrink:0;flex-wrap:wrap;justify-content:flex-end}
+.pill{font-size:10px;padding:2px 7px;border-radius:20px;font-weight:600}
+.pl{background:#E6F1FB;color:#0C447C}
+.pp{background:#FAEEDA;color:#633806}
+.pa{background:#FAECE7;color:#712B13}
+.dur{font-size:11px;color:#888}
+.rt-badge{background:#E1F5EE;color:#085041;font-size:10px;font-weight:600;padding:1px 7px;border-radius:20px}
+.chev{font-size:11px;color:#888;transition:transform .2s;flex-shrink:0}
+.chev.open{transform:rotate(180deg)}
+.tbody{display:none;border-top:1px solid #e5e5e5}
+.tbody.open{display:block}
+.tsec{padding:.875rem 1.125rem;border-bottom:1px solid #e5e5e5}
+.tsec:last-child{border-bottom:none}
+.tsl{font-size:10px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:#888;margin-bottom:8px}
+.prose{font-size:13px;color:#555;line-height:1.65}
+.prose b{font-weight:600;color:#1a1a1a}
+.prose .example{background:#f0f7ff;border-left:3px solid #378ADD;border-radius:0 6px 6px 0;padding:10px 12px;margin:10px 0;font-size:12px;line-height:1.6}
+.prose .example .label{font-size:10px;font-weight:600;color:#185FA5;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.prose .contrast{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+.prose .bad-ex{background:#FFF5F5;border-left:3px solid #E24B4A;border-radius:0 6px 6px 0;padding:10px 12px;font-size:12px;line-height:1.55}
+.prose .bad-ex .label{font-size:10px;font-weight:600;color:#A32D2D;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.prose .good-ex{background:#F0FDF4;border-left:3px solid #1D9E75;border-radius:0 6px 6px 0;padding:10px 12px;font-size:12px;line-height:1.55}
+.prose .good-ex .label{font-size:10px;font-weight:600;color:#0F6E56;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+.prose code{font-family:monospace;font-size:11px;background:#f0f0ee;padding:1px 5px;border-radius:4px}
+.prose pre{font-family:monospace;font-size:12px;background:#f7f7f5;border:1px solid #e5e5e5;border-radius:8px;padding:12px 14px;margin:10px 0;line-height:1.7;white-space:pre-wrap;color:#1a1a1a}
+.prose .note{font-size:12px;color:#888;font-style:italic;margin:6px 0}
+.pbox{background:#f7f7f5;border-radius:8px;padding:10px 12px;font-size:13px;color:#555;line-height:1.6}
+.pbox-t{font-weight:600;color:#1a1a1a;margin-bottom:8px;font-size:13px}
+.pbox .step{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+.pbox .step:last-child{margin-bottom:0}
+.step-num{width:20px;height:20px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.step-text{font-size:13px;color:#555;line-height:1.5}
+.mc-exercise{background:#f7f7f5;border-radius:8px;padding:12px 14px;margin-top:8px}
+.mc-q{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:8px}
+.mc-opt{display:flex;gap:8px;align-items:flex-start;padding:6px 8px;border-radius:6px;font-size:13px;color:#555;margin-bottom:4px;cursor:pointer;border:1px solid transparent}
+.mc-opt:hover{background:#fff;border-color:#e5e5e5}
+.mc-key{width:20px;height:20px;border-radius:4px;background:#fff;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0;color:#888}
+.match-exercise{background:#f7f7f5;border-radius:8px;padding:12px 14px;margin-top:8px;font-size:12px;color:#555}
+.match-title{font-weight:600;color:#1a1a1a;margin-bottom:8px;font-size:13px}
+.match-row{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;margin-bottom:6px}
+.match-scenario{background:#fff;border:1px solid #e5e5e5;border-radius:6px;padding:7px 10px;font-size:12px}
+.match-arrow{color:#aaa;font-size:14px}
+.match-answer{background:#E1F5EE;border:1px solid #9FE1CB;border-radius:6px;padding:7px 10px;font-size:12px;color:#085041;font-weight:500}
+.hints{display:flex;flex-direction:column;gap:7px}
+.hint{display:flex;gap:8px;align-items:flex-start}
+.hnum{width:18px;height:18px;border-radius:50%;background:#FAEEDA;color:#633806;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.htext{font-size:13px;color:#555;line-height:1.5}
+.evsigs{display:flex;flex-direction:column;gap:6px}
+.esig{display:flex;gap:8px;align-items:flex-start}
+.esdot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.es-p{background:#1D9E75}.es-f{background:#E24B4A}.es-g{background:#EF9F27}
+.ptag-row{display:flex;flex-wrap:wrap;gap:5px}
+.ptag{font-size:11px;padding:2px 8px;border-radius:20px;background:#f7f7f5;color:#555;border:1px solid #e5e5e5}
+.ttag{font-size:11px;padding:2px 8px;border-radius:20px;background:#EEEDFE;color:#3C3489;border:1px solid #AFA9EC}
+.none-t{font-size:12px;color:#888;font-style:italic}
+.cap-link{font-size:11px;background:#E1F5EE;color:#085041;border:1px solid #9FE1CB;border-radius:6px;padding:6px 10px;margin-top:10px;line-height:1.5}
+.cap-link b{font-weight:600}
+.rubric-box{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 12px;margin-top:8px;font-size:12px;color:#555;line-height:1.55}
+.rubric-box b{font-weight:600;color:#1e40af}
+/* preloaded context box */
+.preload-box{background:#FEFCE8;border:1px solid #FDE68A;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#555;line-height:1.6}
+.preload-box b{font-weight:600;color:#854D0E}
+.preload-content{background:#fff;border:1px solid #e5e5e5;border-radius:6px;padding:10px 12px;margin-top:8px;font-family:monospace;font-size:11px;color:#1a1a1a;line-height:1.7;white-space:pre-wrap}
+/* MCP setup steps */
+.setup-step{display:flex;gap:12px;align-items:flex-start;padding:10px 0;border-bottom:1px solid #f0f0ee}
+.setup-step:last-child{border-bottom:none}
+.setup-num{width:26px;height:26px;border-radius:50%;background:#1a1a1a;color:#fff;font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.setup-body{flex:1}
+.setup-title{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:3px}
+.setup-desc{font-size:12px;color:#555;line-height:1.55}
+.setup-code{font-family:monospace;font-size:11px;background:#f0f0ee;padding:4px 8px;border-radius:4px;display:inline-block;margin-top:4px;color:#1a1a1a}
+.confirm-box{background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:12px;color:#166534}
+.confirm-box b{font-weight:600}
+/* CAPSTONE */
+.cap-wrap{border:1px solid #AFA9EC;border-radius:12px;padding:1.25rem;margin-bottom:2rem}
+.cap-badge{display:inline-flex;background:#EEEDFE;color:#3C3489;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.cap-title{font-size:15px;font-weight:600;color:#1a1a1a;margin-bottom:6px}
+.cap-desc{font-size:13px;color:#555;line-height:1.6;margin-bottom:1rem}
+.cap-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.cap-item{background:#f7f7f5;border-radius:8px;padding:10px 12px;font-size:12px;color:#555;line-height:1.5}
+.cap-item b{font-weight:600;color:#1a1a1a;display:block;margin-bottom:3px}
+/* PREREQS */
+.pg-list{display:flex;flex-direction:column}
+.pg-row{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid #e5e5e5}
+.pg-row:last-child{border-bottom:none}
+.pg-mid{flex:1;min-width:0}
+.pg-name{font-weight:600;color:#1a1a1a;font-size:13px}
+.pg-skill{font-size:11px;color:#888;margin-top:1px}
+/* AUDIT */
+.audit-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:2rem}
+.as-card{border-radius:10px;padding:1rem 1.125rem;border:1px solid}
+.as-ok{background:#F0FDF4;border-color:#86EFAC}
+.as-warn{background:#FEFCE8;border-color:#FDE68A}
+.as-label{font-size:11px;font-weight:600;margin-bottom:5px}
+.as-ok .as-label{color:#166534}
+.as-warn .as-label{color:#854D0E}
+.as-val{font-size:26px;font-weight:600;margin-bottom:3px}
+.as-ok .as-val{color:#15803D}
+.as-warn .as-val{color:#A16207}
+.as-sub{font-size:12px;color:#555;line-height:1.5}
+.audit-card{border:1px solid #e5e5e5;border-radius:12px;margin-bottom:10px;overflow:hidden}
+.ac-head{display:flex;align-items:center;gap:10px;padding:.875rem 1.125rem;cursor:pointer;user-select:none}
+.ac-head:hover{background:#fafafa}
+.ac-id{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.ac-titles{flex:1;min-width:0}
+.ac-name{font-size:14px;font-weight:600;color:#1a1a1a}
+.ac-status{display:flex;align-items:center;gap:6px}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.sd-ok{background:#15803D}.sd-warn{background:#A16207}
+.sl-ok{font-size:11px;font-weight:600;color:#15803D}
+.sl-warn{font-size:11px;font-weight:600;color:#A16207}
+.ac-body{display:none;border-top:1px solid #e5e5e5;padding:.875rem 1.125rem}
+.ac-body.open{display:block}
+.check-row{display:flex;gap:8px;align-items:flex-start;margin-bottom:6px}
+.ci{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:9px;margin-top:2px}
+.ci-ok{background:#DCFCE7;color:#15803D}
+.gap-block{border:1px solid #e5e5e5;border-radius:12px;margin-bottom:12px;overflow:hidden}
+.gb-head{padding:.875rem 1.25rem;background:#f7f7f5;display:flex;align-items:center;gap:10px}
+.gb-sev{font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px}
+.sev-s{background:#FEF9C3;color:#854D0E}
+.sev-e{background:#DBEAFE;color:#1e40af}
+.gb-title{font-size:14px;font-weight:600;color:#1a1a1a}
+.gb-body{padding:.875rem 1.25rem;font-size:13px;color:#555;line-height:1.65}
+.gb-body b{font-weight:600;color:#1a1a1a}
+.fix-box{margin-top:10px;padding:10px 12px;background:#F0FDF4;border:1px solid #86EFAC;border-radius:8px;font-size:12px;color:#555;line-height:1.55}
+.fix-box b{font-weight:600;color:#166534}
+@media(max-width:640px){
+  .pgrid,.gap-grid,.cap-grid,.audit-summary,.prose .contrast,.match-row{grid-template-columns:1fr}
+  .match-arrow{display:none}
+}
+code{font-family:monospace;font-size:12px;background:#f0f0ee;padding:1px 5px;border-radius:4px}
+
+
+
+/* ===== TWO-COLUMN LAYOUT ===== */
+.page-layout{display:grid;grid-template-columns:1fr 268px;gap:0;align-items:start}
+.content-col{min-width:0}
+.comments-col{position:relative;padding-left:16px;min-height:100px}
+
+/* ===== COMMENT SYSTEM ===== */
+.task-card{position:relative}
+.skill-block{position:relative}
+
+/* Hover button — shared by task-card, skill-block, cap-wrap */
+.cmnt-add-btn{
+  position:absolute;top:10px;right:10px;
+  width:28px;height:28px;border-radius:50%;
+  background:#fff;border:1.5px solid #e5e5e5;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;opacity:0;transition:opacity .15s,border-color .15s,background .15s;
+  z-index:5;font-size:13px;color:#aaa;flex-shrink:0;
+}
+.cmnt-add-btn:hover{background:#FEFCE8;border-color:#EF9F27;color:#EF9F27}
+.task-card:hover .cmnt-add-btn,
+.skill-block:hover .cmnt-add-btn,
+.cap-wrap:hover .cmnt-add-btn{opacity:1}
+.task-card.has-comment .cmnt-add-btn,
+.skill-block.has-comment .cmnt-add-btn,
+.cap-wrap.has-comment .cmnt-add-btn{opacity:1;background:#FEFCE8;border-color:#EF9F27;color:#EF9F27}
+.task-card.has-comment{border-color:#FDE68A}
+.skill-block.has-comment .skill-head{border-bottom-color:#FDE68A}
+.cap-wrap{position:relative}.cap-wrap.has-comment{border-color:#EF9F27}
+
+/* Composer dropdown */
+.cmnt-composer{
+  background:#fff;border:1.5px solid #EF9F27;border-radius:10px;
+  padding:10px 12px;box-shadow:0 4px 16px rgba(0,0,0,.12);
+  display:none;position:absolute;width:252px;z-index:200;
+}
+.cmnt-composer.open{display:block}
+.cmnt-composer-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#EF9F27;margin-bottom:6px}
+.cmnt-composer textarea{width:100%;border:1px solid #e5e5e5;border-radius:6px;padding:7px 9px;font-size:13px;font-family:inherit;color:#1a1a1a;resize:none;outline:none;line-height:1.5;box-sizing:border-box}
+.cmnt-composer textarea:focus{border-color:#1a1a1a}
+.cmnt-composer-actions{display:flex;justify-content:flex-end;gap:6px;margin-top:8px}
+.cmnt-cancel-btn{background:none;border:none;font-size:12px;color:#888;cursor:pointer;padding:4px 8px}
+.cmnt-cancel-btn:hover{color:#1a1a1a}
+.cmnt-save-btn{background:#1a1a1a;color:#fff;border:none;border-radius:6px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer}
+.cmnt-save-btn:hover{background:#333}
+
+/* Thread card */
+.cmnt-thread{
+  background:#fff;border:1.5px solid #FDE68A;border-radius:10px;
+  padding:10px 12px;box-shadow:0 1px 6px rgba(0,0,0,.07);
+  position:absolute;width:252px;transition:box-shadow .15s;
+}
+.cmnt-thread:hover{box-shadow:0 3px 14px rgba(0,0,0,.12)}
+.cmnt-thread-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:#EF9F27;margin-bottom:7px}
+.cmnt-item{padding:6px 0;border-bottom:1px solid #f5f5f5}
+.cmnt-item:last-child{border-bottom:none;padding-bottom:0}
+.cmnt-item-text{font-size:13px;color:#1a1a1a;line-height:1.5;word-break:break-word}
+.cmnt-item-text textarea{width:100%;border:1px solid #e5e5e5;border-radius:5px;padding:5px 7px;font-size:13px;font-family:inherit;resize:none;outline:none;box-sizing:border-box}
+.cmnt-item-text textarea:focus{border-color:#1a1a1a}
+.cmnt-item-meta{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.cmnt-item-ts{font-size:10px;color:#bbb}
+.cmnt-item-actions{display:flex;gap:8px}
+.cmnt-item-edit,.cmnt-item-delete{font-size:11px;color:#ccc;cursor:pointer;background:none;border:none;padding:0}
+.cmnt-item-edit:hover{color:#0C447C}
+.cmnt-item-delete:hover{color:#E24B4A}
+.cmnt-edit-actions{display:flex;gap:5px;margin-top:5px;justify-content:flex-end}
+.cmnt-edit-save{background:#1a1a1a;color:#fff;border:none;border-radius:5px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer}
+.cmnt-edit-cancel{background:none;border:none;font-size:11px;color:#888;cursor:pointer;padding:3px 8px}
+
+/* Summary tab stats */
+.summ-stat-card{background:#f7f7f5;border-radius:10px;padding:12px 14px;border:1px solid #e5e5e5}
+.summ-stat-label{font-size:11px;color:#888;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+.summ-stat-val{font-size:26px;font-weight:600;color:#1a1a1a}
+.summ-stat-sub{font-size:11px;color:#888;margin-top:2px}
+.summ-skill-section{margin-bottom:2rem}
+.summ-skill-header{display:flex;align-items:center;gap:10px;padding-bottom:10px;border-bottom:1px solid #e5e5e5;margin-bottom:12px}
+.summ-skill-badge{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0}
+.summ-skill-name{font-size:15px;font-weight:600;color:#1a1a1a}
+.summ-skill-count{font-size:11px;color:#888;margin-top:1px}
+.summ-comment-row{display:flex;gap:10px;align-items:flex-start;padding:9px 0;border-bottom:1px solid #f5f5f5}
+.summ-comment-row:last-child{border-bottom:none}
+.summ-tid-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;flex-shrink:0;margin-top:2px;white-space:nowrap}
+.summ-comment-text{font-size:13px;color:#1a1a1a;line-height:1.5;flex:1}
+.summ-comment-ts{font-size:10px;color:#bbb;margin-top:2px}
+.ai-loading{display:flex;align-items:center;gap:8px;color:#888;font-size:13px;padding:8px 0}
+.ai-loading-dot{width:6px;height:6px;border-radius:50%;background:#AFA9EC;animation:aidot .8s infinite alternate}
+.ai-loading-dot:nth-child(2){animation-delay:.2s}
+.ai-loading-dot:nth-child(3){animation-delay:.4s}
+@keyframes aidot{to{transform:translateY(-4px);opacity:.4}}
+#ai-synth-btn:hover{background:#333}
+#ai-synth-btn:disabled{background:#888;cursor:not-allowed}
+@media(max-width:900px){
+  .page-layout{grid-template-columns:1fr}
+  .comments-col{display:none}
+}
+</style>
+</head>
+<body>
+<div class="root">
+<div style="margin-bottom:1.5rem">
+  <div style="font-size:28px;font-weight:700;color:#1a1a1a;margin-bottom:4px">AI in the Flow of Work</div>
+  <div style="font-size:16px;font-weight:600;color:#1a1a1a">Skills Plan for Product Manager v2</div>
+  <div style="font-size:13px;color:#888">Reference: <a style="color:#888" href="https://main.dh6lkwokdcgny.amplifyapp.com/ai-spark-exec/ai-spark-presentation.html" target="_blank">AI Spark 2026 presentation</a></div>
+</div>
+<div class="tab-row">
+  <div class="tab active" onclick="sw('curriculum')">Curriculum</div>
+  <div class="tab" onclick="sw('capstone')">Capstone</div>
+  <div class="tab" onclick="sw('summary')">Comments <span id="tab-cmnt-count" style="display:none;background:#EF9F27;color:#fff;font-size:9px;font-weight:700;border-radius:10px;padding:1px 6px;margin-left:4px;vertical-align:middle">0</span></div>
+</div>
+
+<!-- CURRICULUM -->
+<div id="tp-curriculum" class="panel active">
+  <div class="page-layout"><div class="content-col"><div id="skills-container"></div></div><div class="comments-col" id="comments-col"></div></div>
+</div>
+
+<!-- CAPSTONE -->
+<div id="tp-capstone" class="panel"><div class="page-layout"><div class="content-col"><div id="cap-skills-container">
+  <h1>Capstone projects</h1>
+  <div class="sub">Three optional capstone projects — each produces a real artifact the PM uses in their actual job this week. Complete any one, or all three.</div>
+  <div class="infobox info"><b>Design principle:</b> Every capstone artifact must be usable this week. If it can't be sent to a real stakeholder or run in a real meeting, it's not done.</div>
+  <div class="cap-wrap">
+    <span class="cap-badge">Capstone A</span>
+    <div class="cap-title">Automated weekly update pipeline</div>
+    <div class="cap-desc">Build a reusable pipeline that takes your raw weekly notes + Databricks data, and produces a stakeholder-ready update in three formats — exec summary, full team update, async Slack digest — in one session. Runs in under 10 minutes. You never format a weekly update from scratch again.</div>
+    <div class="cap-grid">
+      <div class="cap-item"><b>Deliverable 1</b>Prompt library: templates for 3 audience formats (exec, team, async)</div>
+      <div class="cap-item"><b>Deliverable 2</b>Databricks MCP query that auto-pulls your weekly metrics into the pipeline</div>
+      <div class="cap-item"><b>Deliverable 3</b>Skill file: <code>weekly-update.md</code> — callable in one command next week</div>
+      <div class="cap-item"><b>Deliverable 4</b>Live test: run the pipeline on this week's actual notes. Output must be sendable.</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:12px">Prerequisites: S1 (T1–T4) + S2 (T5–T7) + S3 (T8–T11). Est. time: 45–60 min.</div>
+  </div>
+  <div class="cap-wrap">
+    <span class="cap-badge">Capstone B</span>
+    <div class="cap-title">Data-informed communication for multiple audiences</div>
+    <div class="cap-desc">Take a real product insight from Databricks — a retention drop, funnel anomaly, or cohort comparison — and produce three communications from one query: exec brief, structured team analysis, and QBR-ready slide summary. Each version is audience-calibrated and stakeholder-ready.</div>
+    <div class="cap-grid">
+      <div class="cap-item"><b>Deliverable 1</b>Databricks query surfacing a real insight from your product area</div>
+      <div class="cap-item"><b>Deliverable 2</b>Exec brief: 1 paragraph, implication-first</div>
+      <div class="cap-item"><b>Deliverable 3</b>Team analysis: data + interpretation + 3 recommended actions</div>
+      <div class="cap-item"><b>Deliverable 4</b>QBR-ready summary: visual-first framing as interactive HTML diagram</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:12px">Prerequisites: S1 (T1–T4) + S3 (T8–T11) + S5 (T15–T17). Est. time: 45–60 min.</div>
+  </div>
+  <div class="cap-wrap">
+    <span class="cap-badge">Capstone C</span>
+    <div class="cap-title">Vibe-coded working prototype</div>
+    <div class="cap-desc">Build a working interactive prototype for a feature you're currently shaping — no design handoff, no engineering bandwidth. The prototype runs in the browser, is shareable as a link, and demonstrates the core interaction. You use it in your next stakeholder or solution-shaping session.</div>
+    <div class="cap-grid">
+      <div class="cap-item"><b>Deliverable 1</b>One-paragraph spec: what the prototype demonstrates and who it's for</div>
+      <div class="cap-item"><b>Deliverable 2</b>Working prototype: clickable, browser-based, core interaction functional</div>
+      <div class="cap-item"><b>Deliverable 3</b>Light eval: 3 things tested, what passed, what you'd change before showing eng</div>
+      <div class="cap-item"><b>Deliverable 4</b>Shareable link (GitHub Pages) — ready to use in your next session</div>
+    </div>
+    <div style="font-size:12px;color:#888;margin-top:12px">Prerequisites: S1 (T1–T4) + S4 (T12–T14). Est. time: 60–90 min.</div>
+  </div>
+</div></div><div class="comments-col" id="cap-comments-col"></div></div></div>
+
+
+<script>
+const SKILLS=[
+  {id:"S1",color:"#E6F1FB",tc:"#0C447C",name:"Prompt patterns and model fluency",
+   desc:"Context-rich prompts, task decomposition, model selection, reusable templates &#8212; grounded in PM workflows you run this week",
+   end:"PM produces context-rich prompts consistently, decomposes any PM deliverable into AI-executable steps, routes to the right model, and has 2 reusable templates ready to use this week.",
+   tasks:[
+    {id:"T1",name:"Write a context-first prompt",by:"Stop task-only prompting &#8212; start with who, what, and for whom",dur:"10 min",
+     types:["lesson","practice"],formats:["Text lesson with worked before/after","Codex simulator"],tools:[],prereqs:[],rt:false,
+     lesson:`<p>Most PMs use AI like a search engine: type the task, get an answer, accept or reject. This produces mediocre outputs &#8212; because AI has no idea who you are, who the output is for, or what "good" looks like for your stakeholders.</p>
+
+<p>A context-first prompt has three parts:</p>
+<p><b>1. Role framing</b> &#8212; who you are, what product area you own, who your key stakeholders are<br>
+<b>2. Audience + context block</b> &#8212; who this output is for, what they already know, what they need to decide<br>
+<b>3. Output spec</b> &#8212; format, length, tone, and what to avoid</p>
+
+<div class="contrast">
+<div class="bad-ex"><div class="label">&#10060; Task-only &#8212; what most PMs send</div><p style="margin-bottom:6px">"Write a weekly update for my team."</p><p style="color:#991B1B;font-size:11px">AI invents the audience, the format, and the tone. You spend 15 min editing the result.</p></div>
+<div class="good-ex"><div class="label">&#10003; Context-first &#8212; what works</div><p style="margin-bottom:6px">"I'm a PM owning the activation funnel at Coursera. I need a weekly update for my eng lead (skeptical of scope changes) and design lead (focused on consolidating UI). They already know we hit our MAU target but are worried about W1 retention dropping 4 points this week.</p><p style="margin-bottom:6px">Give me: 1 headline sentence (outcome, not task), 3 signal bullets (each ending with one business implication), 1 decision I need from them by Thursday.</p><p style="color:#0F6E56;font-size:11px">Format rules: No intro sentence. No passive voice. No phrases like 'we are working on.'"</p></div>
+</div>
+
+<p style="margin-top:10px"><b>What changed and why it matters:</b></p>
+<p>The role framing told AI which product area and why the stakeholders' priorities differ. The audience block told it what they already know (no need to re-explain MAU win) and what they need. The output spec gave it a precise structure. Result: the first output is close to sendable. Without context, you're editing. With context, you're reviewing.</p>
+
+<p class="note">This week's application: the next time you write a recurring PM doc &#8212; update, brief, intake &#8212; stop before you prompt and add all three parts. Set a 2-minute timer. That's the full investment.</p>`,
+     practice:{t:"Rewrite a prompt you've actually used in the last week",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Think of a real prompt</b> you sent AI in the last week &#8212; a weekly update, a PRD section, a Slack message draft. Write it down exactly as you sent it.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Add the three parts.</b> Role framing (your product area + stakeholders). Audience context (who reads this + what they know + what they need to decide). Output spec (format + length + what to avoid). Label each section.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run both in Codex side by side.</b> Original first, rewrite second. Compare the outputs &#8212; don't edit, just observe what changed.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Identify the one change</b> that made the biggest difference in output quality. That's your highest-leverage prompt habit to repeat this week.</div></div>`},
+     hints:["If the output sounds like it could have been written for anyone &#8212; it was. Add the audience block first: who reads this, what they already know, what they need to do.",
+            "The output spec is the most commonly skipped part. It's also what eliminates 80% of post-generation editing."],
+     sigs:[{t:"pass",s:"Rewritten prompt has all three parts; output is noticeably more specific and closer to sendable"},{t:"fail",s:"Prompt still task-only &#8212; no audience or output spec; surface lesson callout on output spec"},{t:"gap",s:"Added role framing but skipped audience block &#8212; hint 1 fires"}],
+     caplink:""},
+
+    {id:"T2",name:"Decompose a PM deliverable",by:"Break complex outputs into AI-executable steps before running them",dur:"12 min",
+     types:["lesson","practice"],formats:["Text lesson","Recognition exercise","Codex simulator"],tools:[],prereqs:["T1"],rt:false,
+     lesson:`<p>PMs produce complex outputs: PRDs, QBR decks, strategy memos, stakeholder updates. When you hand these to AI as one big task, you get one big mediocre output. Decomposition &#8212; breaking a deliverable into specific, ordered sub-tasks &#8212; is the difference between AI as a drafting assistant and AI as a thought partner that shapes the work.</p>
+
+<p>A good decomposition is specific to your deliverable and your context. A bad decomposition could apply to any document ever written.</p>
+
+<div class="contrast">
+<div class="bad-ex"><div class="label">&#10060; Generic &#8212; applies to any doc</div>1. Overview<br>2. Goals<br>3. Requirements<br>4. Timeline<br>5. Risks<br><br><span style="color:#991B1B;font-size:11px">AI makes up what goes in each section. You spend 20 min fixing it.</span></div>
+<div class="good-ex"><div class="label">&#10003; PM-specific &#8212; tied to this feature and context</div>1. User problem: W1 retention drop 4pts, enterprise cohort, Databricks data from last 30 days<br>2. Hypothesis + success metric: notification timing change &#8594; +6pts W1 retention<br>3. Scope: notification change only &#8212; no onboarding redesign this sprint<br>4. Open questions I need eng to answer before speccing: iOS push permission flow edge cases<br>5. Design dependencies: 3 screens needed from Figma<br><br><span style="color:#0F6E56;font-size:11px">AI knows what goes in each section because you told it the context, the constraint, and the unknowns.</span></div>
+</div>
+
+<p><b>The key habit:</b> Before running your decomposition prompt, include: what the deliverable is, who it's for, when it's needed, and any constraints. The more context in the decomposition prompt, the more specific the plan. The more specific the plan, the better every section that follows.</p>`,
+     practice:{t:"Recognition + decompose something you're actually writing this week",
+       d:`<div class="pbox-t">Part 1 &#8212; recognition (3 min)</div>
+<div class="mc-exercise">
+<div class="mc-q">Decomposition A: "1. Background 2. Goals 3. Features 4. Timeline 5. Success metrics"</div>
+<div class="mc-opt"><div class="mc-key">G</div>Good &#8212; specific and tied to the deliverable</div>
+<div class="mc-opt"><div class="mc-key">B</div>Bad &#8212; generic, applies to any PRD ever written</div>
+</div>
+<div class="mc-exercise" style="margin-top:8px">
+<div class="mc-q">Decomposition B: "1. Activation drop evidence (Databricks, enterprise cohort, last 30 days) 2. Top 3 friction points from last 8 user interviews 3. Scope: notification change only, no onboarding redesign 4. Success metric: W1 retention from 24% to 30% 5. Eng unknowns: push notification permission flow on iOS"</div>
+<div class="mc-opt"><div class="mc-key">G</div>Good &#8212; PM-specific with real constraints and sources</div>
+<div class="mc-opt"><div class="mc-key">B</div>Bad &#8212; too granular for a decomposition</div>
+</div>
+<div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e5e5">
+<div class="pbox-t">Part 2 &#8212; your deliverable (7 min)</div>
+<div class="step" style="margin-top:8px"><div class="step-num">1</div><div class="step-text"><b>Pick something you're actually writing this week</b> &#8212; a PRD, a brief, an update. Not a hypothetical.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Write a decomposition prompt with your context:</b> what it is, who it's for, when it's needed, constraints. Run it in Codex.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Edit the plan:</b> Cut one section that doesn't apply. Add one section you know is missing. Don't just accept the first list.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Execute one section</b> using T1's prompt structure. Note how the edited plan changed the output.</div></div>
+</div>`},
+     hints:["If the decomposition is generic, your prompt was missing context. Add: who it's for, what decision it enables, what constraint you're working within.",
+            "After AI generates the plan, tell it explicitly which sections to skip. Don't just say 'proceed.'"],
+     sigs:[{t:"pass",s:"Correctly identifies generic vs specific; edits their own list before executing; uses a real deliverable"},{t:"fail",s:"Accepted generic decomposition and ran full output &#8212; skipped review step"},{t:"gap",s:"Both recognition answers wrong &#8212; prereq gap in T1 context concept"}],
+     caplink:""},
+
+    {id:"T3",name:"Choose the right model",by:"Opus, Sonnet, Haiku &#8212; when each earns its cost for PM work",dur:"6 min",
+     types:["lesson","practice"],formats:["Text lesson","Multiple-choice routing exercise"],tools:[],prereqs:["T1"],rt:false,
+     lesson:`<p>Choosing the wrong model costs you time (Opus for a Haiku task) or quality (Haiku for an Opus task). For PMs:</p>
+
+<p><b>Opus</b> &#8212; deep synthesis, nuanced judgment, competing constraints. Use for: synthesizing 15 user interviews into a root cause, framing a QBR narrative for a skeptical CFO, roadmap prioritization with competing signals. Rule of thumb: if you'd spend 30+ minutes writing this yourself, use Opus.</p>
+
+<p><b>Sonnet</b> &#8212; the workhorse for most PM daily work. PRD sections, stakeholder updates, meeting prep, user story drafts, QBR summaries, intake doc drafts. Best default for 80% of your tasks.</p>
+
+<p><b>Haiku</b> &#8212; structured extraction and reformatting. Pulling decisions from a meeting transcript, listing open questions from a spec, summarizing a Slack thread into action items, reformatting a Jira list. Rule of thumb: if you'd spend under 2 minutes writing this yourself, use Haiku.</p>
+
+<div class="example"><div class="label">Real example &#8212; same week, three different models</div>
+<p><b>Monday, 9am:</b> "Extract all open questions from this PRD before sprint planning." &#8594; <b>Haiku</b>. Pure extraction, structured input, no judgment needed.</p>
+<p><b>Monday, 2pm:</b> "Draft the user stories section for the notification timing feature." &#8594; <b>Sonnet</b>. Standard PM writing, balanced task.</p>
+<p><b>Wednesday:</b> "Synthesize these 15 user interviews to identify the root cause of why enterprise admins churn in month 3." &#8594; <b>Opus</b>. Pattern synthesis across complex qualitative data, nuanced judgment required.</p>
+</div>`,
+     practice:{t:"Route 5 PM scenarios you'll actually face this week",
+       d:`<p style="font-size:13px;color:#555;margin-bottom:10px">Route each to the right model. The goal isn't memorization &#8212; it's building the routing reflex so you use it automatically.</p>
+<div class="mc-exercise">
+<div class="mc-q">Scenario 1: Extract all open questions from a 4-page PRD before a sprint planning meeting in 30 minutes.</div>
+<div class="mc-opt"><div class="mc-key">O</div>Opus &#8212; nuanced judgment</div>
+<div class="mc-opt"><div class="mc-key">S</div>Sonnet &#8212; balanced task</div>
+<div class="mc-opt"><div class="mc-key">H</div>Haiku &#8212; structured extraction, speed matters</div>
+</div>
+<div class="mc-exercise" style="margin-top:8px">
+<div class="mc-q">Scenario 2: Synthesize 15 user interviews to identify the root cause of month-3 churn for enterprise admins.</div>
+<div class="mc-opt"><div class="mc-key">O</div>Opus &#8212; pattern synthesis across complex qualitative data</div>
+<div class="mc-opt"><div class="mc-key">S</div>Sonnet &#8212; standard summary</div>
+<div class="mc-opt"><div class="mc-key">H</div>Haiku &#8212; fast lookup</div>
+</div>
+<div class="mc-exercise" style="margin-top:8px">
+<div class="mc-q">Scenario 3: Draft the user stories section for a mid-complexity feature brief due tomorrow.</div>
+<div class="mc-opt"><div class="mc-key">O</div>Opus &#8212; deep reasoning required</div>
+<div class="mc-opt"><div class="mc-key">S</div>Sonnet &#8212; standard daily PM output</div>
+<div class="mc-opt"><div class="mc-key">H</div>Haiku &#8212; simple extraction</div>
+</div>
+<div class="mc-exercise" style="margin-top:8px">
+<div class="mc-q">Scenario 4: Frame the QBR strategic narrative &#8212; why this roadmap, why now &#8212; for a CFO who's skeptical about cost of the new feature investment.</div>
+<div class="mc-opt"><div class="mc-key">O</div>Opus &#8212; high-stakes, competing constraints, skeptical audience</div>
+<div class="mc-opt"><div class="mc-key">S</div>Sonnet &#8212; most daily work</div>
+<div class="mc-opt"><div class="mc-key">H</div>Haiku &#8212; fast lookup</div>
+</div>
+<div class="mc-exercise" style="margin-top:8px">
+<div class="mc-q">Scenario 5: Reformat this week's Jira ticket list into a stakeholder-friendly release summary for the weekly sync.</div>
+<div class="mc-opt"><div class="mc-key">O</div>Opus &#8212; deep reasoning required</div>
+<div class="mc-opt"><div class="mc-key">S</div>Sonnet &#8212; standard summary</div>
+<div class="mc-opt"><div class="mc-key">H</div>Haiku &#8212; structured reformatting from structured input</div>
+</div>`},
+     hints:["Haiku is excellent at structured extraction &#8212; it reliably pulls decisions, questions, and action items from text. Don't use Sonnet when you just need to pull things out of a doc.",
+            "If output was shallow on a high-stakes deliverable, you used Sonnet where Opus was warranted. The tell: right format, wrong depth."],
+     sigs:[{t:"pass",s:"4/5 or 5/5 correct with correct reasoning"},{t:"fail",s:"2 or fewer correct &#8212; model distinction not clear, surface lesson"},{t:"gap",s:"Confused Opus/Sonnet on strategic tasks &#8212; needs one more Opus PM example, surface hint 2"}],
+     caplink:""},
+
+    {id:"T4",name:"Build a reusable prompt template",by:"Turn one-off prompts into repeatable PM assets you use every week",dur:"15 min",
+     types:["practice","assess"],formats:["Guided builder","Codex simulator"],tools:[],prereqs:["T1","T2"],rt:true,
+     lesson:`<p>A prompt template is a prompt with placeholders &#8212; everything that stays the same is hardcoded, everything that changes is marked with [BRACKETS]. Once built, producing a weekly update takes 90 seconds instead of 20 minutes. The quality is consistent across every week.</p>
+
+<p>A complete PM template has four components:</p>
+<p><b>1. Role framing block</b> &#8212; your product area, your stakeholders, hardcoded permanently<br>
+<b>2. [INPUT] placeholders</b> &#8212; the content that changes (this week's metrics, notes, decisions)<br>
+<b>3. Output spec block</b> &#8212; format, audience, length, tone constraints, hardcoded<br>
+<b>4. What to avoid line</b> &#8212; specific prohibitions from your own past AI output failures</p>
+
+<div class="example"><div class="label">Complete PM template &#8212; weekly product update (filled in for a real Coursera PM)</div>
+<pre>You are helping [YOUR NAME], PM owning activation and W1 retention at Coursera.
+
+This week's update is for the Monday product review. Audience:
+- Eng lead [Name]: skeptical of scope changes; needs to see phased plan and milestones before agreeing to anything
+- Design lead [Name]: focused on consolidating the onboarding UI; resistant to adding new screens before reducing existing ones
+- They already know: we hit MAU target last week, W1 retention dropped 4 points for the enterprise cohort
+
+Using the notes and metrics below, produce a weekly update with exactly this structure:
+- Headline (1 sentence: most important thing this week as an OUTCOME, not a task)
+- 3 signal bullets (each: 1 sentence, present tense, ends with 1 business implication)
+- Key metric (1 data point, what it means, what we're watching next week)
+- 1 decision needed from team (if none, omit this section)
+- 1 blocker or risk (if none, omit)
+
+Format rules: No intro sentence. No passive voice. No phrases like "we continued to" or "we are working on."
+What to avoid: Don't include task lists. Don't use the word "leverage." Don't restate the agenda.
+
+INPUT NOTES THIS WEEK: [PASTE NOTES]
+INPUT METRICS: [PASTE FROM DATABRICKS]</pre>
+</div>
+
+<p>Notice: role framing, output spec, format rules, and what-to-avoid are all hardcoded with real names and context. You fill in only the bracketed input fields each week. First time: 15 minutes to build. Every Monday after: 90 seconds to run.</p>`,
+     practice:{t:"Build your weekly update template &#8212; you'll use it this Monday",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Template 1 &#8212; weekly update:</b> Adapt the example above to your actual stakeholders. Replace [Name] with your real eng lead and design lead. Hardcode what they already know and what they optimize for. Add at least one item to 'what to avoid' from something you've had to delete from an AI output before.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Test with real notes from this week.</b> Run the template in Codex. Evaluate against this rubric: Did the headline lead with an outcome? Were bullets in the right format? Did it include anything from the avoid list? If yes to any &#8212; fix the template, not the output.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Template 2 &#8212; your choice:</b> Write the header block only (role framing + audience + output spec) for one of: feature brief, exec data brief, or QBR talking points. You're building the pattern on a second type. Full content comes at capstone.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Save both templates</b> somewhere you can paste from outside this session &#8212; a doc, a notes file, or a markdown file.</div></div>
+<div class="rubric-box"><b>Self-evaluation rubric for Template 1:</b><br>
+&#10003; Role framing includes your actual product area and real stakeholder names<br>
+&#10003; Audience block says what they already know and what they optimize for<br>
+&#10003; Output spec has a specific structure (how many bullets, which sections)<br>
+&#10003; 'What to avoid' has at least 2 specific prohibitions from real experience<br>
+&#10003; Template works on different notes without structural editing</div>
+<div class="cap-link"><b>Capstone connection:</b> Template 1 is Capstone A deliverable #1. Template 2 header is the starting point for Capstone B. You're already partway there.</div>`},
+     hints:["If you're copying a previous prompt to reuse it &#8212; that's a template waiting to be written. Add brackets to the parts that change, hardcode the rest.",
+            "The 'what to avoid' line should come from real experience. What did you last delete from an AI output? That's your prohibition.",
+            "A template that breaks with new input has an output spec too tied to the first content. Make format rules content-agnostic."],
+     sigs:[{t:"pass",s:"Template 1 passes rubric with real names and context; Template 2 header written for a second type"},{t:"fail",s:"Template too generic &#8212; stakeholder section has placeholder names not real people"},{t:"gap",s:"No 'what to avoid' section &#8212; inconsistent output across runs, post-task modal fires"}],
+     caplink:"Capstone A deliverable #1: weekly update template. Capstone B: data brief template header."}
+  ]},
+
+  {id:"S2",color:"#E1F5EE",tc:"#085041",name:"Build a memory architecture",
+   desc:"Replace cold-start sessions with persistent structured context &#8212; so every Codex session starts knowing your product area, stakeholders, and priorities",
+   end:"PM's my-role-context.md is live in the platform, tested in a fresh Codex session, and accurate. They never re-explain their context again.",
+   tasks:[
+    {id:"T5",name:"Memory vs chat history",by:"Why pasting context doesn't compound &#8212; and what to do instead",dur:"6 min",
+     types:["lesson"],formats:["Text lesson","Reflection exercise"],tools:[],prereqs:["T1"],rt:false,
+     lesson:`<p>When you paste a doc into a new Codex session for context, that context disappears when the session ends. Every new session is a cold start &#8212; you re-explain your product area, your stakeholders, your OKR focus, your sprint priorities. This is the single biggest drag on compounding AI value.</p>
+
+<p>Memory files fix this. The difference between a chat log and a memory file is not format &#8212; it's intent. A chat log is what happened. A memory file is what you want AI to always know.</p>
+
+<div class="contrast">
+<div class="bad-ex"><div class="label">&#10060; Chat log (ephemeral)</div>"In our last conversation, I mentioned I'm a PM owning the growth funnel at Coursera. We're trying to improve W1 retention for enterprise users. My eng lead is skeptical about the redesign scope..."<br><br><span style="color:#991B1B;font-size:11px">Next session: AI knows none of this. You re-explain everything. Starts from zero every Monday morning.</span></div>
+<div class="good-ex"><div class="label">&#10003; Memory file (persistent)</div>## My product area<br>Activation and W1 retention at Coursera. Current focus: enterprise learner activation.<br><br>## Current OKR<br>Increase W1 retention from 24% to 32% by Q3. Owner: me. Tracking weekly in Databricks.<br><br>## Key stakeholders<br>- Eng lead [Name]: needs phased milestones, skeptical of scope changes mid-sprint<br>- Design lead [Name]: consolidating onboarding UI before adding screens<br>- CEO: tracks MAU headline, needs "why now" framing for any roadmap shift<br><br>## Active decisions this sprint<br>- Notification timing change: in spec, pending eng estimate<br>- Onboarding redesign: deprioritized until Q4<br><br><span style="color:#0F6E56;font-size:11px">Next session: paste this file first. AI has full context instantly. You skip 5 minutes of re-explanation every time.</span></div>
+</div>
+
+<p><b>For a Coursera PM, the highest-value memory categories are:</b><br>
+&#8212; Current product focus and OKR (updates quarterly)<br>
+&#8212; Key stakeholders: name, what they optimize for, what triggers pushback<br>
+&#8212; Team conventions: how you write PRDs, what goes in intake vs. spec<br>
+&#8212; Active decisions this sprint: what's open, decided, or blocked</p>`,
+     practice:{t:"List what you re-explain at the start of every AI session",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open a new Codex session right now.</b> Before you type anything useful, notice what you have to explain before it's helpful to you. Write that list.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Categorize each item:</b> product focus / stakeholders / conventions / active decisions. This becomes the structure of your memory file in T6.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Star the 3 items you re-explain most often.</b> These are your priority memory entries &#8212; the ones that, if loaded automatically, would save the most time this week.</div></div>`},
+     hints:["If your first Codex message most mornings is 'I'm a PM at Coursera working on X' &#8212; that's a memory file.",
+            "The goal isn't complete memory. It's eliminating the 3&#8211;5 things you always have to explain before getting to the actual work."],
+     sigs:[{t:"pass",s:"3+ items identified, categorized into memory types, 3 starred"},{t:"fail",s:"Couldn't identify re-explanation patterns &#8212; may need T1 revisit"},{t:"gap",s:"Listed tasks not context &#8212; re-prompt toward role and stakeholder context specifically"}],
+     caplink:""},
+
+    {id:"T6",name:"Review and own your AI context file",by:"The platform built it from intake &#8212; now make it specific enough to be useful",dur:"15 min",
+     types:["practice"],formats:["Passport editor","Fresh Codex session test"],tools:["Codex"],prereqs:["T5"],rt:false,
+     lesson:`<p>Your learner passport was built from the intake conversation. The most common failure: fields that are technically true but too vague for AI to do anything with. Test: could a new PM who's never met you read this field and know specifically how to calibrate for your stakeholder?</p>
+
+<div class="contrast">
+<div class="bad-ex"><div class="label">&#10060; Vague &#8212; technically true, not useful</div>Stakeholder: Eng lead &#8212; cares about feasibility and timeline.<br><br><span style="color:#991B1B;font-size:11px">AI will produce generic stakeholder-sensitive language. Might as well have said nothing.</span></div>
+<div class="good-ex"><div class="label">&#10003; Specific &#8212; actionable for AI</div>Eng lead [Name]: optimizes for scope clarity and story-point predictability. Pushes back when requirements change mid-sprint &#8212; even small changes cause re-estimation that he finds disruptive. Needs a phased rollout plan with clear milestones before saying yes. Responds well to data; gets skeptical when requirements are vague. "What does this unlock?" is his first question.<br><br><span style="color:#0F6E56;font-size:11px">AI will write specifically for this person's patterns. Saves you the mental translation step every time.</span></div>
+</div>
+
+<p><b>The verification test:</b> Open a new Codex session. Paste your context file as the first message. Ask: "Based on this context, brief me on my current product situation and what I'm likely preparing for this week." If the brief is accurate and specific &#8212; the file is working. If it's generic &#8212; the file is still too vague.</p>`,
+     practice:{t:"Review, edit, test, and confirm your context file",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open your passport.</b> For each field, apply the specificity test: could a new PM read this and know specifically what to do? Edit anything that fails.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Fix the stakeholder section first.</b> Each entry must include: what they optimize for, what triggers their pushback, and what they need before saying yes. Add anyone missing.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run the verification test:</b> new Codex session, paste context file, ask for a product situation brief. Evaluate: does it accurately describe your actual sprint and current priorities?</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Fix what the test revealed.</b> Then ask AI: "What else would you need to know to help me prepare for my weekly product review?" That gap list is your next edit.</div></div>
+<div class="cap-link"><b>Capstone connection:</b> This file is the persistent context layer for all three capstone projects. The verification test you just ran is the capstone verification step.</div>`},
+     hints:["Your stakeholder section is the highest-value field. Fewer than 3 sentences per stakeholder usually means it's still too vague.",
+            "Five specific statements beats twenty vague ones. Cut the vague ones before adding more."],
+     sigs:[{t:"pass",s:"Verification test passes &#8212; Codex produces accurate sprint/stakeholder brief without re-briefing"},{t:"fail",s:"File too vague &#8212; Codex still asks basic role questions"},{t:"gap",s:"Passport mirrors intake verbatim &#8212; didn't engage critically, context gap modal fires"}],
+     caplink:"Used as the persistent context layer in all three capstone projects."},
+
+    {id:"T7",name:"Version your context file",by:"Treat your AI memory like a doc, not a chat &#8212; with history and rollback",dur:"10 min",
+     types:["practice"],formats:["Simulator &#8212; version diff walkthrough"],tools:["Codex"],prereqs:["T6"],rt:false,
+     lesson:`<p>Your context file will change as sprints turn over, stakeholders shift, and OKRs update. Without versioning, you lose track of what changed and when &#8212; and when something breaks, you can't roll back. The platform maintains automatic version history. This task teaches the pattern using that history. The skill transfers to Google Docs version history, git, or any versioned store.</p>`,
+     practice:{t:"Make a meaningful edit, observe the diff, practice rollback",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Make one substantive edit:</b> update a stakeholder priority to reflect what you learned this sprint, add a new team convention, or change your active decision list.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Open the platform's version history.</b> Observe the diff &#8212; what changed, when, and what the previous version said. Write a one-line note explaining why you made the change.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Undo the edit using version history.</b> Confirm the previous version restored. This is rollback &#8212; knowing it exists changes how confidently you edit.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Re-apply the edit.</b> Commit it with your one-line note. Get in the habit: every time you update this file, leave a note explaining why. Three months from now you'll be glad you did.</div></div>`},
+     hints:["A good version note explains the why: 'Updated eng lead's priorities after Q2 planning &#8212; he now owns the infra migration too' not just 'update'.",
+            "The trigger to review this file: a Codex output that seems slightly off-base. Usually means the context file hasn't caught up with a recent shift."],
+     sigs:[{t:"pass",s:"Edit made, diff observed, rollback executed, edit re-applied with version note"},{t:"fail",s:"Version history not found &#8212; surface platform guide"},{t:"gap",s:"Made edit but didn't observe diff &#8212; versioning concept not landing, show concrete before/after"}],
+     caplink:""}
+  ]},
+
+  {id:"S3",color:"#FAEEDA",tc:"#633806",name:"Streamline weekly PM workflows",
+   desc:"Connect Codex to the tools you live in, encode recurring PM processes as skill files, and build a pipeline that produces your weekly update in one session",
+   end:"Codex pulls live data from Databricks or Slack, executes your weekly update workflow via skill file, and produces stakeholder-ready outputs for multiple audiences in one session &#8212; ready to send Monday morning.",
+   tasks:[
+    {id:"T8",name:"Understand the three tool primitives",by:"Skill files, MCPs, Codex &#8212; what each does and when to use it",dur:"8 min",
+     types:["lesson","practice"],formats:["Text lesson","Matching exercise"],tools:[],prereqs:["T3"],rt:false,
+     lesson:`<p>Three ways to extend Codex beyond the chat window &#8212; each solving a different PM problem:</p>
+
+<p><b>Skill files</b> &#8212; process knowledge in markdown. Encode how you want a recurring PM task done: your weekly update format, your PRD structure, your QBR template. Zero install. Write once, invoke by name. Best for: recurring format-sensitive workflows.</p>
+
+<p><b>MCPs (Model Context Protocol)</b> &#8212; authenticated connections to live tools. Codex reads your Databricks metrics, searches Slack threads, queries Jira tickets &#8212; without you copy-pasting anything. One-time OAuth setup per tool via the MCP store at <a href="https://app.mintmcp.com/store" target="_blank" style="color:#0C447C">app.mintmcp.com/store</a>. Best for: live data retrieval, eliminating manual context gathering.</p>
+
+<p><b>Codex itself</b> &#8212; AI-native environment that writes, runs, and iterates in plain language. Best for: transforming data, building prototypes, producing structured outputs from raw sources.</p>
+
+<div class="example"><div class="label">Decision rule &#8212; which primitive for which PM situation</div>
+You copy Databricks retention numbers into Codex every Monday &#8594; <b>MCP (Databricks)</b><br>
+You format the same stakeholder update every week &#8594; <b>Skill file</b><br>
+You describe a Figma flow instead of sharing it &#8594; <b>MCP (Figma)</b><br>
+You need to build something clickable from data &#8594; <b>Codex</b><br>
+You need to pull data AND format it as a brief &#8594; <b>MCP + Skill file (pipeline)</b>
+</div>`,
+     practice:{t:"Match 6 real Coursera PM scenarios to the right primitive",
+       d:`<div class="match-exercise">
+<div class="match-title">PM Scenarios &#8594; Primitives</div>
+<div class="match-row"><div class="match-scenario">You paste Databricks W/W retention into Codex every Monday before product review.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Databricks)</div></div>
+<div class="match-row"><div class="match-scenario">Every sprint you write a stakeholder update &#8212; same sections, same format, same three audiences.</div><div class="match-arrow">&#8594;</div><div class="match-answer">Skill file</div></div>
+<div class="match-row"><div class="match-scenario">You describe a Figma onboarding flow to Codex instead of sharing the file.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Figma)</div></div>
+<div class="match-row"><div class="match-scenario">You want to build an interactive prototype of the new activation screen for a stakeholder review tomorrow.</div><div class="match-arrow">&#8594;</div><div class="match-answer">Codex</div></div>
+<div class="match-row"><div class="match-scenario">You want Codex to search #product-decisions for all decisions made in the last 7 days.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Slack)</div></div>
+<div class="match-row"><div class="match-scenario">You want to pull Databricks retention data, identify the key anomaly, and produce a one-paragraph exec brief automatically.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP + Skill file (pipeline)</div></div>
+</div>`},
+     hints:["If you're copy-pasting from a tool, that's always an MCP. If you're building something interactive, that's Codex.",
+            "Start with skill files &#8212; zero friction, immediate value. Add one MCP for the tool you copy-paste from most (for most Coursera PMs: Databricks)."],
+     sigs:[{t:"pass",s:"5/6 or 6/6 correct including pipeline scenario"},{t:"fail",s:"Confused MCP and Codex across multiple scenarios &#8212; surface decision rule from lesson"},{t:"gap",s:"Pipeline scenario wrong &#8212; acceptable at this stage, fully covered in T11"}],
+     caplink:""},
+
+    {id:"T9",name:"Set up your MCPs",by:"One-time setup so Codex can reach Databricks, Slack, and Figma directly",dur:"15 min",
+     types:["practice"],formats:["Step-by-step setup walkthrough","Confirmation test"],tools:["Databricks","Slack","Figma"],prereqs:["T8"],rt:false,
+     lesson:`<p>This is setup, not a lesson &#8212; do it once, and every subsequent data task in this curriculum works without copy-pasting. You're connecting Codex to the tools you already use every day via the MCP store at <a href="https://app.mintmcp.com/store" target="_blank" style="color:#0C447C">app.mintmcp.com/store</a>.</p>
+
+<p>For Coursera PMs, the two highest-value MCPs to connect first are <b>DatabricksMCPServer</b> (product metrics and funnel data) and <b>Slack</b> (decisions and async context). Figma is optional but useful if you reference designs regularly.</p>`,
+     practice:{t:"Connect Databricks + Slack via the MCP store &#8212; confirm both work before proceeding",
+       d:`<div style="margin-bottom:12px">
+<div class="setup-step">
+<div class="setup-num">1</div>
+<div class="setup-body">
+<div class="setup-title">Open the MCP store</div>
+<div class="setup-desc">Go to <a href="https://app.mintmcp.com/store" target="_blank" style="color:#0C447C;font-weight:600">app.mintmcp.com/store</a> in a new tab. You'll see a catalog of MCP servers. You're looking for two: <b>DatabricksMCPServer</b> and <b>Slack</b>.</div>
+</div>
+</div>
+<div class="setup-step">
+<div class="setup-num">2</div>
+<div class="setup-body">
+<div class="setup-title">Install DatabricksMCPServer</div>
+<div class="setup-desc">Click <b>DatabricksMCPServer</b>. Click <b>Install</b> (or Add to Codex). You'll be prompted to authenticate with your Coursera Databricks credentials &#8212; use your work SSO. Once authenticated, the server appears in your connected MCP list in Codex settings.</div>
+<div class="setup-code">Databricks &#8594; Install &#8594; Authenticate with Coursera SSO &#8594; Connected &#10003;</div>
+</div>
+</div>
+<div class="setup-step">
+<div class="setup-num">3</div>
+<div class="setup-body">
+<div class="setup-title">Install Slack MCP</div>
+<div class="setup-desc">Click <b>Slack</b> in the store. Click Install. Authenticate with your Coursera Slack workspace. Grant the requested permissions &#8212; you'll need read access to channels you want Codex to search.</div>
+<div class="setup-code">Slack &#8594; Install &#8594; Authenticate with Coursera Slack &#8594; Select workspace &#8594; Connected &#10003;</div>
+</div>
+</div>
+<div class="setup-step">
+<div class="setup-num">4</div>
+<div class="setup-body">
+<div class="setup-title">(Optional) Install Figma MCP</div>
+<div class="setup-desc">If you regularly reference Figma designs, click <b>Figma MCP Server</b> and authenticate with your Figma account. This lets Codex read your design files directly instead of you describing them.</div>
+</div>
+</div>
+<div class="setup-step">
+<div class="setup-num">5</div>
+<div class="setup-body">
+<div class="setup-title">Confirm the connection in Codex</div>
+<div class="setup-desc">Open a new Codex session. Type: <b>"List the MCP tools you have access to."</b> Codex should list Databricks and Slack tools. If it doesn't, open Codex Settings &#8594; MCP Servers and verify both appear as connected.</div>
+<div class="setup-code">Codex &#8594; "List the MCP tools you have access to" &#8594; should show Databricks + Slack tools</div>
+</div>
+</div>
+</div>
+<div class="confirm-box"><b>Before moving to T10:</b> Confirm Codex can see both MCPs by running the confirmation prompt above. If either is missing, re-run that tool's install step. Do not proceed to T10 until both connections are confirmed &#8212; T10 and T11 depend on them.</div>`},
+     hints:["If authentication fails, try signing out of the MCP store and back in with your Coursera SSO specifically &#8212; personal accounts won't have access to Coursera data.",
+            "If Codex doesn't list the tools after setup, go to Codex Settings &#8594; MCP Servers &#8594; check that the server status shows Connected (not Error or Pending)."],
+     sigs:[{t:"pass",s:"Codex lists Databricks and Slack tools in confirmation prompt &#8212; both connections verified"},{t:"fail",s:"Authentication failed &#8212; most likely personal vs. work account; surface hint 1"},{t:"gap",s:"Only one MCP connected &#8212; flag which one failed; T10 and T11 require both"}],
+     caplink:""},
+
+    {id:"T10",name:"Query a live data source",by:"Ask Databricks or Slack a real question &#8212; without copy-pasting anything",dur:"15 min",
+     types:["practice"],formats:["Guided query session","Codex with MCP"],tools:["Databricks","Slack"],prereqs:["T6","T9"],rt:true,
+     lesson:`<p>With the MCPs connected, Codex queries your tools directly &#8212; you ask in plain language, it returns real data. The skill is knowing what question to ask, not how to write a SQL query. Your job: define the signal. Codex translates, runs, and returns.</p>
+
+<div class="contrast">
+<div class="bad-ex"><div class="label">&#10060; Vague &#8212; returns vague data</div>"Show me Databricks data for my product."<br><br><span style="color:#991B1B;font-size:11px">Codex doesn't know which table, which metric, which cohort, which timeframe. You'll get a schema or an error.</span></div>
+<div class="good-ex"><div class="label">&#10003; Specific &#8212; returns actionable data</div>"Query Databricks for W/W retention rate for the enterprise learner cohort who activated in the last 30 days. Return the weekly numbers and flag any week where retention dropped more than 3 percentage points week-over-week."<br><br><span style="color:#0F6E56;font-size:11px">Codex knows exactly what to retrieve. You get a table you can act on.</span></div>
+</div>
+
+<p><b>The synthesis step matters as much as the query.</b> After getting data, always follow up: "What does this pattern suggest about user behavior? Which number would most concern the eng lead if they saw it, and why?" Raw numbers without synthesis is a dashboard reprint &#8212; not a PM insight.</p>
+
+<p><b>For Slack:</b> "Search the #product-decisions channel for all decisions made in the last 7 days. Return a list with: decision, who made it, and whether it has a follow-up owner."</p>`,
+     practice:{t:"Run a real data query for this week's product review &#8212; then synthesize one actionable insight",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open Codex with your context file loaded</b> (paste it as the first message). This means Codex knows your OKR focus before you ask the data question &#8212; and will surface the most relevant signals automatically.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Write a specific data question</b> about a metric that actually matters for your product review this week. Use the strong query pattern: metric + timeframe + cohort filter. Run it against Databricks MCP.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Evaluate the raw output.</b> Is it specific enough to act on? If not &#8212; refine the query with a tighter filter. Run again.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Ask the synthesis question:</b> "Based on these numbers, what would most concern my eng lead if they saw this, and what action does that suggest?" Evaluate: did Codex produce a specific implication, or just restate the data?</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><b>Write one insight sentence:</b> "[X] happened, which means [Y], and the action this suggests is [Z]." If you can't write it &#8212; the synthesis step isn't done. Keep going.</div></div>
+<div class="cap-link"><b>Capstone connection:</b> This query and insight sentence are Capstone B deliverables #1 and #2. Save your insight sentence &#8212; it's pre-loaded into T15 for the multi-audience communication task.</div>`},
+     hints:["If output is raw numbers with no interpretation, push: 'What does this pattern suggest about user behavior? What's the most important signal for a PM focused on W1 retention?'",
+            "Load your context file first, then run the query. Codex will know which signals matter for your OKR without you having to explain it in the query."],
+     sigs:[{t:"pass",s:"Specific query written; synthesis produces a named implication; insight sentence written"},{t:"fail",s:"Query too vague &#8212; returned schema or error; surface strong query pattern from lesson"},{t:"gap",s:"Data returned but synthesis skipped &#8212; quality gap, post-task modal fires on insight sentence"}],
+     caplink:"Capstone B deliverables #1 and #2. Insight sentence pre-loaded into T15."},
+
+    {id:"T11",name:"Write a PM skill file",by:"Encode your weekly update as a callable process &#8212; run it every Monday in one command",dur:"15 min",
+     types:["practice"],formats:["Guided builder","Codex test"],tools:["Codex"],prereqs:["T4","T8"],rt:false,
+     lesson:`<p>A skill file is a prompt template saved as a markdown file &#8212; but with one key addition: judgment guidance. It tells Codex not just what format to produce, but how to handle edge cases: what to do when notes are thin, when a metric is missing, when a blocker has no owner.</p>
+
+<p>Without judgment guidance, a template breaks when the input is messy. A skill file adapts.</p>
+
+<div class="example"><div class="label">Complete skill file &#8212; weekly-update.md (filled in for a real Coursera PM)</div>
+<pre># Weekly PM Update &#8212; Coursera Activation Team
+
+## Role context
+You are helping [YOUR NAME], PM owning W1 retention and activation at Coursera.
+Current OKR: Increase W1 retention from 24% to 32% by Q3.
+
+## Audiences &#8212; produce all three from the same input
+1. EXEC VERSION (for CEO and VP Product): 5 bullets max. Lead with business outcome.
+   No jargon. No project status. Implication-first.
+2. TEAM VERSION (for eng lead + design lead): Structured sections &#8212; shipped / metrics /
+   decisions made / open questions / blockers. Include one specific ask per blocker.
+3. ASYNC VERSION (Slack digest, #product channel): 3 sentences max. What happened,
+   what it means, what's next. Assume reader has 10 seconds.
+
+## Input (provided each week)
+Notes: [PASTE THIS WEEK'S NOTES]
+Databricks metrics: [PASTE FROM DATABRICKS QUERY]
+Decisions made this week: [LIST ANY DECISIONS]
+
+## Output rules &#8212; apply to all three versions
+- Never use passive voice
+- Never start with "This week, we..."
+- Never use the word "leverage"
+- Exec version: if no metric, flag "[Metric pending]" &#8212; never omit the metric section
+- Team version: every blocker must have an owner name or "Owner: TBD"
+
+## Judgment guidance &#8212; when input is messy
+If notes are thin (fewer than 5 bullet points): Ask "What were the top 3 outcomes 
+this week?" before drafting. Don't generate content from insufficient input.
+If a metric is missing: Note "[Metric pending &#8212; pulling from Databricks]" and 
+proceed with available data.
+If a blocker has no owner: Flag explicitly as "Owner: TBD &#8212; needs assignment Monday."
+If decisions section is empty: Omit the section, don't invent decisions.</pre>
+</div>
+
+<p>To invoke: open Codex, paste your weekly notes and Databricks numbers, then type: <code>"Use my weekly-update skill."</code> If the file is saved in your Codex context, that's all you need.</p>`,
+     practice:{t:"Write and test your weekly update skill file &#8212; you'll use it this Monday",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Adapt the example above to your real context.</b> Replace the placeholder product area with your actual OKR. Add your real eng lead and design lead's names and what they optimize for. This takes 5 minutes and is the most important 5 minutes in the curriculum.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Add at least one judgment guidance line</b> based on something that's gone wrong in your AI outputs before. "If the eng lead is cc'd, always include the milestone timeline in the team version." Real experience, encoded.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Test with this week's actual notes.</b> Open Codex, paste your notes and Databricks output, then invoke the skill file. Evaluate all three versions: would you send any of them right now without editing?</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Fix one thing that didn't work.</b> Save the skill file somewhere you can reference it next Monday. This file is your new Monday morning workflow.</div></div>
+<div class="cap-link"><b>Capstone connection:</b> This skill file IS Capstone A deliverable #3. Testing it on real data this week IS the Capstone A live test.</div>`},
+     hints:["The judgment guidance section is what separates a skill file from a template. At least one 'if X, then Y' instruction makes it robust enough for real use.",
+            "Test with thin notes &#8212; this is when judgment guidance earns its place. A template breaks; a skill file asks a clarifying question."],
+     sigs:[{t:"pass",s:"Skill file produces all three audience formats; at least one judgment line present; PM would send at least one output without editing"},{t:"fail",s:"Only one format produced &#8212; output spec too vague"},{t:"gap",s:"No judgment guidance &#8212; still a template, not a skill file; post-task modal fires"}],
+     caplink:"Capstone A deliverable #3: weekly-update.md skill file."}
+  ]},
+
+  {id:"S4",color:"#FAECE7",tc:"#712B13",name:"Vibe coding and solution shaping",
+   desc:"Build working prototypes and interactive visuals during solution shaping &#8212; no design handoff, no engineering bandwidth required",
+   end:"PM can vibe-code a working browser prototype for a feature concept, build an interactive strategy diagram, and write a light eval &#8212; all in one session using a feature they're actually working on.",
+   tasks:[
+    {id:"T12",name:"Your first vibe-coded prototype",by:"From a one-paragraph spec to something stakeholders can click &#8212; this week",dur:"20 min",
+     types:["lesson","practice"],formats:["Text lesson with worked spec example","Codex guided build"],tools:["Codex"],prereqs:["T1","T2"],rt:false,
+     lesson:`<p>Vibe coding is prompting Codex to build interactive things &#8212; prototypes, tools, visuals &#8212; in plain language. For PMs, it's the fastest path from "here's the concept" to "here's something the eng lead can click and react to" before any sprint planning or design review.</p>
+
+<p>The spec is the entire job. A one-paragraph spec that answers three questions is enough to produce a working prototype in 10 minutes:</p>
+<p>&#8212; <b>What does it demonstrate?</b> (the specific interaction, not the whole feature)<br>
+&#8212; <b>Who is it for?</b> (and what do they need to see to react usefully?)<br>
+&#8212; <b>What must work interactively?</b> (be exact &#8212; "click &#8594; highlight" not "it should feel interactive")</p>
+
+<div class="contrast">
+<div class="bad-ex"><div class="label">&#10060; Vague spec &#8212; produces vague prototype</div>"Build me a prototype of the onboarding flow."<br><br><span style="color:#991B1B;font-size:11px">Codex invents the interaction. You spend 30 min iterating on something that was never grounded in what you actually needed.</span></div>
+<div class="good-ex"><div class="label">&#10003; Specific spec &#8212; produces useful prototype in one pass</div>"Build a single-screen interactive prototype of the new learner activation moment for Coursera. The screen shows: a welcome message with the user's first name, 3 learning goal options (career change, skill upgrade, get certified), and a 'Start my path' CTA. When the user clicks a goal, that card highlights. When they click CTA, show a 1-sentence confirmation. No backend &#8212; pure HTML/JS. I'll show this to the eng lead in tomorrow's sync to validate the interaction before we spec it."<br><br><span style="color:#0F6E56;font-size:11px">Codex knows exactly what to build. First output is usable. You iterate on details, not direction.</span></div>
+</div>
+
+<p><b>Rule: iterate via prompts, not code editing.</b> You're the PM &#8212; your job is to describe what you want changed, not to touch the code. "The goal cards should be larger and the CTA should be below them, not to the side." That's it. Codex handles the rest.</p>`,
+     practice:{t:"Build a prototype for a feature you're actually working on right now",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Pick a feature or concept you're currently shaping</b> &#8212; something you'll discuss with eng or design in the next 5 days. Not a hypothetical.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Write your one-paragraph spec</b> using the three-question structure: what does it demonstrate, who is it for, what must work interactively. Be exact about the interaction.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Prompt Codex with your spec.</b> Ask for HTML/JS, no backend required. Review what it produces against your spec &#8212; not against perfection.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Iterate via prompts only.</b> Describe what's wrong in plain language. Don't edit code. Keep iterating until the core interaction works.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><b>Show it to one person before your next session.</b> Eng lead, designer, or PM peer. Observe what they click. Note what worked and what confused them. This observation is your T14 eval input.</div></div>
+<div class="cap-link"><b>Capstone connection:</b> This prototype &#8212; or an iteration of it &#8212; is the starting point for Capstone C.</div>`},
+     hints:["If the prototype doesn't match your spec, the spec was too vague &#8212; not Codex. Add the missing detail to the spec and rerun.",
+            "Start with the smallest possible interaction. One screen, one click, one result. You can build on it &#8212; but the first version should be showable in 5 minutes."],
+     sigs:[{t:"pass",s:"Working prototype produced; core interaction matches spec; PM showed it to at least one person"},{t:"fail",s:"PM tried to edit code instead of prompting &#8212; redirect to prompt-based iteration"},{t:"gap",s:"Spec too vague &#8212; prototype doesn't match intent; surface three-question spec structure"}],
+     caplink:"Starting point for Capstone C prototype."},
+
+    {id:"T13",name:"Build an interactive strategy diagram",by:"Replace a static slide with something stakeholders can explore in the meeting",dur:"15 min",
+     types:["practice"],formats:["Codex guided build"],tools:["Codex"],prereqs:["T12"],rt:false,
+     lesson:`<p>PMs spend significant time creating decks and static diagrams to communicate strategy. Codex can produce interactive HTML visuals &#8212; clickable, filterable, zoomable &#8212; faster than Keynote and more useful in live discussions where stakeholders want to drill in.</p>
+
+<p><b>When interactive beats static:</b> roadmap by quarter with clickable detail, user journey with decision branches, competitive landscape with toggle views, prioritization matrix where stakeholders can move items. Any time someone says "can you show me just X?" in a slide presentation &#8212; that's a sign the visual should be interactive.</p>
+
+<div class="example"><div class="label">Worked prompt example &#8212; roadmap diagram for a product review</div>
+<pre>Build an interactive HTML roadmap diagram for Coursera's activation team Q2-Q3 roadmap.
+
+Items by quarter:
+Q2: Notification timing optimization (W1 retention), Onboarding UI consolidation (design lead project)
+Q3: Enterprise admin dashboard V2, Certificate program fast-track
+
+For each item, when clicked, show: a one-sentence description, the DRI, and the success metric.
+Color-code by status: green = in progress, yellow = planned, grey = backlog.
+Add a toggle at top: "Show all" / "Show in progress only."
+No backend &#8212; pure HTML/JS. I'll use this in the Monday product review.</pre>
+</div>
+
+<p>Iterate the same way as T12 &#8212; describe changes in plain language, let Codex handle the code.</p>`,
+     practice:{t:"Build an interactive visual for something you're communicating this week",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Pick a strategy, roadmap, or concept you're currently trying to communicate</b> &#8212; something in your next meeting or review. What does your audience need to explore, not just receive?</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Write a prompt</b> specifying: what items appear, what clicking each item shows, any filter or toggle needed, and who you're showing it to. Use the worked example above as a template.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run in Codex.</b> Review. Describe one change in plain language. Iterate until it accurately represents your strategy.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Use it in your next discussion.</b> Did it speed up alignment or create confusion? Note one thing you'd change before using it again.</div></div>`},
+     hints:["If the diagram is too complex, ask Codex to simplify: 'Remove everything except the top 5 items. Each should be clickable with a one-line description.'",
+            "Interactive > static when the audience needs to explore. If it's a board presentation where you control the narrative, static may still win."],
+     sigs:[{t:"pass",s:"Working interactive diagram produced; PM used it in at least one discussion this week"},{t:"fail",s:"PM produced a static image &#8212; redirect to HTML/interactive output specifically"},{t:"gap",s:"Diagram doesn't match strategy &#8212; spec too vague, surface the worked prompt example"}],
+     caplink:""},
+
+    {id:"T14",name:"Write a light eval",by:"Test your prototype before showing it to engineers &#8212; with a worked example",dur:"12 min",
+     types:["lesson","practice"],formats:["Text lesson with worked eval example","Codex-assisted eval"],tools:["Codex"],prereqs:["T12"],rt:false,
+     lesson:`<p>Before you show a vibe-coded prototype to your engineering team, run a light eval. Not formal QA &#8212; a structured 10-minute check that the prototype demonstrates what you said it would, and that you know exactly what it doesn't show yet.</p>
+
+<p>A PM eval asks three questions:</p>
+<p><b>1. Does it demonstrate the right thing?</b> &#8212; The core interaction from your spec. Not more, not less.<br>
+<b>2. What would confuse a first-time viewer?</b> &#8212; Not what's broken, but what's ambiguous.<br>
+<b>3. What's missing before this is useful to engineering?</b> &#8212; Edge cases, error states, decision points not shown.</p>
+
+<div class="example"><div class="label">Worked eval &#8212; activation screen prototype from T12</div>
+<b>Spec:</b> Single-screen activation moment: 3 goal options, click to highlight, CTA &#8594; confirmation screen.<br><br>
+<b>Q1 &#8212; Does it demonstrate the right thing?</b><br>
+Yes: goal selection and highlight work. CTA is visible and clickable. Confirmation screen appears.<br>
+Not quite: the confirmation screen just says "You're all set" &#8212; doesn't show the selected goal back to the user, which is the most important trust signal we're testing.<br><br>
+<b>Q2 &#8212; What would confuse a first-time viewer?</b><br>
+The CTA says "Start my path" before any goal is selected. Should it be grayed out until selection? The prototype doesn't enforce this and an eng lead will immediately ask about it.<br><br>
+<b>Q3 &#8212; What's missing before this is useful to engineering?</b><br>
+No error state if user hits CTA without selecting a goal. No mobile layout &#8212; our enterprise users are 60% mobile. Both are in scope for the actual feature but not shown here.<br><br>
+<b>One-sentence framing for when you share it:</b><br>
+"This shows the core selection-and-confirmation interaction &#8212; I deliberately left out the unselected CTA state and mobile layout so we can align on the core flow first."
+</div>
+
+<p>This framing sentence is not a disclaimer &#8212; it's PM leadership. You're controlling the conversation and focusing the eng team's attention on what you need to validate.</p>`,
+     practice:{t:"Write a light eval of the T12 prototype &#8212; then fix one thing",
+       d:`<div class="preload-box"><b>\u1F4CE Pre-loaded from T12:</b> Your prototype and spec are attached to this session. You don't need to navigate away or re-paste anything. Start directly with the eval questions below.</div>
+<div class="step"><div class="step-num">1</div><div class="step-text"><b>Answer the three eval questions</b> for your T12 prototype. Be specific &#8212; not "it works" but "the goal selection works; the CTA state before selection is ambiguous and will confuse the eng lead."</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Fix one thing</b> the eval revealed, using prompts only. If Q2 revealed an ambiguity &#8212; fix it. If Q3 revealed a missing state &#8212; add it.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Write your one-sentence framing</b> for when you share this with engineering &#8212; acknowledging what's deliberately left out. This sentence is what turns a prototype into a focused conversation, not an open-ended critique session.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Optionally: run the eval prompt in Codex.</b> Paste your spec and the prototype code, then ask: "Review this prototype against this spec. What does the spec say should happen vs. what the prototype actually does? What's missing?" Use Codex's output as a second opinion alongside your own.</div></div>
+<div class="cap-link"><b>Capstone connection:</b> This eval document is Capstone C deliverable #3. The framing sentence is what you'll say when presenting the capstone prototype.</div>`},
+     hints:["The eval is not about code quality. You're asking: does this demonstrate what I said it would? That's a PM question, not an engineering question.",
+            "'What's missing before this is useful to engineering' is the most important question. If you can't answer it specifically, you're not ready to show the prototype yet."],
+     sigs:[{t:"pass",s:"Three eval questions answered specifically; one fix made via prompt; framing sentence written"},{t:"fail",s:"Eval too generic &#8212; 'it works fine'; prompt for specific interaction-level assessment"},{t:"gap",s:"Framing sentence missing &#8212; capstone prep incomplete, post-task modal fires"}],
+     caplink:"Capstone C deliverable #3: light eval. Framing sentence = how you'll present the capstone prototype."}
+  ]},
+
+  {id:"S5",color:"#EEEDFE",tc:"#3C3489",name:"Data querying and multi-audience synthesis",
+   desc:"Query Databricks in plain language, synthesize one actionable insight, and produce three audience-calibrated communications from one session &#8212; ready to send",
+   end:"PM runs a plain language data query, writes an insight sentence with implication, and produces three stakeholder-ready communications (exec brief, team analysis, QBR-ready) &#8212; all from one Codex session.",
+   tasks:[
+    {id:"T15",name:"Communicate data for multiple audiences",by:"One insight, three versions &#8212; exec brief, team analysis, QBR slide",dur:"20 min",
+     types:["practice"],formats:["Multi-output builder","Codex with pre-loaded context"],tools:["Codex"],prereqs:["T10","T4"],rt:true,
+     lesson:`<p>The same data insight needs to be communicated differently depending on who's reading it. PMs often spend 40&#8211;50% of their week reformatting the same information for different audiences. Codex collapses this to one session &#8212; one data query, three stakeholder-ready versions.</p>
+
+<p><b>Three audience lenses for a PM data communication:</b></p>
+<p><b>Exec brief</b> &#8212; lead with implication, not data. One paragraph. "This means we need to decide X." The CEO wants to know what action this requires, not how you found the number.<br>
+<b>Team analysis</b> &#8212; show the data, explain your interpretation, give 3 recommended actions with owners. Methodologically transparent. The eng lead wants to know what this means for sprint planning.<br>
+<b>QBR / leadership slide</b> &#8212; visual-first framing. One chart headline, one insight line, one implication line. Built for a room that moves on in 90 seconds.</p>
+
+<div class="example"><div class="label">Worked example &#8212; same data, three different versions</div>
+<b>The data:</b> Enterprise learner W1 retention dropped from 28% to 24% over the last 4 weeks. Largest drop in the certificate program cohort (\u22126pts). Mobile users affected more than desktop (\u22128pts vs \u22122pts).
+
+<b>Exec brief (1 paragraph):</b><br>
+Enterprise W1 retention has declined 4 points over the last month, with certificate program learners and mobile users hit hardest. At current trajectory, we miss the Q3 retention target by 8 points. The decision this requires: do we accelerate the notification timing fix this sprint, or hold for the full onboarding redesign in Q4? I recommend the sprint fix &#8212; here's why.
+
+<b>Team analysis (structured):</b><br>
+Data: W1 retention, enterprise cohort, 4-week trend (Databricks, pulled [date])<br>
+28% &#8594; 24% overall. Certificate cohort: \u22126pts. Mobile: \u22128pts vs desktop \u22122pts.<br>
+Interpretation: The mobile gap suggests the problem is in the activation flow, not content quality &#8212; mobile users hit the same wall but have less patience to push through it.<br>
+Recommended actions: (1) [PM name] &#8212; run the notification timing change as a sprint 12 experiment, mobile-first. (2) [Eng lead] &#8212; scope the mobile onboarding fix for Q3. (3) [Data] &#8212; set up a weekly retention alert if it drops below 22%.
+
+<b>QBR slide summary:</b><br>
+Chart: Enterprise W1 retention, 4-week trend<br>
+Insight: Down 4 points &#8212; certificate and mobile learners hit hardest<br>
+Implication: Sprint 12 experiment needed; Q3 target at risk without it
+</div>`,
+     practice:{t:"Produce 3 audience-calibrated versions from your T10 insight &#8212; without leaving this session",
+       d:`<div class="preload-box"><b>\u1F4CE Pre-loaded from T10:</b> Your Databricks query output and insight sentence from T10 are attached to this session below. You don't need to re-run the query or navigate away.<br><br><div class="preload-content">Databricks output: [YOUR T10 QUERY RESULT APPEARS HERE]
+Insight sentence: [YOUR T10 INSIGHT SENTENCE APPEARS HERE]</div></div>
+<div class="step"><div class="step-num">1</div><div class="step-text"><b>Load your context file in Codex</b> (it's pre-loaded in this session). Paste the T10 insight sentence into a new Codex message with the three-version prompt: "Using this data and insight, produce an exec brief, team analysis, and QBR summary. Use the audience context from my role file."</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Evaluate the exec brief first.</b> Does it lead with implication, not data? Is the first sentence "This means we need to decide X" &#8212; or does it start by explaining the number? If it starts with data &#8212; that's the gap to fix.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Evaluate the team analysis.</b> Does it have 3 specific recommended actions with named owners? If the actions are generic ("investigate further", "discuss in meeting") &#8212; that's the gap to fix.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Evaluate the QBR summary.</b> Could you show this as a slide in 90 seconds? Does the implication line tell a stakeholder what they need to do? If it's just restating the data &#8212; that's the gap to fix.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><b>Fix the worst version.</b> One more Codex prompt, one targeted fix. Then evaluate: which version is closest to sendable right now?</div></div>
+<div class="cap-link"><b>Capstone connection:</b> These three versions are Capstone B deliverables #2, #3, and #4 &#8212; you've just completed 4 of the 4 capstone B deliverables in this one task.</div>`},
+     hints:["The exec brief fails if it starts with data. Lead with: 'This means we have a decision to make about X.' Data goes in sentence 2.",
+            "If the team version has more than 5 sections, it's too long. Cut to: data, interpretation, 3 actions. That's the format."],
+     sigs:[{t:"pass",s:"Exec brief leads with implication; team version has 3 named-owner actions; QBR version works as a 90-second slide"},{t:"fail",s:"All three versions look the same &#8212; audience calibration not applied; rerun with explicit audience instruction"},{t:"gap",s:"Exec brief leads with data not implication &#8212; most frequent PM error, post-task modal fires with worked example"}],
+     caplink:"Capstone B deliverables #2, #3, and #4."},
+
+    {id:"T16",name:"Build a connected data pipeline",by:"From Databricks query to three-version brief in one session &#8212; your new Monday morning",dur:"20 min",
+     types:["practice"],formats:["Pipeline builder","Codex with MCPs"],tools:["Databricks","Codex"],prereqs:["T11","T15"],rt:false,
+     lesson:`<p>The highest-leverage PM workflow: a single Codex session that starts with a Databricks query and ends with three stakeholder-ready communications. No copy-pasting, no reformatting, no three separate sessions, no Monday morning scramble.</p>
+
+<p>The pipeline has three stages:</p>
+<p><b>Stage 1 &#8212; Query:</b> Databricks MCP pulls the data. You define the question in plain language.<br>
+<b>Stage 2 &#8212; Synthesize:</b> Codex identifies the key signal and writes the insight sentence.<br>
+<b>Stage 3 &#8212; Communicate:</b> Your weekly-update skill file formats three versions from the synthesis.</p>
+
+<div class="example"><div class="label">What the full pipeline looks like in practice &#8212; Monday, 8:45am</div>
+<b>You open Codex. Paste your context file. Then:</b>
+
+Message 1: "Query Databricks for W1 retention for the enterprise cohort, last 30 days. Flag any week with a drop greater than 3 percentage points."
+&#8594; Codex queries Databricks MCP. Returns data table.
+
+Message 2: "Identify the most important signal in this data for a PM focused on increasing W1 retention from 24% to 32% by Q3. Write one insight sentence: what happened, what it means, what it suggests."
+&#8594; Codex writes: "Enterprise W1 retention dropped 4pts this month, concentrated in certificate program and mobile cohorts, suggesting the activation problem is in the flow &#8212; not the content."
+
+Message 3: "Use my weekly-update skill. Here are this week's notes: [paste]. The key insight is [paste insight sentence]."
+&#8594; Codex produces all three versions: exec, team, async Slack digest.
+
+9:05am: 20 minutes. Three versions. Monday review covered.
+</div>`,
+     practice:{t:"Run the full pipeline on real data &#8212; this is your new Monday morning workflow",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open a new Codex session.</b> Paste your context file as the first message. Paste your weekly-update skill file as the second message. Codex now has your full context and your process.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Run your Databricks query</b> using the MCP. Use a real question about a metric that matters for your product review this week &#8212; not a test query.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Ask for the synthesis.</b> "Identify the most important signal in this data for a PM focused on [your specific OKR]. Write one insight sentence." Evaluate: is the insight sentence specific enough to anchor a stakeholder update?</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Invoke your weekly-update skill.</b> Paste this week's notes. Codex produces all three versions.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><b>Log your time.</b> How long did stages 1&#8211;4 take? Note it. This is your new baseline. The goal: under 20 minutes from open to three sendable versions.</div></div>
+<div class="cap-link"><b>Capstone connection:</b> This pipeline run IS Capstone A and Capstone B combined. If you ran it on real data &#8212; you've completed both capstones.</div>`},
+     hints:["If Stage 2 synthesis is too generic, add your OKR as a constraint: 'Identify the signal most relevant to our goal of improving W1 retention from 24% to 32% by Q3.' Specificity in = specificity out.",
+            "When the pipeline fails, identify which stage broke: bad data (Stage 1 &#8212; tighten the query), vague insight (Stage 2 &#8212; add OKR constraint), wrong format (Stage 3 &#8212; fix the skill file judgment guidance)."],
+     sigs:[{t:"pass",s:"Full pipeline run; 2/3 or 3/3 outputs stakeholder-ready; time logged"},{t:"fail",s:"Stopped at Stage 2 &#8212; synthesis too vague; add OKR constraint and rerun"},{t:"gap",s:"Pipeline ran but all three versions identical &#8212; skill file audience calibration missing, review T11 judgment guidance"}],
+     caplink:"Capstone A + Capstone B live test. If run on real data this week &#8212; both capstones complete."},
+
+    {id:"T17",name:"Ask data questions in plain language",by:"Explore your product data without writing SQL &#8212; using Databricks MCP",dur:"15 min",
+     types:["lesson","practice"],formats:["Text lesson","Codex with Databricks MCP","Simulator fallback"],tools:["Databricks"],prereqs:["T10"],rt:false,
+     lesson:`<p>T10 taught you to run a specific, targeted query. This task teaches the investigative loop &#8212; how to use data to ask better questions, not just answer the first one. Most PM data work isn't a single query. It's a sequence: you see a number, it raises a question, you drill in, something else surfaces.</p>
+
+<p>The skill is knowing what the next question is after the first answer. Codex handles the translation to Databricks. Your job is to keep asking.</p>
+
+<div class="example"><div class="label">What an investigative loop looks like &#8212; retention anomaly investigation</div>
+Query 1: "What's W1 retention for the enterprise cohort this month vs. last month?"
+&#8594; Down 4pts overall.
+
+Query 2: "Break that down by learning path &#8212; which paths drove the most of the drop?"
+&#8594; Certificate programs: \u22126pts. Professional development: \u22121pt.
+
+Query 3: "For the certificate program cohort specifically &#8212; what's the drop-off by day within Week 1?"
+&#8594; 60% of churn happens on Day 1 before learners complete the first module.
+
+Query 4: "Compare Day 1 completion rates for mobile vs. desktop learners in that cohort."
+&#8594; Mobile: 22% complete Day 1. Desktop: 51%.
+
+Insight: The problem isn't the program quality &#8212; it's the mobile Day 1 experience. That's a specific, actionable, engineering-scoped finding from 4 plain-language queries.
+</div>`,
+     practice:{t:"Run an investigative loop on a real product question you have this week",
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Pick a real product question</b> you don't know the answer to yet &#8212; something relevant to your current OKR or sprint. Not a metric you already know. Something you'd actually want to investigate.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Run your first query</b> in plain language via Databricks MCP. Get the first answer.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Ask: "What does this make you want to know next?"</b> Let Codex suggest the next query. Evaluate: is it the right next question for your product area? Run it.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Run at least 3 queries total</b> &#8212; each building on the previous answer. The goal is to find something specific that you didn't know before you started.</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><b>Write the finding:</b> "I found that [specific result], which means [implication for my product]. The action this suggests is [specific next step]." This is what you'll bring to the next product review.</div></div>`},
+     hints:["If the first answer doesn't surprise you, segment it. Same metric broken down by mobile vs. desktop, or by learning path, or by plan type. Segmentation almost always surfaces the real story.",
+            "The finding sentence is the output that matters &#8212; not the raw data. If you can't write it, the loop isn't done yet."],
+     sigs:[{t:"pass",s:"3+ queries run; each builds on previous answer; finding sentence written with specific implication and action"},{t:"fail",s:"Ran one query and stopped &#8212; investigative loop not attempted"},{t:"gap",s:"Finding sentence too generic &#8212; no implication, just data restatement; hint 2 fires"}],
+     caplink:""}
+  ]}
+];
+
+const ALL={};
+SKILLS.forEach(sk=>sk.tasks.forEach(t=>{ALL[t.id]=t;}));
+
+const AUDIT_DATA=[
+  {id:"T9",name:"Set up your MCPs (NEW)",color:"#FAEEDA",tc:"#633806",status:"new",
+   v3:["Extracted from T10 step 1 &#8212; now a standalone task","Step-by-step install walkthrough for DatabricksMCPServer + Slack via app.mintmcp.com/store","Figma as optional third MCP","Explicit confirmation test before proceeding: 'List MCP tools you have access to'","Prerequisite gate: T10 and T11 explicitly blocked until both MCPs confirmed"]},
+  {id:"T1",name:"Write a context-first prompt",color:"#E6F1FB",tc:"#0C447C",status:"new",
+   v3:["Before/after prompt with Coursera PM activation context &#8212; not generic","Why-it-matters explanation after the contrast: explains what each part changed","This-week application note added: 'next time you write a recurring PM doc, stop and add all three parts'","Practice requires a real prompt from the last week &#8212; not a hypothetical"]},
+  {id:"T2",name:"Decompose a PM deliverable",color:"#E6F1FB",tc:"#0C447C",status:"new",
+   v3:["Contrast uses a real Coursera PM example (W1 retention drop, certificate cohort, Databricks)","Part 2 requires a real deliverable being written this week &#8212; not hypothetical","Habit framing added: 'edit the plan before executing' as explicit step"]},
+  {id:"T4",name:"Build a reusable prompt template",color:"#E6F1FB",tc:"#0C447C",status:"new",
+   v3:["Full template example filled in with real Coursera PM context (activation team, named stakeholders)","'You'll use it this Monday' added to task title &#8212; ties to this week","Step 2 requires testing with real notes from this week &#8212; not a sample"]},
+  {id:"T10",name:"Query a live data source (was T9)",color:"#FAEEDA",tc:"#633806",status:"new",
+   v3:["Renumbered to T10 &#8212; MCP setup now in T9","Context file pre-loading as Step 1 &#8212; teaches the pattern of loading context before querying","Synthesis question grounded in eng lead stakeholder specifically","Insight sentence (X happened &#8594; Y means &#8594; Z action) added as final required output","Capstone connection: insight sentence pre-loaded into T15"]},
+  {id:"T11",name:"Write a PM skill file (was T10)",color:"#FAEEDA",tc:"#633806",status:"new",
+   v3:["Complete skill file example filled in with real Coursera PM context &#8212; not a template","Judgment guidance section shown with real PM examples (thin notes, missing metric, no blocker owner)","'You'll use it this Monday' in task title &#8212; explicit this-week framing","Test requires real notes from this week &#8212; not a sample"]},
+  {id:"T14",name:"Write a light eval",color:"#FAECE7",tc:"#712B13",status:"new",
+   v3:["Full worked eval example for the T12 activation screen prototype","Three-question framework shown with real filled-in answers &#8212; not abstract definitions","Framing sentence example: 'I deliberately left out X so we can align on Y first'","Codex-assisted eval prompt added as optional Step 4","Pre-loaded context box: 'Your prototype and spec from T12 are attached to this session'"]},
+  {id:"T15",name:"Communicate data for multiple audiences",color:"#EEEDFE",tc:"#3C3489",status:"new",
+   v3:["Pre-loaded context from T10: insight sentence and Databricks output shown in session &#8212; no navigation away","Full worked example: same data, three different versions written out completely","'All three versions' prompt pattern shown explicitly","Exec brief failure pattern named with specific fix"]},
+  {id:"T16",name:"Build a connected data pipeline",color:"#EEEDFE",tc:"#3C3489",status:"new",
+   v3:["Full pipeline walkthrough written out as a real Monday morning session &#8212; timestamped (8:45am, 9:05am)","Three-message pattern shown explicitly","Stage-specific debugging: which stage broke and what the fix is","'This is your new Monday morning workflow' &#8212; explicit this-week framing"]}
+];
+
+const REMAINING=[
+  {sev:"structural",title:"MCP setup (T9) assumes Coursera SSO access &#8212; needs IT validation before pilot",body:"The setup walkthrough assumes PMs can authenticate DatabricksMCPServer and Slack MCP with their Coursera SSO credentials. If IT has blocked OAuth access for the MintMCP store domain, the entire S3 workflow breaks before it starts.",fix:"<b>Pre-pilot action:</b> Validate MintMCP OAuth flow with one Coursera PM + IT contact before the session. Confirm DatabricksMCPServer can access the tables relevant to PM work (retention, funnel, activation). Have a Simulator fallback ready for T10 and T11 in case MCP setup fails during the session."},
+  {sev:"structural",title:"Vibe coding tasks (S4) need a 'why this is worth your time' hook for skeptical PMs",body:"S4 assumes activation gap is the main risk. Some experienced Coursera PMs may have a stronger resistance gap &#8212; they can imagine what a prototype looks like and don't see the value of building one vs. waiting for design. The entry framing doesn't address this.",fix:"<b>Next step:</b> Add a 2-minute 'why this matters for PMs' framing before T12: one real example of a Coursera-context PM-built prototype that changed the direction of a feature before it was specced. The specific example makes it concrete. Without it, skeptical PMs will disengage at T12."},
+  {sev:"enhancement",title:"Pre-loaded context (T14, T15) requires platform implementation",body:"T14 and T15 include pre-loaded context boxes that assume the platform automatically carries T10's insight sentence and T12's prototype spec into the next task's session. This is documented as a platform behavior, but the actual implementation hasn't been scoped.",fix:"<b>For the pilot:</b> Manually paste the relevant context at session start &#8212; instruct PMs to copy their T10 insight sentence before navigating to T15, and their T12 spec before navigating to T14. The design intent is clear; the platform build is a v2 implementation."},
+  {sev:"enhancement",title:"T17 (investigative loop) overlaps with T10 &#8212; may not need both in the pilot",body:"T10 teaches a single targeted query. T17 teaches the investigative loop. In a pilot with limited time, both may be too much. T17 adds genuine value (the loop pattern is underused by PMs) but it's the task most likely to be cut in a 90-minute session.",fix:"<b>Pilot decision:</b> Run T10 in all sessions. Run T17 only if time permits. Alternatively, fold the investigative loop concept into T10 as a fifth step ('now ask what the first answer makes you want to know next') and eliminate T17 as a separate task for the pilot."}
+];
+
+function sw(n){
+  const ids=['curriculum','capstone','summary'];
+  ids.forEach((id,i)=>{
+    const tab=document.querySelectorAll('.tab')[i];
+    const panel=document.getElementById('tp-'+id);
+    if(id===n){tab.classList.add('active');panel.classList.add('active');}
+    else{tab.classList.remove('active');panel.classList.remove('active');}
+  });
+}
+function tog(uid){
+  const b=document.getElementById('b-'+uid);
+  const c=document.getElementById('c-'+uid);
+  if(b){b.classList.toggle('open');c.classList.toggle('open');}
+}
+function togAudit(uid){
+  const b=document.getElementById('ab-'+uid);
+  const c=document.getElementById('ac-'+uid);
+  if(b){b.classList.toggle('open');c.classList.toggle('open');}
+}
+function renderCurriculum(){
+  const cont=document.getElementById('skills-container');
+  if(!cont)return;
+  SKILLS.forEach((sk,si)=>{
+    const blk=document.createElement('div');blk.className='skill-block';
+    blk.setAttribute('data-tid','S'+(si+1));
+    blk.innerHTML=`<div class="skill-head" style="position:relative"><div class="skill-num" style="background:${sk.color};color:${sk.tc}">S${si+1}</div><div><div class="skill-name">${sk.name}</div><div class="skill-desc">${sk.desc}</div></div><button class="cmnt-add-btn skill-cmnt-btn" title="Add comment" onclick="event.stopPropagation();cmntOpen('S${si+1}')">&#128172;</button></div><div class="end-state"><b>End state:</b> ${sk.end}</div><div class="sec" style="margin-top:0">Tasks</div>`;
+    sk.tasks.forEach((t,ti)=>{
+      const uid=`${si}-${ti}`;
+      const pills=t.types.map(tp=>({lesson:'<span class="pill pl">Lesson</span>',practice:'<span class="pill pp">Practice</span>',assess:'<span class="pill pa">Assessment</span>'}[tp])).join('');
+      const rtBadge=t.rt?'<span class="rt-badge">Retrieval check</span>':'';
+      const fmts=t.formats.map(f=>`<span class="ptag">${f}</span>`).join('');
+      const tools=t.tools.length?t.tools.map(tl=>`<span class="ttag">${tl}</span>`).join(''):'<span class="none-t">None required &#8212; Codex simulator only</span>';
+      const prereqs=t.prereqs.length?t.prereqs.map(p=>`<span class="ptag">${p}: ${ALL[p]?.name||p}</span>`).join(''):'<span class="none-t">Entry point</span>';
+      const sigs=t.sigs.map(s=>{const cls={pass:'es-p',fail:'es-f',gap:'es-g'}[s.t];const lbl={pass:'Pass',fail:'Fail signal',gap:'Gap signal'}[s.t];return`<div class="esig"><div class="esdot ${cls}"></div><div><span style="font-size:11px;font-weight:600;color:#1a1a1a">${lbl}:</span> <span style="font-size:12px;color:#555">${s.s}</span></div></div>`;}).join('');
+      const caplink=t.caplink?`<div class="cap-link"><b>Capstone connection:</b> ${t.caplink}</div>`:'';
+      const card=document.createElement('div');card.className='task-card';
+      card.innerHTML=`<div class="task-head" onclick="tog('${uid}')"><div class="tidx" style="background:${sk.color};color:${sk.tc}">${t.id}</div><div class="ttitles"><div class="tname">${t.name} ${rtBadge}</div><div class="tby">${t.by}</div></div><div class="tright">${pills}<span class="dur">${t.dur}</span><span class="chev" id="c-${uid}">&#9660;</span></div></div><div class="tbody" id="b-${uid}"><div class="tsec"><div class="tsl">Prerequisites</div><div class="ptag-row">${prereqs}</div></div><div class="tsec"><div class="tsl">Lesson formats</div><div class="ptag-row">${fmts}</div></div><div class="tsec"><div class="tsl">Tools</div><div class="ptag-row">${tools}</div></div><div class="tsec"><div class="tsl">Lesson &#8212; what you will learn and be able to do</div><div class="prose">${t.lesson}</div></div><div class="tsec"><div class="tsl">Practice task</div><div class="pbox"><div class="pbox-t">${t.practice.t}</div>${t.practice.d}${caplink}</div></div><div class="tsec"><div class="tsl">Progressive hints</div><div class="hints">${t.hints.map((h,i)=>`<div class="hint"><div class="hnum">${i+1}</div><div class="htext">${h}</div></div>`).join('')}</div></div><div class="tsec"><div class="tsl">Evaluation signals</div><div class="evsigs">${sigs}</div></div></div>`;
+      blk.appendChild(card);
+    });
+    cont.appendChild(blk);
+  });
+}
+function renderPrereqs(){
+  const c=document.getElementById('pg-list');
+  if(!c)return;
+  SKILLS.forEach((sk,si)=>sk.tasks.forEach((t,ti)=>{
+    const row=document.createElement('div');row.className='pg-row';
+    const deps=t.prereqs.length
+      ?t.prereqs.map(p=>{const n=ALL[p]?ALL[p].name:'';return`<span style="display:inline-flex;align-items:center;gap:4px;background:#EFF6FF;border:1px solid #BFDBFE;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:600;color:#185FA5;margin-right:4px">${p} <span style="font-weight:400;color:#555">${n}</span></span>`;}).join('')
+      :'<span style="font-size:12px;color:#888;font-style:italic;padding:2px 8px;background:#f7f7f5;border-radius:6px">Entry point &#8212; no prerequisites</span>';
+    row.innerHTML=`<div style="width:22px;height:22px;border-radius:50%;background:${sk.color};color:${sk.tc};display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;flex-shrink:0">${t.id}</div><div class="pg-mid"><div class="pg-name">${t.name}</div><div class="pg-skill">${sk.name}</div></div><div style="display:flex;flex-wrap:wrap;gap:4px;align-items:center">${deps}</div>`;
+    c.appendChild(row);
+  }));
+}
+function renderAudit(){
+  const c=document.getElementById('audit-cards');
+  AUDIT_DATA.forEach((t,i)=>{
+    const v3items=(t.v3||[]).map(s=>`<div class="check-row"><div class="ci ci-ok">&#10003;</div><div class="check-text">${s}</div></div>`).join('');
+    const card=document.createElement('div');card.className='audit-card';
+    card.innerHTML=`<div class="ac-head" onclick="togAudit(${i})"><div class="ac-id" style="background:${t.color};color:${t.tc}">${t.id}</div><div class="ac-titles"><div class="ac-name">${t.name}</div></div><div class="ac-status"><div class="status-dot sd-ok"></div><span class="sl-ok">Updated in v2</span><span class="chev" id="ac-${i}">&#9660;</span></div></div><div class="ac-body" id="ab-${i}"><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:#166534;margin-bottom:6px">What changed in v2</div>${v3items}</div>`;
+    c.appendChild(card);
+  });
+  const rg=document.getElementById('remaining-gaps');
+  REMAINING.forEach(g=>{
+    const cls={structural:'sev-s',enhancement:'sev-e'}[g.sev]||'sev-e';
+    const lbl={structural:'Structural',enhancement:'Enhancement'}[g.sev]||g.sev;
+    const blk=document.createElement('div');blk.className='gap-block';
+    blk.innerHTML=`<div class="gb-head"><span class="gb-sev ${cls}">${lbl}</span><span class="gb-title">${g.title}</span></div><div class="gb-body">${g.body}<div class="fix-box">${g.fix}</div></div>`;
+    rg.appendChild(blk);
+  });
+}
+window.addEventListener('DOMContentLoaded',function(){
+  renderCurriculum();
+  setTimeout(injectCommentButtons, 150);
+});
+
+
+
+// ===== COMMENT SYSTEM =====
+var CMNT = (function(){try{var d=localStorage.getItem('sp_cmnt');return d?JSON.parse(d):{};}catch(e){return {};}}());
+var CMNT_NEXT_ID = (function(){try{return parseInt(localStorage.getItem('sp_cmnt_id')||'1');}catch(e){return 1;}})();
+var CMNT_ACTIVE = null;
+
+function cmntTotal() {
+  var t = 0;
+  Object.keys(CMNT).forEach(function(k){ t += CMNT[k].length; });
+  return t;
+}
+
+// \u2500\u2500 Core: get accurate top of an element relative to comments-col \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntGetColForEl(el) {
+  // Find the right comments column for this element
+  var panel = el ? el.closest('.panel') : null;
+  if (panel) {
+    var col = panel.querySelector('.comments-col');
+    if (col) return col;
+  }
+  return document.getElementById('comments-col');
+}
+
+function cmntGetRelativeTop(el, col) {
+  if (!col) col = cmntGetColForEl(el);
+  if (!col) return 0;
+  var elRect = el.getBoundingClientRect();
+  var colRect = col.getBoundingClientRect();
+  return elRect.top - colRect.top + col.scrollTop;
+}
+
+// \u2500\u2500 Composer \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntOpen(tid) {
+  if (CMNT_ACTIVE && CMNT_ACTIVE !== tid) cmntClose(CMNT_ACTIVE);
+  CMNT_ACTIVE = tid;
+  var comp = document.getElementById('cmnt-comp-' + tid);
+  if (!comp) return;
+
+  // Position it: align with the triggering element
+  var anchor = document.querySelector('[data-tid="' + tid + '"]');
+  if (anchor) {
+    var col = cmntGetColForEl(anchor);
+    comp.style.top = cmntGetRelativeTop(anchor, col) + 'px';
+    // Move composer into the right col if needed
+    if (col && comp.parentElement !== col) col.appendChild(comp);
+  }
+
+  comp.classList.add('open');
+  var ta = comp.querySelector('textarea');
+  if (ta) { ta.value = ''; setTimeout(function(){ ta.focus(); }, 40); }
+}
+
+function cmntClose(tid) {
+  var comp = document.getElementById('cmnt-comp-' + tid);
+  if (comp) comp.classList.remove('open');
+  if (CMNT_ACTIVE === tid) CMNT_ACTIVE = null;
+}
+
+function cmntSave(tid) {
+  var comp = document.getElementById('cmnt-comp-' + tid);
+  if (!comp) return;
+  var ta = comp.querySelector('textarea');
+  var text = ta ? ta.value.replace(/^\s+|\s+$/g, '') : '';
+  if (!text) return;
+  if (!CMNT[tid]) CMNT[tid] = [];
+  var now = new Date();
+  var ts = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+  CMNT[tid].push({id: CMNT_NEXT_ID++, text: text, ts: ts});
+  try{localStorage.setItem('sp_cmnt',JSON.stringify(CMNT));localStorage.setItem('sp_cmnt_id',String(CMNT_NEXT_ID));}catch(e){}
+  cmntClose(tid);
+  cmntRenderThread(tid);
+  cmntMarkCard(tid);
+  cmntUpdateBadge();
+}
+
+// \u2500\u2500 Thread \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntRenderThread(tid) {
+  var existing = document.getElementById('cmnt-thread-' + tid);
+  var anchor = document.querySelector('[data-tid="' + tid + '"]');
+  var col;
+  if (existing) {
+    col = existing.parentElement;
+  } else if (anchor) {
+    col = cmntGetColForEl(anchor);
+  } else {
+    col = document.getElementById('comments-col');
+  }
+  if (!col) return;
+  var list = CMNT[tid] || [];
+
+  if (!list.length) {
+    if (existing) existing.remove();
+    return;
+  }
+
+  if (!existing) {
+    existing = document.createElement('div');
+    existing.className = 'cmnt-thread';
+    existing.id = 'cmnt-thread-' + tid;
+    col.appendChild(existing);
+  }
+
+  // Position aligned to anchor element
+  var anchor = document.querySelector('[data-tid="' + tid + '"]');
+  if (anchor) {
+    existing.style.top = cmntGetRelativeTop(anchor, col) + 'px';
+  }
+
+  // Build label
+  var label = tid;
+  if (anchor) {
+    var tnameEl = anchor.querySelector('.tname') || anchor.querySelector('.skill-name') || anchor.querySelector('.cap-title');
+    if (tnameEl) label = tid + ' \u2014 ' + tnameEl.textContent.trim().substring(0, 28);
+  }
+
+  var html = '<div class="cmnt-thread-label">' + label + '</div>';
+  list.forEach(function(c) {
+    html += '<div class="cmnt-item" id="cmnt-item-' + c.id + '">'
+      + '<div class="cmnt-item-text" id="cmnt-text-' + c.id + '">' + cmntEsc(c.text) + '</div>'
+      + '<div class="cmnt-item-meta">'
+      + '<span class="cmnt-item-ts">' + c.ts + '</span>'
+      + '<div class="cmnt-item-actions">'
+      + '<button class="cmnt-item-edit" onclick="cmntStartEdit(\'' + tid + '\',' + c.id + ')">Edit</button>'
+      + '<button class="cmnt-item-delete" onclick="cmntDeleteItem(\'' + tid + '\',' + c.id + ')">Delete</button>'
+      + '</div></div></div>';
+  });
+  existing.innerHTML = html;
+  cmntStack();
+}
+
+function cmntEsc(s) {
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+          .replace(/\n/g,'<br>');
+}
+
+// \u2500\u2500 Stacking: keep threads sorted and spaced \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntStack() {
+  var col = document.getElementById('comments-col');
+  if (!col) return;
+  var threads = Array.prototype.slice.call(col.querySelectorAll('.cmnt-thread'));
+  if (!threads.length) return;
+
+  // Recalculate natural positions from anchors
+  threads.forEach(function(t) {
+    var tid = t.id.replace('cmnt-thread-', '');
+    var anchor = document.querySelector('[data-tid="' + tid + '"]');
+    if (anchor) t.dataset.natural = cmntGetRelativeTop(anchor, t.parentElement);
+  });
+
+  threads.sort(function(a, b) {
+    return parseFloat(a.dataset.natural||0) - parseFloat(b.dataset.natural||0);
+  });
+
+  var cursor = 0;
+  threads.forEach(function(t) {
+    var natural = parseFloat(t.dataset.natural || 0);
+    var top = Math.max(natural, cursor);
+    t.style.top = top + 'px';
+    cursor = top + t.offsetHeight + 10;
+  });
+}
+
+// \u2500\u2500 Edit \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntStartEdit(tid, cid) {
+  var list = CMNT[tid] || [];
+  var item = null;
+  for (var i = 0; i < list.length; i++) { if (list[i].id === cid) { item = list[i]; break; } }
+  if (!item) return;
+  var el = document.getElementById('cmnt-text-' + cid);
+  if (!el) return;
+  var escaped = item.text.replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  el.innerHTML = '<textarea rows="3">' + escaped + '</textarea>'
+    + '<div class="cmnt-edit-actions">'
+    + '<button class="cmnt-edit-cancel" onclick="cmntCancelEdit(\'' + tid + '\',' + cid + ')">Cancel</button>'
+    + '<button class="cmnt-edit-save" onclick="cmntSaveEdit(\'' + tid + '\',' + cid + ')">Save</button>'
+    + '</div>';
+  var ta = el.querySelector('textarea');
+  if (ta) { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }
+}
+
+function cmntSaveEdit(tid, cid) {
+  var el = document.getElementById('cmnt-text-' + cid);
+  if (!el) return;
+  var ta = el.querySelector('textarea');
+  var newText = ta ? ta.value.replace(/^\s+|\s+$/g, '') : '';
+  if (!newText) return;
+  var list = CMNT[tid] || [];
+  for (var i = 0; i < list.length; i++) {
+    if (list[i].id === cid) { list[i].text = newText; break; }
+  }
+  try{localStorage.setItem('sp_cmnt',JSON.stringify(CMNT));}catch(e){}
+  cmntRenderThread(tid);
+}
+
+function cmntCancelEdit(tid, cid) { cmntRenderThread(tid); }
+
+// \u2500\u2500 Delete \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntDeleteItem(tid, cid) {
+  if (!CMNT[tid]) return;
+  CMNT[tid] = CMNT[tid].filter(function(c) { return c.id !== cid; });
+  if (!CMNT[tid].length) delete CMNT[tid];
+  try{localStorage.setItem('sp_cmnt',JSON.stringify(CMNT));}catch(e){}
+  cmntRenderThread(tid);
+  cmntMarkCard(tid);
+  cmntUpdateBadge();
+}
+
+// \u2500\u2500 Card highlight \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntMarkCard(tid) {
+  var el = document.querySelector('[data-tid="' + tid + '"]');
+  if (!el) return;
+  var has = CMNT[tid] && CMNT[tid].length > 0;
+  el.classList.toggle('has-comment', has);
+  var btn = el.querySelector('.cmnt-add-btn');
+  if (btn) btn.style.opacity = has ? '1' : '';
+}
+
+// \u2500\u2500 Badge in tab \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntUpdateBadge() {
+  var total = cmntTotal();
+  var badge = document.getElementById('tab-cmnt-count');
+  if (badge) { badge.textContent = total; badge.style.display = total > 0 ? 'inline' : 'none'; }
+}
+
+// \u2500\u2500 Keyboard \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape' && CMNT_ACTIVE) cmntClose(CMNT_ACTIVE);
+  if ((e.metaKey || e.ctrlKey) && e.key === 'Enter' && CMNT_ACTIVE) cmntSave(CMNT_ACTIVE);
+});
+
+// \u2500\u2500 Build composer element \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function cmntGetActiveCol() {
+  // Return the comments-col inside the currently active panel
+  var active = document.querySelector('.panel.active');
+  if (active) {
+    var col = active.querySelector('.comments-col');
+    if (col) return col;
+  }
+  return document.getElementById('comments-col');
+}
+
+function cmntMakeComposer(tid, labelHtml) {
+  var col = document.getElementById('cmnt-comp-' + tid)
+    ? null  // composer already exists, skip col lookup
+    : (document.getElementById('cap-comments-col') && document.querySelector('#tp-capstone.active')
+        ? document.getElementById('cap-comments-col')
+        : document.getElementById('comments-col'));
+  if (!col || document.getElementById('cmnt-comp-' + tid)) return;
+  var comp = document.createElement('div');
+  comp.className = 'cmnt-composer';
+  comp.id = 'cmnt-comp-' + tid;
+  comp.innerHTML = '<div class="cmnt-composer-label">' + labelHtml + '</div>'
+    + '<textarea rows="3" placeholder="Your feedback... (&#8984;&#8629; to save)"></textarea>'
+    + '<div class="cmnt-composer-actions">'
+    + '<button class="cmnt-cancel-btn" onclick="cmntClose(\'' + tid + '\')">Cancel</button>'
+    + '<button class="cmnt-save-btn" onclick="cmntSave(\'' + tid + '\')">Save</button>'
+    + '</div>';
+  col.appendChild(comp);
+}
+
+// \u2500\u2500 Inject buttons after render \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function injectCommentButtons() {
+  // Task cards
+  document.querySelectorAll('.task-card').forEach(function(card) {
+    var head = card.querySelector('.task-head');
+    if (!head || card.getAttribute('data-tid')) return;
+    var tidx = head.querySelector('.tidx');
+    if (!tidx) return;
+    var tid = tidx.textContent.replace(/\s/g, '');
+    card.setAttribute('data-tid', tid);
+    var btn = document.createElement('button');
+    btn.className = 'cmnt-add-btn';
+    btn.innerHTML = '&#128172;';
+    btn.title = 'Add comment';
+    btn.addEventListener('click', function(e) { e.stopPropagation(); cmntOpen(tid); });
+    card.appendChild(btn);
+    var tname = (head.querySelector('.tname') || {}).textContent || tid;
+    cmntMakeComposer(tid, tid + ' &mdash; ' + tname.trim().substring(0, 30));
+  });
+
+  // Skill blocks
+  document.querySelectorAll('.skill-block').forEach(function(blk) {
+    var tid = blk.getAttribute('data-tid');
+    if (!tid || blk.getAttribute('data-cmnt-ready')) return;
+    blk.setAttribute('data-cmnt-ready', '1');
+    var nameEl = blk.querySelector('.skill-name');
+    var label = nameEl ? tid + ' &mdash; ' + nameEl.textContent.trim().substring(0, 28) : tid;
+    // Button already in innerHTML from renderCurriculum \u2014 just wire the composer
+    cmntMakeComposer(tid, label);
+    // Fix the button onclick (it was set via inline onclick in innerHTML)
+    // It already calls cmntOpen(tid) which is now defined
+  });
+
+  // Capstone wraps \u2014 inject button dynamically
+  document.querySelectorAll('.cap-wrap').forEach(function(wrap, wi) {
+    if (wrap.getAttribute('data-tid')) return;
+    var tid = 'Cap' + String.fromCharCode(65 + wi);
+    wrap.setAttribute('data-tid', tid);
+    var titleEl = wrap.querySelector('.cap-title');
+    var label = titleEl ? tid + ' &mdash; ' + titleEl.textContent.trim().substring(0, 28) : tid;
+
+    var btn = document.createElement('button');
+    btn.className = 'cmnt-add-btn';
+    btn.innerHTML = '&#128172;';
+    btn.title = 'Add comment';
+    btn.addEventListener('click', function(e) { e.stopPropagation(); cmntOpen(tid); });
+    wrap.appendChild(btn);
+    cmntMakeComposer(tid, label);
+  });
+
+  // Restore persisted comments
+  Object.keys(CMNT).forEach(function(tid) {
+    if (CMNT[tid] && CMNT[tid].length) {
+      cmntRenderThread(tid);
+      cmntMarkCard(tid);
+    }
+  });
+  cmntUpdateBadge();
+
+  // Restack on scroll/resize
+  window.addEventListener('scroll', cmntStack, {passive: true});
+  window.addEventListener('resize', cmntStack, {passive: true});
+}
+
+// \u2500\u2500 CSV Export \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+function downloadCSV() {
+  var total = cmntTotal();
+  if (!total) { alert('No comments to export yet.'); return; }
+
+  var rows = [['Skill/Task ID', 'Task Name', 'Comment', 'Time']];
+  var order = ['S1','S2','S3','S4','S5','CapA','CapB','CapC'];
+
+  // Build parent map
+  function getParent(tid) {
+    var n = parseInt(tid.replace(/[^0-9]/g, ''));
+    if (isNaN(n)) return tid;
+    if (n <= 4) return 'S1';
+    if (n <= 7) return 'S2';
+    if (n <= 11) return 'S3';
+    if (n <= 14) return 'S4';
+    return 'S5';
+  }
+
+  var groups = {};
+  Object.keys(CMNT).forEach(function(tid) {
+    var parent = (tid.match(/^S[0-9]+$/) || tid.match(/^Cap/)) ? tid : getParent(tid);
+    if (!groups[parent]) groups[parent] = [];
+    CMNT[tid].forEach(function(c) {
+      groups[parent].push({tid: tid, text: c.text, ts: c.ts});
+    });
+  });
+
+  order.forEach(function(sk) {
+    if (!groups[sk]) return;
+    groups[sk].forEach(function(item) {
+      var anchor = document.querySelector('[data-tid="' + item.tid + '"]');
+      var name = '';
+      if (anchor) {
+        var ne = anchor.querySelector('.tname') || anchor.querySelector('.skill-name') || anchor.querySelector('.cap-title');
+        if (ne) name = ne.textContent.trim();
+      }
+      rows.push([item.tid, name, item.text.replace(/\n/g, ' '), item.ts]);
+    });
+  });
+
+  var csv = rows.map(function(row) {
+    return row.map(function(cell) {
+      var s = String(cell).replace(/"/g, '""');
+      return /[,"\n]/.test(s) ? '"' + s + '"' : s;
+    }).join(',');
+  }).join('\n');
+
+  var blob = new Blob([csv], {type: 'text/csv'});
+  var a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'pm-curriculum-feedback.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+}
+
+// \u2500\u2500 Summary tab render \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+var SUMM_META = {
+  'S1': {name:'Prompt patterns and model fluency', color:'#E6F1FB', tc:'#0C447C'},
+  'S2': {name:'Build a memory architecture',       color:'#E1F5EE', tc:'#085041'},
+  'S3': {name:'Streamline weekly PM workflows',    color:'#FAEEDA', tc:'#633806'},
+  'S4': {name:'Vibe coding and solution shaping',  color:'#FAECE7', tc:'#712B13'},
+  'S5': {name:'Data querying and multi-audience synthesis', color:'#EEEDFE', tc:'#3C3489'},
+  'CapA': {name:'Capstone A \u2014 Automated weekly update',      color:'#EEEDFE', tc:'#3C3489'},
+  'CapB': {name:'Capstone B \u2014 Data-informed communication',  color:'#EEEDFE', tc:'#3C3489'},
+  'CapC': {name:'Capstone C \u2014 Vibe-coded prototype',         color:'#EEEDFE', tc:'#3C3489'},
+};
+
+function getParentSk(tid) {
+  var n = parseInt(tid.replace(/[^0-9]/g, ''));
+  if (isNaN(n)) return tid;
+  if (n <= 4) return 'S1'; if (n <= 7) return 'S2';
+  if (n <= 11) return 'S3'; if (n <= 14) return 'S4';
+  return 'S5';
+}
+
+function renderSummaryTab() {
+  var total = cmntTotal();
+  var empty = document.getElementById('summ-empty');
+  var stats = document.getElementById('summ-stats');
+  var bySkill = document.getElementById('summ-by-skill');
+  if (!stats || !bySkill) return;
+
+  if (!total) {
+    if (empty) empty.style.display = 'block';
+    stats.innerHTML = ''; bySkill.innerHTML = ''; return;
+  }
+  if (empty) empty.style.display = 'none';
+
+  var groups = {};
+  var taskCt = 0, skillCt = 0, capCt = 0;
+  Object.keys(CMNT).forEach(function(tid) {
+    var list = CMNT[tid]; if (!list.length) return;
+    var parent;
+    if (tid.match(/^S[0-9]+$/)) { parent = tid; skillCt += list.length; }
+    else if (tid.match(/^Cap/))  { parent = tid; capCt += list.length; }
+    else                         { parent = getParentSk(tid); taskCt += list.length; }
+    if (!groups[parent]) groups[parent] = {};
+    groups[parent][tid] = list;
+  });
+
+  stats.innerHTML = [
+    {label:'Total comments', val: total,          sub: 'across all tasks and skills'},
+    {label:'Skills covered',  val: Object.keys(groups).length, sub: 'of 5 skills + 3 capstones'},
+    {label:'Task-level',      val: taskCt,         sub: 'on individual tasks'},
+    {label:'Skill + capstone',val: skillCt+capCt,  sub: 'high-level comments'},
+  ].map(function(s) {
+    return '<div class="summ-stat-card"><div class="summ-stat-label">'+s.label+'</div>'
+      +'<div class="summ-stat-val">'+s.val+'</div>'
+      +'<div class="summ-stat-sub">'+s.sub+'</div></div>';
+  }).join('');
+
+  var order = ['S1','S2','S3','S4','S5','CapA','CapB','CapC'];
+  var html = '';
+  order.forEach(function(sk) {
+    if (!groups[sk]) return;
+    var meta = SUMM_META[sk] || {name: sk, color:'#f7f7f5', tc:'#555'};
+    var all = [];
+    // Skill-level first
+    if (groups[sk][sk]) groups[sk][sk].forEach(function(c){ all.push({tid:sk, c:c}); });
+    Object.keys(groups[sk]).forEach(function(tid) {
+      if (tid === sk) return;
+      groups[sk][tid].forEach(function(c){ all.push({tid:tid, c:c}); });
+    });
+    html += '<div class="summ-skill-section">'
+      +'<div class="summ-skill-header">'
+      +'<div class="summ-skill-badge" style="background:'+meta.color+';color:'+meta.tc+'">'+sk+'</div>'
+      +'<div><div class="summ-skill-name">'+meta.name+'</div>'
+      +'<div class="summ-skill-count">'+all.length+' comment'+(all.length!==1?'s':'')+'</div></div></div>';
+    all.forEach(function(item){
+      html += '<div class="summ-comment-row">'
+        +'<span class="summ-tid-badge" style="background:'+meta.color+';color:'+meta.tc+'">'+item.tid+'</span>'
+        +'<div><div class="summ-comment-text">'+cmntEsc(item.c.text)+'</div>'
+        +'<div class="summ-comment-ts">'+item.c.ts+'</div></div></div>';
+    });
+    html += '</div>';
+  });
+  bySkill.innerHTML = html;
+}
+
+// Hook summary render into sw()
+var _sw0 = sw;
+sw = function(n) { _sw0(n); if (n === 'summary') renderSummaryTab(); };
+
+// Refresh summary live when comments change
+function _cmntHook() {
+  var panel = document.getElementById('tp-summary');
+  if (panel && panel.classList.contains('active')) renderSummaryTab();
+  cmntUpdateBadge();
+}
+var _origSave = cmntSave;
+cmntSave = function(tid) { _origSave(tid); _cmntHook(); };
+var _origDel = cmntDeleteItem;
+cmntDeleteItem = function(tid, cid) { _origDel(tid, cid); _cmntHook(); };
+
+// \u2500\u2500 AI Synthesis \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+async function runAiSynthesis() {
+  var total = cmntTotal();
+  if (!total) { alert('Add comments first, then run synthesis.'); return; }
+  var btn = document.getElementById('ai-synth-btn');
+  var out = document.getElementById('ai-synth-out');
+  var body = document.getElementById('ai-synth-body');
+  var ts = document.getElementById('ai-synth-ts');
+  btn.disabled = true;
+  btn.innerHTML = '&#10024; Synthesizing...';
+  out.style.display = 'block';
+  body.innerHTML = '<div class="ai-loading"><div class="ai-loading-dot"></div><div class="ai-loading-dot"></div><div class="ai-loading-dot"></div><span>Reading feedback...</span></div>';
+
+  var dump = '';
+  var order = ['S1','S2','S3','S4','S5','CapA','CapB','CapC'];
+  var groups = {};
+  Object.keys(CMNT).forEach(function(tid) {
+    var parent = (tid.match(/^S[0-9]+$/) || tid.match(/^Cap/)) ? tid : getParentSk(tid);
+    if (!groups[parent]) groups[parent] = [];
+    CMNT[tid].forEach(function(c){ groups[parent].push({tid:tid, text:c.text}); });
+  });
+  order.forEach(function(sk) {
+    if (!groups[sk]) return;
+    var meta = SUMM_META[sk] || {name:sk};
+    dump += '\n## ' + sk + ' \u2014 ' + meta.name + '\n';
+    groups[sk].forEach(function(item){ dump += '- [' + item.tid + '] ' + item.text + '\n'; });
+  });
+
+  var prompt = 'You are analyzing feedback from Coursera Product Managers on a new AI upskilling curriculum called Skill Passport. The curriculum has 5 skills (S1-S5) and 3 optional capstone projects.\n\nHere are all the comments:\n' + dump + '\n\nProvide a structured synthesis with exactly these four sections:\n\n**1. Top insights** (3-5 bullets)\nThe most important things this feedback tells us. Be specific.\n\n**2. By skill: signal summary**\nFor each skill with comments, one sentence on the key feedback theme.\n\n**3. Action priorities**\n- Keep as-is: tasks where feedback is positive or no concerns\n- Revise: specific tasks needing editing, with reason\n- Needs more work: anything needing rethinking\n\n**4. Open questions**\n2-3 questions this feedback raises for the next iteration.\n\nReference task IDs (T1, S3, etc.) where relevant. Be direct and actionable.';
+
+  try {
+    var resp = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{role:'user',content:prompt}]})
+    });
+    var data = await resp.json();
+    var text = (data.content && data.content[0]) ? (data.content[0].text || '') : 'No response.';
+    text = text.replace(/\*\*(.+?)\*\*/g,'<b>$1</b>')
+               .replace(/^- (.+)$/gm,'<li style="margin-bottom:4px">$1</li>')
+               .replace(/(<li[^>]*>.*?<\/li>\n?)+/gs, function(m){ return '<ul style="padding-left:18px;margin:6px 0">'+m+'</ul>'; })
+               .replace(/\n\n/g,'</p><p style="margin-top:10px">')
+               .replace(/\n/g,'<br>');
+    body.innerHTML = '<p>' + text + '</p>';
+    ts.textContent = 'Generated ' + new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  } catch(err) {
+    body.innerHTML = '<div style="color:#E24B4A;font-size:13px">Synthesis failed: ' + err.message + '</div>';
+  }
+  btn.disabled = false;
+  btn.innerHTML = '&#10024; Re-synthesize';
+}
+</script>
+
+
+<!-- SUMMARY PANEL -->
+<div id="tp-summary" class="panel">
+  <div style="max-width:940px">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.5rem;flex-wrap:wrap;gap:12px">
+      <div>
+        <h1 style="margin-bottom:4px">Feedback summary</h1>
+        <div style="font-size:14px;color:#555;line-height:1.6">All comments organized by skill. Export to CSV for Google Sheets, or run AI synthesis for actionable insights.</div>
+      </div>
+      <button onclick="downloadCSV()" style="background:#1a1a1a;color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap">&#8595; Download CSV</button>
+    </div>
+    <div id="summ-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:2rem"></div>
+    <div id="summ-by-skill"></div>
+    <div id="summ-empty" style="text-align:center;padding:4rem 2rem;color:#aaa">
+      <div style="font-size:32px;margin-bottom:12px">&#128172;</div>
+      <div style="font-size:15px;font-weight:600;color:#888;margin-bottom:6px">No comments yet</div>
+      <div style="font-size:13px">Go to the Curriculum or Capstone tab, hover any task card or skill header, and click the chat bubble to add feedback.</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
