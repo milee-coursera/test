@@ -298,11 +298,6 @@ code{font-family:monospace;font-size:12px;background:#f0f0ee;padding:1px 5px;bor
   .page-layout{grid-template-columns:1fr}
   .comments-col{display:none}
 }
-
-/* ===== MODE BADGES ===== */
-.mode-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;white-space:nowrap}
-.mode-sim{background:#E1F5EE;color:#085041}
-.mode-screenshare{background:#EFF6FF;color:#1e40af}
 </style>
 </head>
 <body>
@@ -316,6 +311,7 @@ code{font-family:monospace;font-size:12px;background:#f0f0ee;padding:1px 5px;bor
 By the end you'll have: a prompt system that produces first-draft-ready outputs, a persistent AI context file so every session starts knowing your product area and stakeholders, live Databricks queries without copy-pasting, and a weekly update pipeline that produces three audience-ready versions in under 15 minutes.
 Every task is something you can do this week. No simulations.
   </div>
+</div>
 <div class="tab-row">
   <div class="tab active" onclick="sw('curriculum')">Curriculum</div>
   <div class="tab" onclick="sw('capstone')">Capstone</div>
@@ -330,7 +326,7 @@ Every task is something you can do this week. No simulations.
 <!-- CAPSTONE -->
 <div id="tp-capstone" class="panel"><div class="page-layout"><div class="content-col"><div id="cap-skills-container">
   <h1>Capstone projects</h1>
-  <div class="sub">Three optional capstone projects — each produces a real artifact you use in your actual job this week. Complete any one, or all three. Capstones run in your <b>real Cursor environment</b>, not the simulator. An AI provides live feedback via screen share overlay.</div>
+  <div class="sub">Three optional capstone projects — each produces a real artifact the PM uses in their actual job this week. Complete any one, or all three.</div>
   <div class="infobox info"><b>Design principle:</b> Every capstone artifact must be usable this week. If it can't be sent to a real stakeholder or run in a real meeting, it's not done.</div>
   <div class="cap-wrap">
     <span class="cap-badge">Capstone A</span>
@@ -377,8 +373,8 @@ const SKILLS=[
    desc:"Context-rich prompts, task decomposition, model selection, reusable templates &#8212; grounded in PM workflows you run this week",
    end:"PM produces context-rich prompts consistently, decomposes any PM deliverable into AI-executable steps, routes to the right model, and has 2 reusable templates ready to use this week.",
    tasks:[
-    {id:"T1",mode:"sim",name:"Write a context-first prompt",by:"Stop task-only prompting &#8212; start with who, what, and for whom",dur:"10 min",
-     types:["lesson","practice"],formats:["Text lesson with worked before/after","Cursor simulator"],tools:[],prereqs:[],rt:false,
+    {id:"T1",name:"Write a context-first prompt",by:"Stop task-only prompting &#8212; start with who, what, and for whom",dur:"10 min",
+     types:["lesson","practice"],formats:["Text lesson with worked before/after","Codex simulator"],tools:[],prereqs:[],rt:false,
      lesson:`<p>Most PMs use AI like a search engine: type the task, get an answer, accept or reject. This produces mediocre outputs &#8212; because AI has no idea who you are, who the output is for, or what "good" looks like for your stakeholders.</p>
 
 <p>A context-first prompt has three parts:</p>
@@ -398,15 +394,15 @@ const SKILLS=[
      practice:{t:"Rewrite a prompt you've actually used in the last week",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Think of a real prompt</b> you sent AI in the last week &#8212; a weekly update, a PRD section, a Slack message draft. Write it down exactly as you sent it.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Add the three parts.</b> Role framing (your product area + stakeholders). Audience context (who reads this + what they know + what they need to decide). Output spec (format + length + what to avoid). Label each section.</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run both in the simulator side by side.</b> Original first, rewrite second. Compare the outputs &#8212; don't edit, just observe what changed.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run both in Codex side by side.</b> Original first, rewrite second. Compare the outputs &#8212; don't edit, just observe what changed.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Identify the one change</b> that made the biggest difference in output quality. That's your highest-leverage prompt habit to repeat this week.</div></div>`},
      hints:["If the output sounds like it could have been written for anyone &#8212; it was. Add the audience block first: who reads this, what they already know, what they need to do.",
             "The output spec is the most commonly skipped part. It's also what eliminates 80% of post-generation editing."],
      sigs:[{t:"pass",s:"Rewritten prompt has all three parts; output is noticeably more specific and closer to sendable"},{t:"fail",s:"Prompt still task-only &#8212; no audience or output spec; surface lesson callout on output spec"},{t:"gap",s:"Added role framing but skipped audience block &#8212; hint 1 fires"}],
      caplink:""},
 
-    {id:"T2",mode:"sim",name:"Decompose a PM deliverable",by:"Break complex outputs into AI-executable steps before running them",dur:"12 min",
-     types:["lesson","practice"],formats:["Text lesson","Recognition exercise","Cursor simulator"],tools:[],prereqs:["T1"],rt:false,
+    {id:"T2",name:"Decompose a PM deliverable",by:"Break complex outputs into AI-executable steps before running them",dur:"12 min",
+     types:["lesson","practice"],formats:["Text lesson","Recognition exercise","Codex simulator"],tools:[],prereqs:["T1"],rt:false,
      lesson:`<p>PMs produce complex outputs: PRDs, QBR decks, strategy memos, stakeholder updates. When you hand these to AI as one big task, you get one big mediocre output. Decomposition &#8212; breaking a deliverable into specific, ordered sub-tasks &#8212; is the difference between AI as a drafting assistant and AI as a thought partner that shapes the work.</p>
 
 <p>A good decomposition is specific to your deliverable and your context. A bad decomposition could apply to any document ever written.</p>
@@ -432,7 +428,7 @@ const SKILLS=[
 <div style="margin-top:12px;padding-top:12px;border-top:1px solid #e5e5e5">
 <div class="pbox-t">Part 2 &#8212; your deliverable (7 min)</div>
 <div class="step" style="margin-top:8px"><div class="step-num">1</div><div class="step-text"><b>Pick something you're actually writing this week</b> &#8212; a PRD, a brief, an update. Not a hypothetical.</div></div>
-<div class="step"><div class="step-num">2</div><div class="step-text"><b>Write a decomposition prompt with your context:</b> what it is, who it's for, when it's needed, constraints. Run it in the simulator.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Write a decomposition prompt with your context:</b> what it is, who it's for, when it's needed, constraints. Run it in Codex.</div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Edit the plan:</b> Cut one section that doesn't apply. Add one section you know is missing. Don't just accept the first list.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Execute one section</b> using T1's prompt structure. Note how the edited plan changed the output.</div></div>
 </div>`},
@@ -441,7 +437,7 @@ const SKILLS=[
      sigs:[{t:"pass",s:"Correctly identifies generic vs specific; edits their own list before executing; uses a real deliverable"},{t:"fail",s:"Accepted generic decomposition and ran full output &#8212; skipped review step"},{t:"gap",s:"Both recognition answers wrong &#8212; prereq gap in T1 context concept"}],
      caplink:""},
 
-    {id:"T3",mode:"sim",name:"Choose the right model",by:"Opus, Sonnet, Haiku &#8212; when each earns its cost for PM work",dur:"6 min",
+    {id:"T3",name:"Choose the right model",by:"Opus, Sonnet, Haiku &#8212; when each earns its cost for PM work",dur:"6 min",
      types:["lesson","practice"],formats:["Text lesson","Multiple-choice routing exercise"],tools:[],prereqs:["T1"],rt:false,
      lesson:`<p>Choosing the wrong model costs you time (Opus for a Haiku task) or quality (Haiku for an Opus task). For PMs:</p>
 
@@ -493,8 +489,8 @@ const SKILLS=[
      sigs:[{t:"pass",s:"4/5 or 5/5 correct with correct reasoning"},{t:"fail",s:"2 or fewer correct &#8212; model distinction not clear, surface lesson"},{t:"gap",s:"Confused Opus/Sonnet on strategic tasks &#8212; needs one more Opus PM example, surface hint 2"}],
      caplink:""},
 
-    {id:"T4",mode:"sim",name:"Build a reusable prompt template",by:"Turn one-off prompts into repeatable PM assets you use every week",dur:"15 min",
-     types:["practice","assess"],formats:["Guided builder","Cursor simulator"],tools:[],prereqs:["T1","T2"],rt:true,
+    {id:"T4",name:"Build a reusable prompt template",by:"Turn one-off prompts into repeatable PM assets you use every week",dur:"15 min",
+     types:["practice","assess"],formats:["Guided builder","Codex simulator"],tools:[],prereqs:["T1","T2"],rt:true,
      lesson:`<p>A prompt template is a prompt with placeholders &#8212; everything that stays the same is hardcoded, everything that changes is marked with [BRACKETS]. Once built, producing a weekly update takes 90 seconds instead of 20 minutes. The quality is consistent across every week.</p>
 
 <p>A complete PM template has four components:</p>
@@ -528,7 +524,7 @@ INPUT METRICS: [PASTE FROM DATABRICKS]</pre>
 <p>Notice: role framing, output spec, format rules, and what-to-avoid are all hardcoded with real names and context. You fill in only the bracketed input fields each week. First time: 15 minutes to build. Every Monday after: 90 seconds to run.</p>`,
      practice:{t:"Build your weekly update template &#8212; you'll use it this Monday",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Template 1 &#8212; weekly update:</b> Adapt the example above to your actual stakeholders. Replace [Name] with your real eng lead and design lead. Hardcode what they already know and what they optimize for. Add at least one item to 'what to avoid' from something you've had to delete from an AI output before.</div></div>
-<div class="step"><div class="step-num">2</div><div class="step-text"><b>Test with real notes from this week.</b> Run the template in Cursor. Evaluate against this rubric: Did the headline lead with an outcome? Were bullets in the right format? Did it include anything from the avoid list? If yes to any &#8212; fix the template, not the output.</div></div>
+<div class="step"><div class="step-num">2</div><div class="step-text"><b>Test with real notes from this week.</b> Run the template in Codex. Evaluate against this rubric: Did the headline lead with an outcome? Were bullets in the right format? Did it include anything from the avoid list? If yes to any &#8212; fix the template, not the output.</div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Template 2 &#8212; your choice:</b> Write the header block only (role framing + audience + output spec) for one of: feature brief, exec data brief, or QBR talking points. You're building the pattern on a second type. Full content comes at capstone.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Save both templates</b> somewhere you can paste from outside this session &#8212; a doc, a notes file, or a markdown file.</div></div>
 <div class="rubric-box"><b>Self-evaluation rubric for Template 1:</b><br>
@@ -546,12 +542,12 @@ INPUT METRICS: [PASTE FROM DATABRICKS]</pre>
   ]},
 
   {id:"S2",color:"#E1F5EE",tc:"#085041",name:"Build a memory architecture",
-   desc:"Replace cold-start sessions with persistent structured context &#8212; so every Cursor session starts knowing your product area, stakeholders, and priorities",
-   end:"PM's my-role-context.md is live in the platform, tested in a fresh Cursor session, and accurate. They never re-explain their context again.",
+   desc:"Replace cold-start sessions with persistent structured context &#8212; so every Codex session starts knowing your product area, stakeholders, and priorities",
+   end:"PM's my-role-context.md is live in the platform, tested in a fresh Codex session, and accurate. They never re-explain their context again.",
    tasks:[
-    {id:"T5",mode:"sim",name:"Memory vs chat history",by:"Why pasting context doesn't compound &#8212; and what to do instead",dur:"6 min",
+    {id:"T5",name:"Memory vs chat history",by:"Why pasting context doesn't compound &#8212; and what to do instead",dur:"6 min",
      types:["lesson"],formats:["Text lesson","Reflection exercise"],tools:[],prereqs:["T1"],rt:false,
-     lesson:`<p>When you paste a doc into a new simulator session for context, that context disappears when the session ends. Every new session is a cold start &#8212; you re-explain your product area, your stakeholders, your OKR focus, your sprint priorities. This is the single biggest drag on compounding AI value.</p>
+     lesson:`<p>When you paste a doc into a new Codex session for context, that context disappears when the session ends. Every new session is a cold start &#8212; you re-explain your product area, your stakeholders, your OKR focus, your sprint priorities. This is the single biggest drag on compounding AI value.</p>
 
 <p>Memory files fix this. The difference between a chat log and a memory file is not format &#8212; it's intent. A chat log is what happened. A memory file is what you want AI to always know.</p>
 
@@ -566,16 +562,16 @@ INPUT METRICS: [PASTE FROM DATABRICKS]</pre>
 &#8212; Team conventions: how you write PRDs, what goes in intake vs. spec<br>
 &#8212; Active decisions this sprint: what's open, decided, or blocked</p>`,
      practice:{t:"List what you re-explain at the start of every AI session",
-       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open a new simulator session right now.</b> Before you type anything useful, notice what you have to explain before it's helpful to you. Write that list.</div></div>
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open a new Codex session right now.</b> Before you type anything useful, notice what you have to explain before it's helpful to you. Write that list.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Categorize each item:</b> product focus / stakeholders / conventions / active decisions. This becomes the structure of your memory file in T6.</div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Star the 3 items you re-explain most often.</b> These are your priority memory entries &#8212; the ones that, if loaded automatically, would save the most time this week.</div></div>`},
-     hints:["If your first Cursor message most mornings is 'I'm a PM at Coursera working on X' &#8212; that's a memory file.",
+     hints:["If your first Codex message most mornings is 'I'm a PM at Coursera working on X' &#8212; that's a memory file.",
             "The goal isn't complete memory. It's eliminating the 3&#8211;5 things you always have to explain before getting to the actual work."],
      sigs:[{t:"pass",s:"3+ items identified, categorized into memory types, 3 starred"},{t:"fail",s:"Couldn't identify re-explanation patterns &#8212; may need T1 revisit"},{t:"gap",s:"Listed tasks not context &#8212; re-prompt toward role and stakeholder context specifically"}],
      caplink:""},
 
-    {id:"T6",mode:"sim",name:"Review and own your AI context file",by:"The platform built it from intake &#8212; now make it specific enough to be useful",dur:"15 min",
-     types:["practice"],formats:["Passport editor","Fresh Cursor session test"],tools:["Cursor"],prereqs:["T5"],rt:false,
+    {id:"T6",name:"Review and own your AI context file",by:"The platform built it from intake &#8212; now make it specific enough to be useful",dur:"15 min",
+     types:["practice"],formats:["Passport editor","Fresh Codex session test"],tools:["Codex"],prereqs:["T5"],rt:false,
      lesson:`<p>Your learner passport was built from the intake conversation. The most common failure: fields that are technically true but too vague for AI to do anything with. Test: could a new PM who's never met you read this field and know specifically how to calibrate for your stakeholder?</p>
 
 <div class="contrast">
@@ -583,20 +579,20 @@ INPUT METRICS: [PASTE FROM DATABRICKS]</pre>
 <div class="good-ex"><div class="label">&#10003; Specific &#8212; actionable for AI</div>Eng lead [Name]: optimizes for scope clarity and story-point predictability. Pushes back when requirements change mid-sprint &#8212; even small changes cause re-estimation that he finds disruptive. Needs a phased rollout plan with clear milestones before saying yes. Responds well to data; gets skeptical when requirements are vague. "What does this unlock?" is his first question.<br><br><span style="color:#0F6E56;font-size:11px">AI will write specifically for this person's patterns. Saves you the mental translation step every time.</span></div>
 </div>
 
-<p><b>The verification test:</b> Your context file is pre-loaded in this simulator session. Ask: "Based on this context, brief me on my current product situation and what I'm likely preparing for this week." If the brief is accurate and specific &#8212; the file is working. If it's generic &#8212; the file is still too vague.</p>`,
+<p><b>The verification test:</b> Open a new Codex session. Paste your context file as the first message. Ask: "Based on this context, brief me on my current product situation and what I'm likely preparing for this week." If the brief is accurate and specific &#8212; the file is working. If it's generic &#8212; the file is still too vague.</p>`,
      practice:{t:"Review, edit, test, and confirm your context file",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open your passport.</b> For each field, apply the specificity test: could a new PM read this and know specifically what to do? Edit anything that fails.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Fix the stakeholder section first.</b> Each entry must include: what they optimize for, what triggers their pushback, and what they need before saying yes. Add anyone missing.</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run the verification test:</b> new simulator session, paste context file, ask for a product situation brief. Evaluate: does it accurately describe your actual sprint and current priorities?</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run the verification test:</b> new Codex session, paste context file, ask for a product situation brief. Evaluate: does it accurately describe your actual sprint and current priorities?</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Fix what the test revealed.</b> Then ask AI: "What else would you need to know to help me prepare for my weekly product review?" That gap list is your next edit.</div></div>
 <div class="cap-link"><b>Capstone connection:</b> This file is the persistent context layer for all three capstone projects. The verification test you just ran is the capstone verification step.</div>`},
      hints:["Your stakeholder section is the highest-value field. Fewer than 3 sentences per stakeholder usually means it's still too vague.",
             "Five specific statements beats twenty vague ones. Cut the vague ones before adding more."],
-     sigs:[{t:"pass",s:"Verification test passes &#8212; Cursor produces accurate sprint/stakeholder brief without re-briefing"},{t:"fail",s:"File too vague &#8212; Cursor still asks basic role questions"},{t:"gap",s:"Passport mirrors intake verbatim &#8212; didn't engage critically, context gap modal fires"}],
+     sigs:[{t:"pass",s:"Verification test passes &#8212; Codex produces accurate sprint/stakeholder brief without re-briefing"},{t:"fail",s:"File too vague &#8212; Codex still asks basic role questions"},{t:"gap",s:"Passport mirrors intake verbatim &#8212; didn't engage critically, context gap modal fires"}],
      caplink:"Used as the persistent context layer in all three capstone projects."},
 
-    {id:"T7",mode:"sim",name:"Version your context file",by:"Treat your AI memory like a doc, not a chat &#8212; with history and rollback",dur:"10 min",
-     types:["practice"],formats:["Simulator &#8212; version diff walkthrough"],tools:["Cursor"],prereqs:["T6"],rt:false,
+    {id:"T7",name:"Version your context file",by:"Treat your AI memory like a doc, not a chat &#8212; with history and rollback",dur:"10 min",
+     types:["practice"],formats:["Simulator &#8212; version diff walkthrough"],tools:["Codex"],prereqs:["T6"],rt:false,
      lesson:`<p>Your context file will change as sprints turn over, stakeholders shift, and OKRs update. Without versioning, you lose track of what changed and when &#8212; and when something breaks, you can't roll back. The platform maintains automatic version history. This task teaches the pattern using that history. The skill transfers to Google Docs version history, git, or any versioned store.</p>`,
      practice:{t:"Make a meaningful edit, observe the diff, practice rollback",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Make one substantive edit:</b> update a stakeholder priority to reflect what you learned this sprint, add a new team convention, or change your active decision list.</div></div>
@@ -604,137 +600,126 @@ INPUT METRICS: [PASTE FROM DATABRICKS]</pre>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Undo the edit using version history.</b> Confirm the previous version restored. This is rollback &#8212; knowing it exists changes how confidently you edit.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Re-apply the edit.</b> Commit it with your one-line note. Get in the habit: every time you update this file, leave a note explaining why. Three months from now you'll be glad you did.</div></div>`},
      hints:["A good version note explains the why: 'Updated eng lead's priorities after Q2 planning &#8212; he now owns the infra migration too' not just 'update'.",
-            "The trigger to review this file: a Cursor output that seems slightly off-base. Usually means the context file hasn't caught up with a recent shift."],
+            "The trigger to review this file: a Codex output that seems slightly off-base. Usually means the context file hasn't caught up with a recent shift."],
      sigs:[{t:"pass",s:"Edit made, diff observed, rollback executed, edit re-applied with version note"},{t:"fail",s:"Version history not found &#8212; surface platform guide"},{t:"gap",s:"Made edit but didn't observe diff &#8212; versioning concept not landing, show concrete before/after"}],
      caplink:""}
   ]},
 
   {id:"S3",color:"#FAEEDA",tc:"#633806",name:"Streamline weekly PM workflows",
-   desc:"Connect Cursor to the tools you live in, encode recurring PM processes as skill files, and build a pipeline that produces your weekly update in one session",
-   end:"Cursor pulls live data from Databricks or Slack, executes your weekly update workflow via skill file, and produces stakeholder-ready outputs for multiple audiences in one session &#8212; ready to send Monday morning.",
+   desc:"Connect Codex to the tools you live in, encode recurring PM processes as skill files, and build a pipeline that produces your weekly update in one session",
+   end:"Codex pulls live data from Databricks or Slack, executes your weekly update workflow via skill file, and produces stakeholder-ready outputs for multiple audiences in one session &#8212; ready to send Monday morning.",
    tasks:[
-    {id:"T8",mode:"sim",name:"Understand the three tool primitives",by:"Skill files, MCPs, Cursor &#8212; what each does and when to use it",dur:"8 min",
+    {id:"T8",name:"Understand the three tool primitives",by:"Skill files, MCPs, Codex &#8212; what each does and when to use it",dur:"8 min",
      types:["lesson","practice"],formats:["Text lesson","Matching exercise"],tools:[],prereqs:["T3"],rt:false,
-     lesson:`<p>Three ways to extend Cursor beyond the chat window &#8212; each solving a different PM problem:</p>
+     lesson:`<p>Three ways to extend Codex beyond the chat window &#8212; each solving a different PM problem:</p>
 
 <p><b>Skill files</b> &#8212; process knowledge in markdown. Encode how you want a recurring PM task done: your weekly update format, your PRD structure, your QBR template. Zero install. Write once, invoke by name. Best for: recurring format-sensitive workflows.</p>
 
-<p><b>MCPs (Model Context Protocol)</b> &#8212; authenticated connections to live tools. Cursor reads your Databricks metrics, searches Slack threads, queries Jira tickets &#8212; without you copy-pasting anything. One-time OAuth setup per tool via the MCP store at <a href="https://app.mintmcp.com/store" target="_blank" style="color:#0C447C">app.mintmcp.com/store</a>. Best for: live data retrieval, eliminating manual context gathering.</p>
+<p><b>MCPs (Model Context Protocol)</b> &#8212; authenticated connections to live tools. Codex reads your Databricks metrics, searches Slack threads, queries Jira tickets &#8212; without you copy-pasting anything. One-time OAuth setup per tool via the MCP store at <a href="https://app.mintmcp.com/store" target="_blank" style="color:#0C447C">app.mintmcp.com/store</a>. Best for: live data retrieval, eliminating manual context gathering.</p>
 
-<p><b>Cursor itself</b> &#8212; AI-native environment that writes, runs, and iterates in plain language. Best for: transforming data, building prototypes, producing structured outputs from raw sources.</p>
+<p><b>Codex itself</b> &#8212; AI-native environment that writes, runs, and iterates in plain language. Best for: transforming data, building prototypes, producing structured outputs from raw sources.</p>
 
 <div class="example"><div class="label">Decision rule &#8212; which primitive for which PM situation</div>
-You copy Databricks retention numbers into Cursor every Monday &#8594; <b>MCP (Databricks)</b><br>
+You copy Databricks retention numbers into Codex every Monday &#8594; <b>MCP (Databricks)</b><br>
 You format the same stakeholder update every week &#8594; <b>Skill file</b><br>
 You describe a Figma flow instead of sharing it &#8594; <b>MCP (Figma)</b><br>
-You need to build something clickable from data &#8594; <b>Cursor</b><br>
+You need to build something clickable from data &#8594; <b>Codex</b><br>
 You need to pull data AND format it as a brief &#8594; <b>MCP + Skill file (pipeline)</b>
 </div>`,
      practice:{t:"Match 6 real Coursera PM scenarios to the right primitive",
        d:`<div class="match-exercise">
 <div class="match-title">PM Scenarios &#8594; Primitives</div>
-<div class="match-row"><div class="match-scenario">You paste Databricks W/W retention into Cursor every Monday before product review.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Databricks)</div></div>
+<div class="match-row"><div class="match-scenario">You paste Databricks W/W retention into Codex every Monday before product review.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Databricks)</div></div>
 <div class="match-row"><div class="match-scenario">Every sprint you write a stakeholder update &#8212; same sections, same format, same three audiences.</div><div class="match-arrow">&#8594;</div><div class="match-answer">Skill file</div></div>
-<div class="match-row"><div class="match-scenario">You describe a Figma onboarding flow to Cursor instead of sharing the file.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Figma)</div></div>
-<div class="match-row"><div class="match-scenario">You want to build an interactive prototype of the new activation screen for a stakeholder review tomorrow.</div><div class="match-arrow">&#8594;</div><div class="match-answer">Cursor</div></div>
-<div class="match-row"><div class="match-scenario">You want Cursor to search #product-decisions for all decisions made in the last 7 days.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Slack)</div></div>
+<div class="match-row"><div class="match-scenario">You describe a Figma onboarding flow to Codex instead of sharing the file.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Figma)</div></div>
+<div class="match-row"><div class="match-scenario">You want to build an interactive prototype of the new activation screen for a stakeholder review tomorrow.</div><div class="match-arrow">&#8594;</div><div class="match-answer">Codex</div></div>
+<div class="match-row"><div class="match-scenario">You want Codex to search #product-decisions for all decisions made in the last 7 days.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP (Slack)</div></div>
 <div class="match-row"><div class="match-scenario">You want to pull Databricks retention data, identify the key anomaly, and produce a one-paragraph exec brief automatically.</div><div class="match-arrow">&#8594;</div><div class="match-answer">MCP + Skill file (pipeline)</div></div>
 </div>`},
-     hints:["If you're copy-pasting from a tool, that's always an MCP. If you're building something interactive, that's Cursor.",
+     hints:["If you're copy-pasting from a tool, that's always an MCP. If you're building something interactive, that's Codex.",
             "Start with skill files &#8212; zero friction, immediate value. Add one MCP for the tool you copy-paste from most (for most Coursera PMs: Databricks)."],
-     sigs:[{t:"pass",s:"5/6 or 6/6 correct including pipeline scenario"},{t:"fail",s:"Confused MCP and Cursor across multiple scenarios &#8212; surface decision rule from lesson"},{t:"gap",s:"Pipeline scenario wrong &#8212; acceptable at this stage, fully covered in T11"}],
+     sigs:[{t:"pass",s:"5/6 or 6/6 correct including pipeline scenario"},{t:"fail",s:"Confused MCP and Codex across multiple scenarios &#8212; surface decision rule from lesson"},{t:"gap",s:"Pipeline scenario wrong &#8212; acceptable at this stage, fully covered in T11"}],
      caplink:""},
 
-    {id:"T9",mode:"screenshare",name:"Set up Cursor and install Coursera plugins",by:"One-time setup so Cursor can reach Databricks, Slack, and Figma directly",dur:"20 min",
-     types:["practice"],formats:["Step-by-step setup walkthrough","Confirmation test"],tools:["Cursor","Databricks","Slack","Figma"],prereqs:["T8"],rt:false,
-     lesson:`<div class="preload-box" style="background:#F0F7FF;border:1px solid #BFDBFE;border-radius:8px;padding:10px 14px;margin-bottom:12px;font-size:12px;color:#1e40af;line-height:1.6"><b>&#127909; Screen share session</b> &#8212; This task runs as a facilitated screen share, not in the simulator. An AI will guide you through the setup and provide live feedback via an overlay. Have Cursor downloaded and your Coursera SSO credentials ready before the session.</div>
+    {id:"T9",name:"Set up your MCPs",by:"One-time setup so Codex can reach Databricks, Slack, and Figma directly",dur:"15 min",
+     types:["practice"],formats:["Step-by-step setup walkthrough","Confirmation test"],tools:["Databricks","Slack","Figma"],prereqs:["T8"],rt:false,
+     lesson:`<p>This is setup, not a lesson &#8212; do it once, and every subsequent data task in this curriculum works without copy-pasting. You're connecting Codex to the tools you already use every day via the MCP store at <a href="https://app.mintmcp.com/store" target="_blank" style="color:#0C447C">app.mintmcp.com/store</a>.</p>
 
-<p>This is a one-time setup task. Once done, every data task in this curriculum works without copy-pasting, and Cursor starts every session knowing your tools and context. You are setting up two things: Cursor itself, and the Coursera plugin marketplace which gives you access to Databricks, Slack, Figma, and Jira via MCP.</p>
-
-<p><b>What you're installing:</b><br>
-&#8212; <b>Cursor</b> &#8212; the AI-native IDE you'll use for capstone projects and real-environment work<br>
-&#8212; <b>coursera-claude-marketplace</b> &#8212; Coursera's internal plugin marketplace<br>
-&#8212; <b>coursera-mcps</b> &#8212; the MCP plugin that connects Cursor to Databricks, Slack, Figma, and Jira<br>
-&#8212; <b>personal-memory</b> &#8212; the plugin that enables your persistent AI context file (used in S2)</p>`,
-     practice:{t:"Install Cursor, add the Coursera marketplace, and confirm your MCP connections",
+<p>For Coursera PMs, the two highest-value MCPs to connect first are <b>DatabricksMCPServer</b> (product metrics and funnel data) and <b>Slack</b> (decisions and async context). Figma is optional but useful if you reference designs regularly.</p>`,
+     practice:{t:"Connect Databricks + Slack via the MCP store &#8212; confirm both work before proceeding",
        d:`<div style="margin-bottom:12px">
 <div class="setup-step">
 <div class="setup-num">1</div>
 <div class="setup-body">
-<div class="setup-title">Install Cursor</div>
-<div class="setup-desc">Download and install Cursor from <a href="https://cursor.com" target="_blank" style="color:#0C447C;font-weight:600">cursor.com</a>. Sign in with your work account. If your team has a Cursor Teams or Enterprise plan, make sure you join under the Coursera organization &#8212; this unlocks shared plugins.</div>
-<div class="setup-code">cursor.com &#8594; Download &#8594; Install &#8594; Sign in with Coursera account</div>
+<div class="setup-title">Open the MCP store</div>
+<div class="setup-desc">Go to <a href="https://app.mintmcp.com/store" target="_blank" style="color:#0C447C;font-weight:600">app.mintmcp.com/store</a> in a new tab. You'll see a catalog of MCP servers. You're looking for two: <b>DatabricksMCPServer</b> and <b>Slack</b>.</div>
 </div>
 </div>
 <div class="setup-step">
 <div class="setup-num">2</div>
 <div class="setup-body">
-<div class="setup-title">Add the Coursera plugin marketplace</div>
-<div class="setup-desc">In Cursor, go to <b>Settings &#8594; Plugins &#8594; Add Marketplace</b> and enter the following URL:</div>
-<div class="setup-code">https://github.com/webedx-spark/coursera-claude-marketplace</div>
-<div class="setup-desc" style="margin-top:6px">The Coursera marketplace will appear in your plugins panel. You should see available plugins including <b>coursera-mcps</b> and <b>personal-memory</b>.</div>
+<div class="setup-title">Install DatabricksMCPServer</div>
+<div class="setup-desc">Click <b>DatabricksMCPServer</b>. Click <b>Install</b> (or Add to Codex). You'll be prompted to authenticate with your Coursera Databricks credentials &#8212; use your work SSO. Once authenticated, the server appears in your connected MCP list in Codex settings.</div>
+<div class="setup-code">Databricks &#8594; Install &#8594; Authenticate with Coursera SSO &#8594; Connected &#10003;</div>
 </div>
 </div>
 <div class="setup-step">
 <div class="setup-num">3</div>
 <div class="setup-body">
-<div class="setup-title">Install coursera-mcps</div>
-<div class="setup-desc">From the Cursor plugins panel, find <b>coursera-mcps</b> and click Install. This plugin bundles all Coursera MCP servers &#8212; including the <b>data</b> server (Databricks), <b>dev</b> server (Jira, GitHub), and <b>fe</b> server (Figma). Authenticate with your Coursera SSO when prompted.</div>
-<div class="setup-code">Plugins panel &#8594; coursera-mcps &#8594; Install &#8594; Authenticate with Coursera SSO &#8594; Connected &#10003;</div>
+<div class="setup-title">Install Slack MCP</div>
+<div class="setup-desc">Click <b>Slack</b> in the store. Click Install. Authenticate with your Coursera Slack workspace. Grant the requested permissions &#8212; you'll need read access to channels you want Codex to search.</div>
+<div class="setup-code">Slack &#8594; Install &#8594; Authenticate with Coursera Slack &#8594; Select workspace &#8594; Connected &#10003;</div>
 </div>
 </div>
 <div class="setup-step">
 <div class="setup-num">4</div>
 <div class="setup-body">
-<div class="setup-title">Install personal-memory</div>
-<div class="setup-desc">From the same plugins panel, find <b>personal-memory</b> and click Install. This plugin enables the persistent context file you'll build in S2 &#8212; it lets Cursor remember your product area, stakeholders, and OKR across sessions.</div>
-<div class="setup-code">Plugins panel &#8594; personal-memory &#8594; Install &#8594; Connected &#10003;</div>
+<div class="setup-title">(Optional) Install Figma MCP</div>
+<div class="setup-desc">If you regularly reference Figma designs, click <b>Figma MCP Server</b> and authenticate with your Figma account. This lets Codex read your design files directly instead of you describing them.</div>
 </div>
 </div>
 <div class="setup-step">
 <div class="setup-num">5</div>
 <div class="setup-body">
-<div class="setup-title">Confirm your MCP connections</div>
-<div class="setup-desc">Start a new simulator session. Type the following prompt and check the response:</div>
-<div class="setup-code">&#8220;List the MCP tools you have access to.&#8221;</div>
-<div class="setup-desc" style="margin-top:6px">Cursor should list tools from the <b>data</b> server (Databricks), <b>dev</b> server (Jira, GitHub, Slack), and <b>fe</b> server (Figma). If a server is missing, go to Cursor Settings &#8594; MCP Servers and check its status.</div>
+<div class="setup-title">Confirm the connection in Codex</div>
+<div class="setup-desc">Open a new Codex session. Type: <b>"List the MCP tools you have access to."</b> Codex should list Databricks and Slack tools. If it doesn't, open Codex Settings &#8594; MCP Servers and verify both appear as connected.</div>
+<div class="setup-code">Codex &#8594; "List the MCP tools you have access to" &#8594; should show Databricks + Slack tools</div>
 </div>
 </div>
 </div>
-<div class="confirm-box"><b>Before moving to T10:</b> Your AI will confirm both MCP connections are live before the screen share ends. T10 onward runs in the simulator &#8212; the sim uses realistic mock data so you don&#8217;t need live connections to practice querying and synthesis.</div>`},
-     hints:["If the marketplace doesn't appear after adding the URL, try restarting Cursor and checking Settings &#8594; Plugins again.",
-            "If MCP authentication fails, make sure you're signed into Cursor with your Coursera work account, not a personal account &#8212; the SSO won't work otherwise.",
-            "If the data server isn't listed, Databricks access may need IT approval. Flag this before the session so it can be resolved in advance."],
-     sigs:[{t:"pass",s:"Cursor lists Databricks and Slack tools in confirmation prompt &#8212; both connections verified"},{t:"fail",s:"Authentication failed &#8212; personal vs. work account; surface hint 2"},{t:"gap",s:"Marketplace installed but MCP tools missing &#8212; check Cursor Settings &#8594; MCP Servers for error state"}],
+<div class="confirm-box"><b>Before moving to T10:</b> Confirm Codex can see both MCPs by running the confirmation prompt above. If either is missing, re-run that tool's install step. Do not proceed to T10 until both connections are confirmed &#8212; T10 and T11 depend on them.</div>`},
+     hints:["If authentication fails, try signing out of the MCP store and back in with your Coursera SSO specifically &#8212; personal accounts won't have access to Coursera data.",
+            "If Codex doesn't list the tools after setup, go to Codex Settings &#8594; MCP Servers &#8594; check that the server status shows Connected (not Error or Pending)."],
+     sigs:[{t:"pass",s:"Codex lists Databricks and Slack tools in confirmation prompt &#8212; both connections verified"},{t:"fail",s:"Authentication failed &#8212; most likely personal vs. work account; surface hint 1"},{t:"gap",s:"Only one MCP connected &#8212; flag which one failed; T10 and T11 require both"}],
      caplink:""},
 
-    {id:"T10",mode:"sim",name:"Query a live data source",by:"Ask Databricks or Slack a real question &#8212; without copy-pasting anything",dur:"15 min",
-     types:["practice"],formats:["Guided query session","Cursor with MCP"],tools:["Databricks","Slack"],prereqs:["T6","T9"],rt:true,
-     lesson:`<p>With the MCPs connected, Cursor queries your tools directly &#8212; you ask in plain language, it returns real data. The skill is knowing what question to ask, not how to write a SQL query. Your job: define the signal. Cursor translates, runs, and returns.</p>
+    {id:"T10",name:"Query a live data source",by:"Ask Databricks or Slack a real question &#8212; without copy-pasting anything",dur:"15 min",
+     types:["practice"],formats:["Guided query session","Codex with MCP"],tools:["Databricks","Slack"],prereqs:["T6","T9"],rt:true,
+     lesson:`<p>With the MCPs connected, Codex queries your tools directly &#8212; you ask in plain language, it returns real data. The skill is knowing what question to ask, not how to write a SQL query. Your job: define the signal. Codex translates, runs, and returns.</p>
 
 <div class="contrast">
-<div class="bad-ex"><div class="label">&#10060; Vague &#8212; returns vague data</div>"Show me Databricks data for my product."<br><br><span style="color:#991B1B;font-size:11px">Cursor doesn't know which table, which metric, which cohort, which timeframe. You'll get a schema or an error.</span></div>
-<div class="good-ex"><div class="label">&#10003; Specific &#8212; returns actionable data</div>"Query Databricks for W/W retention rate for the enterprise learner cohort who activated in the last 30 days. Return the weekly numbers and flag any week where retention dropped more than 3 percentage points week-over-week."<br><br><span style="color:#0F6E56;font-size:11px">Cursor knows exactly what to retrieve. You get a table you can act on.</span></div>
+<div class="bad-ex"><div class="label">&#10060; Vague &#8212; returns vague data</div>"Show me Databricks data for my product."<br><br><span style="color:#991B1B;font-size:11px">Codex doesn't know which table, which metric, which cohort, which timeframe. You'll get a schema or an error.</span></div>
+<div class="good-ex"><div class="label">&#10003; Specific &#8212; returns actionable data</div>"Query Databricks for W/W retention rate for the enterprise learner cohort who activated in the last 30 days. Return the weekly numbers and flag any week where retention dropped more than 3 percentage points week-over-week."<br><br><span style="color:#0F6E56;font-size:11px">Codex knows exactly what to retrieve. You get a table you can act on.</span></div>
 </div>
 
 <p><b>The synthesis step matters as much as the query.</b> After getting data, always follow up: "What does this pattern suggest about user behavior? Which number would most concern the eng lead if they saw it, and why?" Raw numbers without synthesis is a dashboard reprint &#8212; not a PM insight.</p>
 
 <p><b>For Slack:</b> "Search the #product-decisions channel for all decisions made in the last 7 days. Return a list with: decision, who made it, and whether it has a follow-up owner."</p>`,
      practice:{t:"Run a real data query for this week's product review &#8212; then synthesize one actionable insight",
-       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open Cursor with your context file loaded</b> (paste it as the first message). This means Cursor knows your OKR focus before you ask the data question &#8212; and will surface the most relevant signals automatically.</div></div>
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open Codex with your context file loaded</b> (paste it as the first message). This means Codex knows your OKR focus before you ask the data question &#8212; and will surface the most relevant signals automatically.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Write a specific data question</b> about a metric that actually matters for your product review this week. Use the strong query pattern: metric + timeframe + cohort filter. Run it against Databricks MCP.</div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Evaluate the raw output.</b> Is it specific enough to act on? If not &#8212; refine the query with a tighter filter. Run again.</div></div>
-<div class="step"><div class="step-num">4</div><div class="step-text"><b>Ask the synthesis question:</b> "Based on these numbers, what would most concern my eng lead if they saw this, and what action does that suggest?" Evaluate: did Cursor produce a specific implication, or just restate the data?</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Ask the synthesis question:</b> "Based on these numbers, what would most concern my eng lead if they saw this, and what action does that suggest?" Evaluate: did Codex produce a specific implication, or just restate the data?</div></div>
 <div class="step"><div class="step-num">5</div><div class="step-text"><b>Write one insight sentence:</b> "[X] happened, which means [Y], and the action this suggests is [Z]." If you can't write it &#8212; the synthesis step isn't done. Keep going.</div></div>
 <div class="cap-link"><b>Capstone connection:</b> This query and insight sentence are Capstone B deliverables #1 and #2. Save your insight sentence &#8212; it's pre-loaded into T15 for the multi-audience communication task.</div>`},
      hints:["If output is raw numbers with no interpretation, push: 'What does this pattern suggest about user behavior? What's the most important signal for a PM focused on W1 retention?'",
-            "Load your context file first, then run the query. Cursor will know which signals matter for your OKR without you having to explain it in the query."],
+            "Load your context file first, then run the query. Codex will know which signals matter for your OKR without you having to explain it in the query."],
      sigs:[{t:"pass",s:"Specific query written; synthesis produces a named implication; insight sentence written"},{t:"fail",s:"Query too vague &#8212; returned schema or error; surface strong query pattern from lesson"},{t:"gap",s:"Data returned but synthesis skipped &#8212; quality gap, post-task modal fires on insight sentence"}],
      caplink:"Capstone B deliverables #1 and #2. Insight sentence pre-loaded into T15."},
 
-    {id:"T11",mode:"sim",name:"Write a PM skill file",by:"Encode your weekly update as a callable process &#8212; run it every Monday in one command",dur:"15 min",
-     types:["practice"],formats:["Guided builder","Cursor test"],tools:["Cursor"],prereqs:["T4","T8"],rt:false,
-     lesson:`<p>A skill file is a prompt template saved as a markdown file &#8212; but with one key addition: judgment guidance. It tells Cursor not just what format to produce, but how to handle edge cases: what to do when notes are thin, when a metric is missing, when a blocker has no owner.</p>
+    {id:"T11",name:"Write a PM skill file",by:"Encode your weekly update as a callable process &#8212; run it every Monday in one command",dur:"15 min",
+     types:["practice"],formats:["Guided builder","Codex test"],tools:["Codex"],prereqs:["T4","T8"],rt:false,
+     lesson:`<p>A skill file is a prompt template saved as a markdown file &#8212; but with one key addition: judgment guidance. It tells Codex not just what format to produce, but how to handle edge cases: what to do when notes are thin, when a metric is missing, when a blocker has no owner.</p>
 
 <p>Without judgment guidance, a template breaks when the input is messy. A skill file adapts.</p>
 
@@ -774,11 +759,11 @@ If a blocker has no owner: Flag explicitly as "Owner: TBD &#8212; needs assignme
 If decisions section is empty: Omit the section, don't invent decisions.</pre>
 </div>
 
-<p>To invoke: open Cursor, paste your weekly notes and Databricks numbers, then type: <code>"Use my weekly-update skill."</code> If the file is saved in your Cursor context, that's all you need.</p>`,
+<p>To invoke: open Codex, paste your weekly notes and Databricks numbers, then type: <code>"Use my weekly-update skill."</code> If the file is saved in your Codex context, that's all you need.</p>`,
      practice:{t:"Write and test your weekly update skill file &#8212; you'll use it this Monday",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Adapt the example above to your real context.</b> Replace the placeholder product area with your actual OKR. Add your real eng lead and design lead's names and what they optimize for. This takes 5 minutes and is the most important 5 minutes in the curriculum.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Add at least one judgment guidance line</b> based on something that's gone wrong in your AI outputs before. "If the eng lead is cc'd, always include the milestone timeline in the team version." Real experience, encoded.</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-text"><b>Test with this week's actual notes.</b> Open Cursor, paste your notes and Databricks output, then invoke the skill file. Evaluate all three versions: would you send any of them right now without editing?</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Test with this week's actual notes.</b> Open Codex, paste your notes and Databricks output, then invoke the skill file. Evaluate all three versions: would you send any of them right now without editing?</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Fix one thing that didn't work.</b> Save the skill file somewhere you can reference it next Monday. This file is your new Monday morning workflow.</div></div>
 <div class="cap-link"><b>Capstone connection:</b> This skill file IS Capstone A deliverable #3. Testing it on real data this week IS the Capstone A live test.</div>`},
      hints:["The judgment guidance section is what separates a skill file from a template. At least one 'if X, then Y' instruction makes it robust enough for real use.",
@@ -791,9 +776,9 @@ If decisions section is empty: Omit the section, don't invent decisions.</pre>
    desc:"Build working prototypes and interactive visuals during solution shaping &#8212; no design handoff, no engineering bandwidth required",
    end:"PM can vibe-code a working browser prototype for a feature concept, build an interactive strategy diagram, and write a light eval &#8212; all in one session using a feature they're actually working on.",
    tasks:[
-    {id:"T12",mode:"sim",name:"Your first vibe-coded prototype",by:"From a one-paragraph spec to something stakeholders can click &#8212; this week",dur:"20 min",
-     types:["lesson","practice"],formats:["Text lesson with worked spec example","Cursor guided build"],tools:["Cursor"],prereqs:["T1","T2"],rt:false,
-     lesson:`<p>Vibe coding is prompting Cursor to build interactive things &#8212; prototypes, tools, visuals &#8212; in plain language. For PMs, it's the fastest path from "here's the concept" to "here's something the eng lead can click and react to" before any sprint planning or design review.</p>
+    {id:"T12",name:"Your first vibe-coded prototype",by:"From a one-paragraph spec to something stakeholders can click &#8212; this week",dur:"20 min",
+     types:["lesson","practice"],formats:["Text lesson with worked spec example","Codex guided build"],tools:["Codex"],prereqs:["T1","T2"],rt:false,
+     lesson:`<p>Vibe coding is prompting Codex to build interactive things &#8212; prototypes, tools, visuals &#8212; in plain language. For PMs, it's the fastest path from "here's the concept" to "here's something the eng lead can click and react to" before any sprint planning or design review.</p>
 
 <p>The spec is the entire job. A one-paragraph spec that answers three questions is enough to produce a working prototype in 10 minutes:</p>
 <p>&#8212; <b>What does it demonstrate?</b> (the specific interaction, not the whole feature)<br>
@@ -801,26 +786,26 @@ If decisions section is empty: Omit the section, don't invent decisions.</pre>
 &#8212; <b>What must work interactively?</b> (be exact &#8212; "click &#8594; highlight" not "it should feel interactive")</p>
 
 <div class="contrast">
-<div class="bad-ex"><div class="label">&#10060; Vague spec &#8212; produces vague prototype</div>"Build me a prototype of the onboarding flow."<br><br><span style="color:#991B1B;font-size:11px">Cursor invents the interaction. You spend 30 min iterating on something that was never grounded in what you actually needed.</span></div>
-<div class="good-ex"><div class="label">&#10003; Specific spec &#8212; produces useful prototype in one pass</div>"Build a single-screen interactive prototype of the new learner activation moment for Coursera. The screen shows: a welcome message with the user's first name, 3 learning goal options (career change, skill upgrade, get certified), and a 'Start my path' CTA. When the user clicks a goal, that card highlights. When they click CTA, show a 1-sentence confirmation. No backend &#8212; pure HTML/JS. I'll show this to the eng lead in tomorrow's sync to validate the interaction before we spec it."<br><br><span style="color:#0F6E56;font-size:11px">Cursor knows exactly what to build. First output is usable. You iterate on details, not direction.</span></div>
+<div class="bad-ex"><div class="label">&#10060; Vague spec &#8212; produces vague prototype</div>"Build me a prototype of the onboarding flow."<br><br><span style="color:#991B1B;font-size:11px">Codex invents the interaction. You spend 30 min iterating on something that was never grounded in what you actually needed.</span></div>
+<div class="good-ex"><div class="label">&#10003; Specific spec &#8212; produces useful prototype in one pass</div>"Build a single-screen interactive prototype of the new learner activation moment for Coursera. The screen shows: a welcome message with the user's first name, 3 learning goal options (career change, skill upgrade, get certified), and a 'Start my path' CTA. When the user clicks a goal, that card highlights. When they click CTA, show a 1-sentence confirmation. No backend &#8212; pure HTML/JS. I'll show this to the eng lead in tomorrow's sync to validate the interaction before we spec it."<br><br><span style="color:#0F6E56;font-size:11px">Codex knows exactly what to build. First output is usable. You iterate on details, not direction.</span></div>
 </div>
 
-<p><b>Rule: iterate via prompts, not code editing.</b> You're the PM &#8212; your job is to describe what you want changed, not to touch the code. "The goal cards should be larger and the CTA should be below them, not to the side." That's it. Cursor handles the rest.</p>`,
+<p><b>Rule: iterate via prompts, not code editing.</b> You're the PM &#8212; your job is to describe what you want changed, not to touch the code. "The goal cards should be larger and the CTA should be below them, not to the side." That's it. Codex handles the rest.</p>`,
      practice:{t:"Build a prototype for a feature you're actually working on right now",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Pick a feature or concept you're currently shaping</b> &#8212; something you'll discuss with eng or design in the next 5 days. Not a hypothetical.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Write your one-paragraph spec</b> using the three-question structure: what does it demonstrate, who is it for, what must work interactively. Be exact about the interaction.</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-text"><b>Prompt Cursor with your spec.</b> Ask for HTML/JS, no backend required. Review what it produces against your spec &#8212; not against perfection.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Prompt Codex with your spec.</b> Ask for HTML/JS, no backend required. Review what it produces against your spec &#8212; not against perfection.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Iterate via prompts only.</b> Describe what's wrong in plain language. Don't edit code. Keep iterating until the core interaction works.</div></div>
 <div class="step"><div class="step-num">5</div><div class="step-text"><b>Show it to one person before your next session.</b> Eng lead, designer, or PM peer. Observe what they click. Note what worked and what confused them. This observation is your T14 eval input.</div></div>
 <div class="cap-link"><b>Capstone connection:</b> This prototype &#8212; or an iteration of it &#8212; is the starting point for Capstone C.</div>`},
-     hints:["If the prototype doesn't match your spec, the spec was too vague &#8212; not Cursor. Add the missing detail to the spec and rerun.",
+     hints:["If the prototype doesn't match your spec, the spec was too vague &#8212; not Codex. Add the missing detail to the spec and rerun.",
             "Start with the smallest possible interaction. One screen, one click, one result. You can build on it &#8212; but the first version should be showable in 5 minutes."],
      sigs:[{t:"pass",s:"Working prototype produced; core interaction matches spec; PM showed it to at least one person"},{t:"fail",s:"PM tried to edit code instead of prompting &#8212; redirect to prompt-based iteration"},{t:"gap",s:"Spec too vague &#8212; prototype doesn't match intent; surface three-question spec structure"}],
      caplink:"Starting point for Capstone C prototype."},
 
-    {id:"T13",mode:"sim",name:"Build an interactive strategy diagram",by:"Replace a static slide with something stakeholders can explore in the meeting",dur:"15 min",
-     types:["practice"],formats:["Cursor guided build"],tools:["Cursor"],prereqs:["T12"],rt:false,
-     lesson:`<p>PMs spend significant time creating decks and static diagrams to communicate strategy. Cursor can produce interactive HTML visuals &#8212; clickable, filterable, zoomable &#8212; faster than Keynote and more useful in live discussions where stakeholders want to drill in.</p>
+    {id:"T13",name:"Build an interactive strategy diagram",by:"Replace a static slide with something stakeholders can explore in the meeting",dur:"15 min",
+     types:["practice"],formats:["Codex guided build"],tools:["Codex"],prereqs:["T12"],rt:false,
+     lesson:`<p>PMs spend significant time creating decks and static diagrams to communicate strategy. Codex can produce interactive HTML visuals &#8212; clickable, filterable, zoomable &#8212; faster than Keynote and more useful in live discussions where stakeholders want to drill in.</p>
 
 <p><b>When interactive beats static:</b> roadmap by quarter with clickable detail, user journey with decision branches, competitive landscape with toggle views, prioritization matrix where stakeholders can move items. Any time someone says "can you show me just X?" in a slide presentation &#8212; that's a sign the visual should be interactive.</p>
 
@@ -837,19 +822,19 @@ Add a toggle at top: "Show all" / "Show in progress only."
 No backend &#8212; pure HTML/JS. I'll use this in the Monday product review.</pre>
 </div>
 
-<p>Iterate the same way as T12 &#8212; describe changes in plain language, let Cursor handle the code.</p>`,
+<p>Iterate the same way as T12 &#8212; describe changes in plain language, let Codex handle the code.</p>`,
      practice:{t:"Build an interactive visual for something you're communicating this week",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Pick a strategy, roadmap, or concept you're currently trying to communicate</b> &#8212; something in your next meeting or review. What does your audience need to explore, not just receive?</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Write a prompt</b> specifying: what items appear, what clicking each item shows, any filter or toggle needed, and who you're showing it to. Use the worked example above as a template.</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run in the simulator.</b> Review. Describe one change in plain language. Iterate until it accurately represents your strategy.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Run in Codex.</b> Review. Describe one change in plain language. Iterate until it accurately represents your strategy.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Use it in your next discussion.</b> Did it speed up alignment or create confusion? Note one thing you'd change before using it again.</div></div>`},
-     hints:["If the diagram is too complex, ask Cursor to simplify: 'Remove everything except the top 5 items. Each should be clickable with a one-line description.'",
+     hints:["If the diagram is too complex, ask Codex to simplify: 'Remove everything except the top 5 items. Each should be clickable with a one-line description.'",
             "Interactive > static when the audience needs to explore. If it's a board presentation where you control the narrative, static may still win."],
      sigs:[{t:"pass",s:"Working interactive diagram produced; PM used it in at least one discussion this week"},{t:"fail",s:"PM produced a static image &#8212; redirect to HTML/interactive output specifically"},{t:"gap",s:"Diagram doesn't match strategy &#8212; spec too vague, surface the worked prompt example"}],
      caplink:""},
 
-    {id:"T14",mode:"sim",name:"Write a light eval",by:"Test your prototype before showing it to engineers &#8212; with a worked example",dur:"12 min",
-     types:["lesson","practice"],formats:["Text lesson with worked eval example","Cursor-assisted eval"],tools:["Cursor"],prereqs:["T12"],rt:false,
+    {id:"T14",name:"Write a light eval",by:"Test your prototype before showing it to engineers &#8212; with a worked example",dur:"12 min",
+     types:["lesson","practice"],formats:["Text lesson with worked eval example","Codex-assisted eval"],tools:["Codex"],prereqs:["T12"],rt:false,
      lesson:`<p>Before you show a vibe-coded prototype to your engineering team, run a light eval. Not formal QA &#8212; a structured 10-minute check that the prototype demonstrates what you said it would, and that you know exactly what it doesn't show yet.</p>
 
 <p>A PM eval asks three questions:</p>
@@ -876,7 +861,7 @@ No error state if user hits CTA without selecting a goal. No mobile layout &#821
 <div class="step"><div class="step-num">1</div><div class="step-text"><b>Answer the three eval questions</b> for your T12 prototype. Be specific &#8212; not "it works" but "the goal selection works; the CTA state before selection is ambiguous and will confuse the eng lead."</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Fix one thing</b> the eval revealed, using prompts only. If Q2 revealed an ambiguity &#8212; fix it. If Q3 revealed a missing state &#8212; add it.</div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Write your one-sentence framing</b> for when you share this with engineering &#8212; acknowledging what's deliberately left out. This sentence is what turns a prototype into a focused conversation, not an open-ended critique session.</div></div>
-<div class="step"><div class="step-num">4</div><div class="step-text"><b>Optionally: run the eval prompt in Cursor.</b> Paste your spec and the prototype code, then ask: "Review this prototype against this spec. What does the spec say should happen vs. what the prototype actually does? What's missing?" Use Cursor's output as a second opinion alongside your own.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Optionally: run the eval prompt in Codex.</b> Paste your spec and the prototype code, then ask: "Review this prototype against this spec. What does the spec say should happen vs. what the prototype actually does? What's missing?" Use Codex's output as a second opinion alongside your own.</div></div>
 <div class="cap-link"><b>Capstone connection:</b> This eval document is Capstone C deliverable #3. The framing sentence is what you'll say when presenting the capstone prototype.</div>`},
      hints:["The eval is not about code quality. You're asking: does this demonstrate what I said it would? That's a PM question, not an engineering question.",
             "'What's missing before this is useful to engineering' is the most important question. If you can't answer it specifically, you're not ready to show the prototype yet."],
@@ -886,11 +871,11 @@ No error state if user hits CTA without selecting a goal. No mobile layout &#821
 
   {id:"S5",color:"#EEEDFE",tc:"#3C3489",name:"Data querying and multi-audience synthesis",
    desc:"Query Databricks in plain language, synthesize one actionable insight, and produce three audience-calibrated communications from one session &#8212; ready to send",
-   end:"PM runs a plain language data query, writes an insight sentence with implication, and produces three stakeholder-ready communications (exec brief, team analysis, QBR-ready) &#8212; all from one Cursor session.",
+   end:"PM runs a plain language data query, writes an insight sentence with implication, and produces three stakeholder-ready communications (exec brief, team analysis, QBR-ready) &#8212; all from one Codex session.",
    tasks:[
-    {id:"T15",mode:"sim",name:"Communicate data for multiple audiences",by:"One insight, three versions &#8212; exec brief, team analysis, QBR slide",dur:"20 min",
-     types:["practice"],formats:["Multi-output builder","Cursor with pre-loaded context"],tools:["Cursor"],prereqs:["T10","T4"],rt:true,
-     lesson:`<p>The same data insight needs to be communicated differently depending on who's reading it. PMs often spend 40&#8211;50% of their week reformatting the same information for different audiences. Cursor collapses this to one session &#8212; one data query, three stakeholder-ready versions.</p>
+    {id:"T15",name:"Communicate data for multiple audiences",by:"One insight, three versions &#8212; exec brief, team analysis, QBR slide",dur:"20 min",
+     types:["practice"],formats:["Multi-output builder","Codex with pre-loaded context"],tools:["Codex"],prereqs:["T10","T4"],rt:true,
+     lesson:`<p>The same data insight needs to be communicated differently depending on who's reading it. PMs often spend 40&#8211;50% of their week reformatting the same information for different audiences. Codex collapses this to one session &#8212; one data query, three stakeholder-ready versions.</p>
 
 <p><b>Three audience lenses for a PM data communication:</b></p>
 <p><b>Exec brief</b> &#8212; lead with implication, not data. One paragraph. "This means we need to decide X." The CEO wants to know what action this requires, not how you found the number.<br>
@@ -917,45 +902,45 @@ Implication: Sprint 12 experiment needed; Q3 target at risk without it
      practice:{t:"Produce 3 audience-calibrated versions from your T10 insight &#8212; without leaving this session",
        d:`<div class="preload-box"><b>\u1F4CE Pre-loaded from T10:</b> Your Databricks query output and insight sentence from T10 are attached to this session below. You don't need to re-run the query or navigate away.<br><br><div class="preload-content">Databricks output: [YOUR T10 QUERY RESULT APPEARS HERE]
 Insight sentence: [YOUR T10 INSIGHT SENTENCE APPEARS HERE]</div></div>
-<div class="step"><div class="step-num">1</div><div class="step-text"><b>Load your context file in Cursor</b> (it's pre-loaded in this session). Paste the T10 insight sentence into a new Cursor message with the three-version prompt: "Using this data and insight, produce an exec brief, team analysis, and QBR summary. Use the audience context from my role file."</div></div>
+<div class="step"><div class="step-num">1</div><div class="step-text"><b>Load your context file in Codex</b> (it's pre-loaded in this session). Paste the T10 insight sentence into a new Codex message with the three-version prompt: "Using this data and insight, produce an exec brief, team analysis, and QBR summary. Use the audience context from my role file."</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Evaluate the exec brief first.</b> Does it lead with implication, not data? Is the first sentence "This means we need to decide X" &#8212; or does it start by explaining the number? If it starts with data &#8212; that's the gap to fix.</div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Evaluate the team analysis.</b> Does it have 3 specific recommended actions with named owners? If the actions are generic ("investigate further", "discuss in meeting") &#8212; that's the gap to fix.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Evaluate the QBR summary.</b> Could you show this as a slide in 90 seconds? Does the implication line tell a stakeholder what they need to do? If it's just restating the data &#8212; that's the gap to fix.</div></div>
-<div class="step"><div class="step-num">5</div><div class="step-text"><b>Fix the worst version.</b> One more Cursor prompt, one targeted fix. Then evaluate: which version is closest to sendable right now?</div></div>
+<div class="step"><div class="step-num">5</div><div class="step-text"><b>Fix the worst version.</b> One more Codex prompt, one targeted fix. Then evaluate: which version is closest to sendable right now?</div></div>
 <div class="cap-link"><b>Capstone connection:</b> These three versions are Capstone B deliverables #2, #3, and #4 &#8212; you've just completed 4 of the 4 capstone B deliverables in this one task.</div>`},
      hints:["The exec brief fails if it starts with data. Lead with: 'This means we have a decision to make about X.' Data goes in sentence 2.",
             "If the team version has more than 5 sections, it's too long. Cut to: data, interpretation, 3 actions. That's the format."],
      sigs:[{t:"pass",s:"Exec brief leads with implication; team version has 3 named-owner actions; QBR version works as a 90-second slide"},{t:"fail",s:"All three versions look the same &#8212; audience calibration not applied; rerun with explicit audience instruction"},{t:"gap",s:"Exec brief leads with data not implication &#8212; most frequent PM error, post-task modal fires with worked example"}],
      caplink:"Capstone B deliverables #2, #3, and #4."},
 
-    {id:"T16",mode:"sim",name:"Build a connected data pipeline",by:"From Databricks query to three-version brief in one session &#8212; your new Monday morning",dur:"20 min",
-     types:["practice"],formats:["Pipeline builder","Cursor with MCPs"],tools:["Databricks","Cursor"],prereqs:["T11","T15"],rt:false,
-     lesson:`<p>The highest-leverage PM workflow: a single Cursor session that starts with a Databricks query and ends with three stakeholder-ready communications. No copy-pasting, no reformatting, no three separate sessions, no Monday morning scramble.</p>
+    {id:"T16",name:"Build a connected data pipeline",by:"From Databricks query to three-version brief in one session &#8212; your new Monday morning",dur:"20 min",
+     types:["practice"],formats:["Pipeline builder","Codex with MCPs"],tools:["Databricks","Codex"],prereqs:["T11","T15"],rt:false,
+     lesson:`<p>The highest-leverage PM workflow: a single Codex session that starts with a Databricks query and ends with three stakeholder-ready communications. No copy-pasting, no reformatting, no three separate sessions, no Monday morning scramble.</p>
 
 <p>The pipeline has three stages:</p>
 <p><b>Stage 1 &#8212; Query:</b> Databricks MCP pulls the data. You define the question in plain language.<br>
-<b>Stage 2 &#8212; Synthesize:</b> Cursor identifies the key signal and writes the insight sentence.<br>
+<b>Stage 2 &#8212; Synthesize:</b> Codex identifies the key signal and writes the insight sentence.<br>
 <b>Stage 3 &#8212; Communicate:</b> Your weekly-update skill file formats three versions from the synthesis.</p>
 
 <div class="example"><div class="label">What the full pipeline looks like in practice &#8212; Monday, 8:45am</div>
-<b>You open Cursor. Paste your context file. Then:</b>
+<b>You open Codex. Paste your context file. Then:</b>
 
 Message 1: "Query Databricks for W1 retention for the enterprise cohort, last 30 days. Flag any week with a drop greater than 3 percentage points."
-&#8594; Cursor queries Databricks MCP. Returns data table.
+&#8594; Codex queries Databricks MCP. Returns data table.
 
 Message 2: "Identify the most important signal in this data for a PM focused on increasing W1 retention from 24% to 32% by Q3. Write one insight sentence: what happened, what it means, what it suggests."
-&#8594; Cursor writes: "Enterprise W1 retention dropped 4pts this month, concentrated in certificate program and mobile cohorts, suggesting the activation problem is in the flow &#8212; not the content."
+&#8594; Codex writes: "Enterprise W1 retention dropped 4pts this month, concentrated in certificate program and mobile cohorts, suggesting the activation problem is in the flow &#8212; not the content."
 
 Message 3: "Use my weekly-update skill. Here are this week's notes: [paste]. The key insight is [paste insight sentence]."
-&#8594; Cursor produces all three versions: exec, team, async Slack digest.
+&#8594; Codex produces all three versions: exec, team, async Slack digest.
 
 9:05am: 20 minutes. Three versions. Monday review covered.
 </div>`,
      practice:{t:"Run the full pipeline on real data &#8212; this is your new Monday morning workflow",
-       d:`<div class="preload-box"><b>&#128203; Pre-loaded:</b> Your context file and weekly-update skill file are both loaded in this simulator session &#8212; start directly with the Databricks query.</div>
+       d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Open a new Codex session.</b> Paste your context file as the first message. Paste your weekly-update skill file as the second message. Codex now has your full context and your process.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Run your Databricks query</b> using the MCP. Use a real question about a metric that matters for your product review this week &#8212; not a test query.</div></div>
 <div class="step"><div class="step-num">3</div><div class="step-text"><b>Ask for the synthesis.</b> "Identify the most important signal in this data for a PM focused on [your specific OKR]. Write one insight sentence." Evaluate: is the insight sentence specific enough to anchor a stakeholder update?</div></div>
-<div class="step"><div class="step-num">4</div><div class="step-text"><b>Invoke your weekly-update skill.</b> Paste this week's notes. Cursor produces all three versions.</div></div>
+<div class="step"><div class="step-num">4</div><div class="step-text"><b>Invoke your weekly-update skill.</b> Paste this week's notes. Codex produces all three versions.</div></div>
 <div class="step"><div class="step-num">5</div><div class="step-text"><b>Log your time.</b> How long did stages 1&#8211;4 take? Note it. This is your new baseline. The goal: under 20 minutes from open to three sendable versions.</div></div>
 <div class="cap-link"><b>Capstone connection:</b> This pipeline run IS Capstone A and Capstone B combined. If you ran it on real data &#8212; you've completed both capstones.</div>`},
      hints:["If Stage 2 synthesis is too generic, add your OKR as a constraint: 'Identify the signal most relevant to our goal of improving W1 retention from 24% to 32% by Q3.' Specificity in = specificity out.",
@@ -963,11 +948,11 @@ Message 3: "Use my weekly-update skill. Here are this week's notes: [paste]. The
      sigs:[{t:"pass",s:"Full pipeline run; 2/3 or 3/3 outputs stakeholder-ready; time logged"},{t:"fail",s:"Stopped at Stage 2 &#8212; synthesis too vague; add OKR constraint and rerun"},{t:"gap",s:"Pipeline ran but all three versions identical &#8212; skill file audience calibration missing, review T11 judgment guidance"}],
      caplink:"Capstone A + Capstone B live test. If run on real data this week &#8212; both capstones complete."},
 
-    {id:"T17",mode:"sim",name:"Ask data questions in plain language",by:"Explore your product data without writing SQL &#8212; using Databricks MCP",dur:"15 min",
-     types:["lesson","practice"],formats:["Text lesson","Cursor with Databricks MCP","Simulator fallback"],tools:["Databricks"],prereqs:["T10"],rt:false,
+    {id:"T17",name:"Ask data questions in plain language",by:"Explore your product data without writing SQL &#8212; using Databricks MCP",dur:"15 min",
+     types:["lesson","practice"],formats:["Text lesson","Codex with Databricks MCP","Simulator fallback"],tools:["Databricks"],prereqs:["T10"],rt:false,
      lesson:`<p>T10 taught you to run a specific, targeted query. This task teaches the investigative loop &#8212; how to use data to ask better questions, not just answer the first one. Most PM data work isn't a single query. It's a sequence: you see a number, it raises a question, you drill in, something else surfaces.</p>
 
-<p>The skill is knowing what the next question is after the first answer. Cursor handles the translation to Databricks. Your job is to keep asking.</p>
+<p>The skill is knowing what the next question is after the first answer. Codex handles the translation to Databricks. Your job is to keep asking.</p>
 
 <div class="example"><div class="label">What an investigative loop looks like &#8212; retention anomaly investigation</div>
 Query 1: "What's W1 retention for the enterprise cohort this month vs. last month?"
@@ -987,7 +972,7 @@ Insight: The problem isn't the program quality &#8212; it's the mobile Day 1 exp
      practice:{t:"Run an investigative loop on a real product question you have this week",
        d:`<div class="step"><div class="step-num">1</div><div class="step-text"><b>Pick a real product question</b> you don't know the answer to yet &#8212; something relevant to your current OKR or sprint. Not a metric you already know. Something you'd actually want to investigate.</div></div>
 <div class="step"><div class="step-num">2</div><div class="step-text"><b>Run your first query</b> in plain language via Databricks MCP. Get the first answer.</div></div>
-<div class="step"><div class="step-num">3</div><div class="step-text"><b>Ask: "What does this make you want to know next?"</b> Let Cursor suggest the next query. Evaluate: is it the right next question for your product area? Run it.</div></div>
+<div class="step"><div class="step-num">3</div><div class="step-text"><b>Ask: "What does this make you want to know next?"</b> Let Codex suggest the next query. Evaluate: is it the right next question for your product area? Run it.</div></div>
 <div class="step"><div class="step-num">4</div><div class="step-text"><b>Run at least 3 queries total</b> &#8212; each building on the previous answer. The goal is to find something specific that you didn't know before you started.</div></div>
 <div class="step"><div class="step-num">5</div><div class="step-text"><b>Write the finding:</b> "I found that [specific result], which means [implication for my product]. The action this suggests is [specific next step]." This is what you'll bring to the next product review.</div></div>`},
      hints:["If the first answer doesn't surprise you, segment it. Same metric broken down by mobile vs. desktop, or by learning path, or by plan type. Segmentation almost always surfaces the real story.",
@@ -1014,7 +999,7 @@ const AUDIT_DATA=[
   {id:"T11",name:"Write a PM skill file (was T10)",color:"#FAEEDA",tc:"#633806",status:"new",
    v3:["Complete skill file example filled in with real Coursera PM context &#8212; not a template","Judgment guidance section shown with real PM examples (thin notes, missing metric, no blocker owner)","'You'll use it this Monday' in task title &#8212; explicit this-week framing","Test requires real notes from this week &#8212; not a sample"]},
   {id:"T14",name:"Write a light eval",color:"#FAECE7",tc:"#712B13",status:"new",
-   v3:["Full worked eval example for the T12 activation screen prototype","Three-question framework shown with real filled-in answers &#8212; not abstract definitions","Framing sentence example: 'I deliberately left out X so we can align on Y first'","Cursor-assisted eval prompt added as optional Step 4","Pre-loaded context box: 'Your prototype and spec from T12 are attached to this session'"]},
+   v3:["Full worked eval example for the T12 activation screen prototype","Three-question framework shown with real filled-in answers &#8212; not abstract definitions","Framing sentence example: 'I deliberately left out X so we can align on Y first'","Codex-assisted eval prompt added as optional Step 4","Pre-loaded context box: 'Your prototype and spec from T12 are attached to this session'"]},
   {id:"T15",name:"Communicate data for multiple audiences",color:"#EEEDFE",tc:"#3C3489",status:"new",
    v3:["Pre-loaded context from T10: insight sentence and Databricks output shown in session &#8212; no navigation away","Full worked example: same data, three different versions written out completely","'All three versions' prompt pattern shown explicitly","Exec brief failure pattern named with specific fix"]},
   {id:"T16",name:"Build a connected data pipeline",color:"#EEEDFE",tc:"#3C3489",status:"new",
@@ -1056,18 +1041,15 @@ function renderCurriculum(){
     blk.innerHTML=`<div class="skill-head" style="position:relative"><div class="skill-num" style="background:${sk.color};color:${sk.tc}">S${si+1}</div><div><div class="skill-name">${sk.name}</div><div class="skill-desc">${sk.desc}</div></div><button class="cmnt-add-btn skill-cmnt-btn" title="Add comment" onclick="event.stopPropagation();cmntOpen('S${si+1}')">&#128172;</button></div><div class="end-state"><b>End state:</b> ${sk.end}</div><div class="sec" style="margin-top:0">Tasks</div>`;
     sk.tasks.forEach((t,ti)=>{
       const uid=`${si}-${ti}`;
-      const pills='';
+      const pills=t.types.map(tp=>({lesson:'<span class="pill pl">Lesson</span>',practice:'<span class="pill pp">Practice</span>',assess:'<span class="pill pa">Assessment</span>'}[tp])).join('');
       const rtBadge=t.rt?'<span class="rt-badge">Retrieval check</span>':'';
-      const modeBadge=t.mode==='screenshare'
-        ?'<span class="mode-badge mode-screenshare">&#127909; Screen share</span>'
-        :'<span class="mode-badge mode-sim">&#127381; Simulator</span>';
       const fmts=t.formats.map(f=>`<span class="ptag">${f}</span>`).join('');
-      const tools=t.tools.length?t.tools.map(tl=>`<span class="ttag">${tl}</span>`).join(''):'<span class="none-t">None required &#8212; Cursor simulator only</span>';
+      const tools=t.tools.length?t.tools.map(tl=>`<span class="ttag">${tl}</span>`).join(''):'<span class="none-t">None required &#8212; Codex simulator only</span>';
       const prereqs=t.prereqs.length?t.prereqs.map(p=>`<span class="ptag">${p}: ${ALL[p]?.name||p}</span>`).join(''):'<span class="none-t">Entry point</span>';
       const sigs=t.sigs.map(s=>{const cls={pass:'es-p',fail:'es-f',gap:'es-g'}[s.t];const lbl={pass:'Pass',fail:'Fail signal',gap:'Gap signal'}[s.t];return`<div class="esig"><div class="esdot ${cls}"></div><div><span style="font-size:11px;font-weight:600;color:#1a1a1a">${lbl}:</span> <span style="font-size:12px;color:#555">${s.s}</span></div></div>`;}).join('');
       const caplink=t.caplink?`<div class="cap-link"><b>Capstone connection:</b> ${t.caplink}</div>`:'';
       const card=document.createElement('div');card.className='task-card';
-      card.innerHTML=`<div class="task-head" onclick="tog('${uid}')"><div class="tidx" style="background:${sk.color};color:${sk.tc}">${t.id}</div><div class="ttitles"><div class="tname">${t.name} ${rtBadge}</div><div class="tby">${t.by}</div></div><div class="tright">${modeBadge}${pills}<span class="dur">${t.dur}</span><span class="chev" id="c-${uid}">&#9660;</span></div></div><div class="tbody" id="b-${uid}"><div class="tsec"><div class="tsl">Prerequisites</div><div class="ptag-row">${prereqs}</div></div><div class="tsec"><div class="tsl">Lesson formats</div><div class="ptag-row">${fmts}</div></div><div class="tsec"><div class="tsl">Tools</div><div class="ptag-row">${tools}</div></div><div class="tsec"><div class="tsl">Lesson &#8212; what you will learn and be able to do</div><div class="prose">${t.lesson}</div></div><div class="tsec"><div class="tsl">Practice task</div><div class="pbox"><div class="pbox-t">${t.practice.t}</div>${t.practice.d}${caplink}</div></div><div class="tsec"><div class="tsl">Progressive hints</div><div class="hints">${t.hints.map((h,i)=>`<div class="hint"><div class="hnum">${i+1}</div><div class="htext">${h}</div></div>`).join('')}</div></div><div class="tsec"><div class="tsl">Evaluation signals</div><div class="evsigs">${sigs}</div></div></div>`;
+      card.innerHTML=`<div class="task-head" onclick="tog('${uid}')"><div class="tidx" style="background:${sk.color};color:${sk.tc}">${t.id}</div><div class="ttitles"><div class="tname">${t.name} ${rtBadge}</div><div class="tby">${t.by}</div></div><div class="tright">${pills}<span class="dur">${t.dur}</span><span class="chev" id="c-${uid}">&#9660;</span></div></div><div class="tbody" id="b-${uid}"><div class="tsec"><div class="tsl">Prerequisites</div><div class="ptag-row">${prereqs}</div></div><div class="tsec"><div class="tsl">Lesson formats</div><div class="ptag-row">${fmts}</div></div><div class="tsec"><div class="tsl">Tools</div><div class="ptag-row">${tools}</div></div><div class="tsec"><div class="tsl">Lesson &#8212; what you will learn and be able to do</div><div class="prose">${t.lesson}</div></div><div class="tsec"><div class="tsl">Practice task</div><div class="pbox"><div class="pbox-t">${t.practice.t}</div>${t.practice.d}${caplink}</div></div><div class="tsec"><div class="tsl">Progressive hints</div><div class="hints">${t.hints.map((h,i)=>`<div class="hint"><div class="hnum">${i+1}</div><div class="htext">${h}</div></div>`).join('')}</div></div><div class="tsec"><div class="tsl">Evaluation signals</div><div class="evsigs">${sigs}</div></div></div>`;
       blk.appendChild(card);
     });
     cont.appendChild(blk);
